@@ -7,6 +7,6 @@
   i. It should prompt the user to select how many sqaures should be generated.
   ii. Grid space should be static.
   iii. Check out prompts.
-  iv. You should be able to populate 64 squares without changing the total pixel count.
+  iv. You should be able to populate 64 squares without changing the total pixel count. (Prompt for rows and columns)
 6. Have the hover effect select a random color. Use opacity to increment value by 10% each time.
 */
