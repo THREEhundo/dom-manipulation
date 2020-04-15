@@ -1,0 +1,13 @@
+.board {
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 662px;
+  height: 569px;
+  text-align: center;
+}
+.innerBoard {
+  width: 75%;
+  height: 70%;
+  display: inline-block;
+  margin-top: 12%;
+}

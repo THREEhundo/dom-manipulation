@@ -10,3 +10,19 @@
   iv. You should be able to populate 64 squares without changing the total pixel count. (Prompt for rows and columns)
 6. Have the hover effect select a random color. Use opacity to increment value by 10% each time.
 */
+
+const header = document.createElement('h1');
+header.textContent = 'Etch-a-Sketch';
+header.style.textAlign = 'center';
+document.body.appendChild(header);
+
+// outter board
+const board = document.createElement('div');
+board.className = 'board';
+board.style.backgroundImage = "url('images/etch-a-sketch.png')";
+document.body.appendChild(board);
+
+// inner board
+const innerBoard = document.createElement('div');
+innerBoard.className = 'innerBoard';
+board.appendChild(innerBoard);
