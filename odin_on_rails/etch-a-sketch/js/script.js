@@ -11,7 +11,9 @@
 6. Have the hover effect select a random color. Use opacity to increment value by 10% each time.
 */
 
+// header
 const header = document.createElement('h1');
+header.id = 'header';
 header.textContent = 'Etch-a-Sketch';
 header.style.textAlign = 'center';
 document.body.appendChild(header);
@@ -22,7 +24,16 @@ board.className = 'board';
 board.style.backgroundImage = "url('images/etch-a-sketch.png')";
 document.body.appendChild(board);
 
-// inner board
+// inner board 16 x 16 grid
 const innerBoard = document.createElement('div');
 innerBoard.className = 'innerBoard';
 board.appendChild(innerBoard);
+
+// text field and button to customize grid
+
+
+
+// function to create boxes for the etch-a-sketch and append them to the innerBoard
+function innerBoardSquares() {
+
+}
