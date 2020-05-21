@@ -36,6 +36,14 @@
 .square {
   background-color: rgba(0, 0, 0, 0);
 } */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column wrap;
+  margin-top: 75px;
+}
+
 #board {
   background-image: url('../images/etch-a-sketch.png');
   width: 512px;
@@ -44,4 +52,5 @@
 
 #new-board-container {
   display: inline-block;
+  margin: auto;
 }
