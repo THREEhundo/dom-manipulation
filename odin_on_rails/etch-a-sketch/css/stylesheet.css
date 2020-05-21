@@ -1,4 +1,4 @@
-body {
+/* body {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -21,7 +21,6 @@ body {
   margin-top: 20%;
   margin-left: 12.6%;
   background-color: gray;
-
   display: grid;
   place-content: center;
   grid-template-columns: repeat(4, minmax(50px, 1fr));
@@ -34,3 +33,6 @@ body {
   border-bottom: 1px solid black;
   border-right: 1px solid black;
 }
+.square {
+  background-color: rgba(0, 0, 0, 0);
+} */
