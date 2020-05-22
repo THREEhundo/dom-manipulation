@@ -45,12 +45,30 @@ body {
 }
 
 #board {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row wrap;
   background-image: url('../images/etch-a-sketch.png');
   width: 512px;
   height: 419px;
 }
 
-#new-board-container {
+#grid {
+  display: grid;
+  height: 297px;
+  width: 400px;
+  background-color: rgba(205, 205, 205, 1);
+  box-sizing: content-box;
+  justify-content: center;
+  border: 1px rgba(0, 0, 0, 0.5) solid;
+}
+
+#reset-container {
   display: inline-block;
   margin: auto;
+}
+
+.square {
+  border: 1px rgba(0, 0, 0, 0.5) solid;
 }

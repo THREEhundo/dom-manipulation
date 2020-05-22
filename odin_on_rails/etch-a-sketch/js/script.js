@@ -83,3 +83,64 @@
 //
 // let s = document.querySelector('.square');
 // // text field and button to customize grid
+const board = document.querySelector('#board');
+const gridContainer = document.querySelector('#grid');
+const controls = document.querySelector('#controls');
+let lengthAndWidth = 12;
+let rgbA = [0, 0, 0, 0];
+let squares = [];
+
+createGrid(lengthAndWidth);
+
+// Create Board
+function createGrid(lengthAndWidth) {
+  // Create squares with grid
+  gridContainer.style.gridTemplateRows = `repeat(${lengthAndWidth}, 1fr)`;
+  gridContainer.style.gridTemplateColumns = `repeat(${lengthAndWidth}, 1fr)`;
+
+  let totalSquares = lengthAndWidth * lengthAndWidth;
+  for (var i = 0; i < totalSquares; i++) {
+    squares[i] = document.createElement('div');
+    squares[i].classList.add('square');
+    squares[i].dataset.darkness = 0;
+    squares[i].style = 'background-color: rgba(0, 0, 0, 0)';
+    squares[i].addEventListener('mouseover', darken);
+    gridContainer.appendChild(squares[i]);
+  }
+  // Add Event Listener to each square to darken
+}
+// Clear Board
+
+// Square Adjustor using range slider
+
+// Darken Squares
+function darken(e) {
+  let currentShade = e.target.style.backgroundColor;
+  let rgbaString = (currentShade.charAt(3) == 'a') ? currentShade.slice(5, -1) : currentShade.slice(4, -1);
+  console.log(currentShade.charAt(0), currentShade.charAt(1), currentShade.charAt(2), currentShade.charAt(3));
+  let rgbaArray = rgbaString.split(',')
+  console.log(`rgbaArray: ` + rgbaArray);
+  let red = rgbaArray[0];
+  let green = rgbaArray[1];
+  let blue = rgbaArray[2];
+  let alpha = rgbaArray[3];
+  console.log(`alpha: ` + alpha);
+  let currentDarkness = e.target.dataset.darkness;
+  console.log(`darkness: ` + currentDarkness);
+  if (currentDarkness === 9) {
+    return [0, 0, 0, 1];
+  }
+  let newAlpha = alphaIncrease(alpha, currentDarkness);
+  console.log(newAlpha);
+  return [red, green, blue, newAlpha];
+}
+
+function alphaIncrease(alpha, step) {
+  let incrementor;
+  let newDarknessValue;
+  incrementor = (1 - alpha) / (10 - step);
+  console.log(`incrementor: ` + incrementor);
+  newDarknessValue = +alpha + incrementor;
+  console.log(`New Darkness Value: ` + newDarknessValue);
+  return newDarknessValue;
+}
