@@ -119,6 +119,7 @@ function clearGrid() {
     item.style = 'background-color: rgba(0, 0, 0, 0)';
     item.dataset.darkness = 0;
     item.removeEventListener('mouseover', shadeChanger);
+    item.addEventListener('mouseover', shadeChanger);
   });
 
 }
