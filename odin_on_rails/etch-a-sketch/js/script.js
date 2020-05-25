@@ -104,7 +104,7 @@ function createGrid(lengthAndWidth) {
     squares[i].classList.add('square');
     squares[i].dataset.darkness = 0;
     squares[i].style = 'background-color: rgba(0, 0, 0, 0)';
-    squares[i].addEventListener('mouseover', darken);
+    squares[i].addEventListener('mouseover', shadeChanger);
     gridContainer.appendChild(squares[i]);
   }
   // Add Event Listener to each square to darken
@@ -113,6 +113,11 @@ function createGrid(lengthAndWidth) {
 
 // Square Adjustor using range slider
 
+// Change Shade Value
+function shadeChanger(e) {
+  rgbA = darken(e);
+  e.target.style = `background-color: rgba(${rgbA})`
+}
 // Darken Squares
 function darken(e) {
   let currentShade = e.target.style.backgroundColor;
@@ -131,7 +136,7 @@ function darken(e) {
     return [0, 0, 0, 1];
   }
   let newAlpha = alphaIncrease(alpha, currentDarkness);
-  console.log(newAlpha);
+  console.log(`New Alpha: ` + newAlpha);
   return [red, green, blue, newAlpha];
 }
 
