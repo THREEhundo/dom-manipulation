@@ -86,9 +86,14 @@
 const board = document.querySelector('#board');
 const gridContainer = document.querySelector('#grid');
 const controls = document.querySelector('#controls');
+const reset = document.querySelector('#clear');
 let lengthAndWidth = 12;
 let rgbA = [0, 0, 0, 0];
 let squares = [];
+
+reset.addEventListener('click', clearGrid);
+
+// Square Adjustor using range slider
 
 createGrid(lengthAndWidth);
 
@@ -107,11 +112,16 @@ function createGrid(lengthAndWidth) {
     squares[i].addEventListener('mouseover', shadeChanger);
     gridContainer.appendChild(squares[i]);
   }
-  // Add Event Listener to each square to darken
 }
-// Clear Board
 
-// Square Adjustor using range slider
+function clearGrid() {
+  squares.forEach((item) => {
+    item.style = 'background-color: rgba(0, 0, 0, 0)';
+    item.dataset.darkness = 0;
+    item.removeEventListener('mouseover', shadeChanger);
+  });
+
+}
 
 // Change Shade Value
 function shadeChanger(e) {
@@ -132,7 +142,8 @@ function darken(e) {
   console.log(`alpha: ` + alpha);
   let currentDarkness = e.target.dataset.darkness;
   console.log(`darkness: ` + currentDarkness);
-  if (currentDarkness >= 9) {
+  if (currentDarkness > 9) {
+    console.log(`over 9`);
     return [0, 0, 0, 1];
   }
   let newAlpha = alphaIncrease(alpha, currentDarkness);
