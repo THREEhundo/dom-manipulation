@@ -55,7 +55,7 @@ button:hover {
 #clear {
   margin: auto;
   display: block;
-  background-color: #4e9af1;
+  background-color: #303960;
 }
 
 #reset-container {
@@ -66,7 +66,7 @@ button:hover {
 #new-board {
   margin: auto;
   margin-top: 1vh;
-  background-color: #f14ebd;
+  background-color: #ea9a96;
 }
 
 .square {
