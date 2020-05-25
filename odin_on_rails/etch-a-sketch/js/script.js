@@ -87,13 +87,25 @@ const board = document.querySelector('#board');
 const gridContainer = document.querySelector('#grid');
 const controls = document.querySelector('#controls');
 const reset = document.querySelector('#clear');
+const newBoard = document.querySelector('#new-board');
+const slider = document.querySelector('#new-size');
+let sliderLabel = document.querySelector('#size-label');
 let lengthAndWidth = 12;
 let rgbA = [0, 0, 0, 0];
 let squares = [];
 
+slider.value = lengthAndWidth;
 
 reset.addEventListener('click', clearGrid);
+// newBoard.addEventListener('click', createGrid(lengthAndWidth))
+slider.addEventListener('input', updateValue);
+sliderLabel.innerHTML = slider.value + ' rows & columns';
 
+function updateValue(e) {
+  sliderLabel.innerHTML = e.target.value + ' rows & columns';
+  // sliderLabel = e.target.value;
+  console.log(sliderLabel);
+}
 // Square Adjustor using range slider
 
 createGrid(lengthAndWidth);
@@ -126,7 +138,7 @@ function clearGrid() {
   });
 }
 
-animationEndCallback = (e) => {
+animationEndCallback = () => {
   board.removeEventListener('animationend', animationEndCallback);
   board.classList.remove('animate');
 }

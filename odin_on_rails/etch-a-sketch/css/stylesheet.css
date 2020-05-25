@@ -66,7 +66,7 @@ body {
 }
 
 #reset-container {
-  display: inline-block;
+  display: inline-grid;
   margin: auto;
 }
 
