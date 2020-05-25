@@ -137,6 +137,9 @@ function darken(e) {
   }
   let newAlpha = alphaIncrease(alpha, currentDarkness);
   console.log(`New Alpha: ` + newAlpha);
+  currentDarkness++;
+  console.log(`Current Darkness: ` + currentDarkness);
+  e.target.dataset.darkness = currentDarkness;
   return [red, green, blue, newAlpha];
 }
 
