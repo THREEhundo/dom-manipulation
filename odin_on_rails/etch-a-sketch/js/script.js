@@ -91,6 +91,7 @@ let lengthAndWidth = 12;
 let rgbA = [0, 0, 0, 0];
 let squares = [];
 
+
 reset.addEventListener('click', clearGrid);
 
 // Square Adjustor using range slider
@@ -115,13 +116,19 @@ function createGrid(lengthAndWidth) {
 }
 
 function clearGrid() {
+  board.classList.add('animate');
+  board.addEventListener('animationend', animationEndCallback);
   squares.forEach((item) => {
     item.style = 'background-color: rgba(0, 0, 0, 0)';
     item.dataset.darkness = 0;
     item.removeEventListener('mouseover', shadeChanger);
     item.addEventListener('mouseover', shadeChanger);
   });
+}
 
+animationEndCallback = (e) => {
+  board.removeEventListener('animationend', animationEndCallback);
+  board.classList.remove('animate');
 }
 
 // Change Shade Value
