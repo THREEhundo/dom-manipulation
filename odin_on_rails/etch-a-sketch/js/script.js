@@ -132,7 +132,7 @@ function darken(e) {
   console.log(`alpha: ` + alpha);
   let currentDarkness = e.target.dataset.darkness;
   console.log(`darkness: ` + currentDarkness);
-  if (currentDarkness === 9) {
+  if (currentDarkness >= 9) {
     return [0, 0, 0, 1];
   }
   let newAlpha = alphaIncrease(alpha, currentDarkness);
