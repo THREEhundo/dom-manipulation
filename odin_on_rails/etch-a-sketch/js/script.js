@@ -97,16 +97,11 @@ let squares = [];
 slider.value = lengthAndWidth;
 
 reset.addEventListener('click', clearGrid);
-// newBoard.addEventListener('click', createGrid(lengthAndWidth))
-slider.addEventListener('input', updateValue);
-sliderLabel.innerHTML = slider.value + ' rows & columns';
 
-function updateValue(e) {
-  sliderLabel.innerHTML = e.target.value + ' rows & columns';
-  // sliderLabel = e.target.value;
-  console.log(sliderLabel);
-}
-// Square Adjustor using range slider
+slider.addEventListener('input', updateValue);
+sliderLabel.innerHTML = slider.value + ' Rows & Columns';
+
+newBoard.addEventListener('click', newGrid);
 
 createGrid(lengthAndWidth);
 
@@ -127,6 +122,11 @@ function createGrid(lengthAndWidth) {
   }
 }
 
+// Square Adjustor using range slider
+function updateValue(e) {
+  sliderLabel.innerHTML = e.target.value + ' Rows & Columns';
+}
+
 function clearGrid() {
   board.classList.add('animate');
   board.addEventListener('animationend', animationEndCallback);
@@ -141,6 +141,16 @@ function clearGrid() {
 animationEndCallback = () => {
   board.removeEventListener('animationend', animationEndCallback);
   board.classList.remove('animate');
+}
+
+function newGrid() {
+  // clear grid
+  clearGrid();
+  while (grid.firstChild) {
+    grid.removeChild(grid.lastChild);
+  }
+  // add new grid
+  createGrid(slider.value);
 }
 
 // Change Shade Value
