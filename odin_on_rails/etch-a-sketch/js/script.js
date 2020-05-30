@@ -107,3 +107,34 @@ function alphaIncrease(alpha, step) {
   console.log(`New Darkness Value: ` + newDarknessValue);
   return newDarknessValue;
 }
+/* Check for Emptiness */
+let schedule = {};
+
+function isEmpty(schedule) {
+  for (let key in schedule) {
+    return false;
+  }
+  return true;
+}
+alert(isEmpty(schedule)); // true
+
+schedule["8:30"] = "get up";
+
+alert(isEmpty(schedule)); //false
+
+/* Sum Object Properties */
+let salaries = {
+  John: 100,
+  Ann: 160,
+  Pete: 130
+}
+
+function sum(salaries) {
+  let counter = 0;
+  for (let salary in salaries) {
+    return coutner += salary;
+  }
+
+}
+
+sum(salaries);
