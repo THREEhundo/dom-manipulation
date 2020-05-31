@@ -17,8 +17,13 @@ function sum(arr) {
   return redux;
 }
 
-function multiply() {
-
+function multiply(arr) {
+  // No initial value due to 0 * num = 0
+  let multi = arr.reduce(function(acc, curr) {
+    acc *= curr;
+    return acc;
+  });
+  return multi;
 }
 
 function power() {
