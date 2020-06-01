@@ -26,12 +26,23 @@ function multiply(arr) {
   return multi;
 }
 
-function power() {
-
+function power(a, b) {
+  return Math.pow(a, b);
 }
 
-function factorial() {
-
+function factorial(num) {
+  if (num === 0) {
+    return 1;
+  }
+  let base = Array.of(num);
+  for (let i = num - 1; i > 0; i--) {
+    base.push(i);
+  }
+  let fac = base.reduce(function(acc, curr) {
+    acc *= curr;
+    return acc;
+  });
+  return fac;
 }
 
 module.exports = {
