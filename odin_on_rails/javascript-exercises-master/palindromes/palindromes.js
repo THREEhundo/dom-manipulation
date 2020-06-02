@@ -5,8 +5,10 @@ const palindromes = function(word) {
     .toLowerCase()
     .match(alphabetRegex);
   console.log(`arr: ${arr}`)
+
   let refactoredString = arr.join('');
   console.log(`Refactored String: ${refactoredString}`);
+
   let reversedString = arr
     .reverse()
     .join('');
