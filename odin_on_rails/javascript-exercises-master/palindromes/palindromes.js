@@ -5,8 +5,10 @@ const palindromes = function(word) {
     .toLowerCase()
     .match(alphabetRegex);
   console.log(`arr: ${arr}`)
+
   let refactoredString = arr.join('');
   console.log(`Refactored String: ${refactoredString}`);
+
   let reversedString = arr
     .reverse()
     .join('');
@@ -17,6 +19,10 @@ const palindromes = function(word) {
     return false;
   }
 }
-// letters are the same backwards and forwards
-// ommit spaces and punctuation
+// Use regex to return an array of only alphanumeric character
+// turn to lowercase letters
+// join array
+// reverse array
+// join array
+// compare lowercased string to reversed string
 module.exports = palindromes
