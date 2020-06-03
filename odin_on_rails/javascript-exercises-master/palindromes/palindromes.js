@@ -1,28 +1,21 @@
 const palindromes = function(word) {
-  // Matches Alphanumeric values
-  let alphabetRegex = /\w/g;
-  let arr = word
-    .toLowerCase()
-    .match(alphabetRegex);
-  console.log(`arr: ${arr}`)
+  const regex = /\w/g;
+  const lowerCaseString = word.toLowerCase();
+  const wordArray = lowerCaseString.match(regex);
+  console.log(`wordArray: ${wordArray}`);
+  console.log(lowerCaseString.match(regex));
 
-  let refactoredString = arr.join('');
-  console.log(`Refactored String: ${refactoredString}`);
-
-  let reversedString = arr
-    .reverse()
-    .join('');
-  console.log(`Reversed String: ${reversedString}`);
-  if (refactoredString === reversedString) {
+  const reversedArray = wordArray.reverse();
+  console.log(reversedArray);
+  if (lowerCaseString.match(regex) === reversedArray) {
     return true;
   } else {
     return false;
   }
 }
-// Use regex to return an array of only alphanumeric character
-// turn to lowercase letters
-// join array
-// reverse array
-// join array
-// compare lowercased string to reversed string
 module.exports = palindromes
+
+// Define parameters you want to keep
+// Get a match of those characters
+// Reverse array
+// Compare both arrays and return true or false
