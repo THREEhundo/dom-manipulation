@@ -19,3 +19,5 @@ palindromes('tacos') // false
 ### Thoughts
 
 I had an issue with wordArray and reversedArray both giving the same reversed output of the array. I realized that they were both pointing to the same array in memory. It was a simple fix that required me to change wordArray in the if statement.
+
+Changing the answer to the given solution showed that I could refactor even more. Got rid of the if else and just used a type conversion comparison to do so.
