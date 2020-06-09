@@ -26,4 +26,3 @@ module.exports = caesar
 // split the string into an array
 // forEach elem of the array find the same value in either lowerAlpha or upperAlpha
 // return the letter that corresponds to the shift value
-//
