@@ -7,6 +7,15 @@ const fibonacci = function(x) {
   let sum = 0;
   let first = 0;
   let second = 1;
+
+  if (Math.sign(x) === -1) {
+    return "OOPS";
+  }
+
+  if (x === String) {
+    x.parseInt();
+  }
+
   for (var i = 0; i < x; i++) {
     if (i === 0) {
       fib.push(second);
