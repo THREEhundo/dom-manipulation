@@ -5,22 +5,25 @@ const fibonacci = function(x) {
   // change the second value to the previous first value
   // change the change the sum to first and second value
   let sum = 0;
-  let first = 1;
+  let first = 0;
   let second = 1;
   for (var i = 0; i < x; i++) {
     if (i === 0) {
-      fib.push(first);
+      fib.push(second);
     } else {
       //console.log(nextDigit)
       fib.push(
-        sum += firstDigit
+        sum = first + second
       )
-      firstDigit = sum
-      console.log(firstDigit)
+      first = second;
+      second = sum;
+      console.log(`sum: ${sum},
+        first: ${first},
+        second: ${second}`);
     }
   }
 
-  return fib;
+  return fib[x - 1];
 }
 
 module.exports = fibonacci
