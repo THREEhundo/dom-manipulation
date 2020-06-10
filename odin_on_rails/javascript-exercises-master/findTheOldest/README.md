@@ -9,3 +9,5 @@ given an array of objects representing people with a birth and death year, retur
 
 ## Thoughts
 The biggest hurdle for this challenge was figuring out how I would compare the age of each person within the array. I decided to use a combination of map and reduce. Reduce contained a maxCallback function that utilized Math.max() to compare numbers and return the greatest value.
+
+The provided answer reduced the code by a wide margin. All of the age computation was an input for the ternary operator, which allows for the return of the whole object within the array without having to use additional methods.
