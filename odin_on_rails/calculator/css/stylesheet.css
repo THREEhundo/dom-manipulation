@@ -1,0 +1,39 @@
+body {
+  background-color: #E1DEE3;
+}
+
+button {
+  background-color: #2B3B30;
+  color: #E1DEE3;
+  text-align: center;
+  text-decoration: none;
+  font-size: 2em;
+}
+
+#calculator {
+  background-color: #3A4F41;
+  width: 33vw;
+  margin: auto;
+  margin-top: 25vh;
+  padding-top: 0.75em;
+}
+
+#view {
+  width: 29vw;
+  height: 25vh;
+  margin: auto;
+  font-size: 2.5em;
+  text-align: right;
+}
+
+#history {
+  width: 29vw;
+  height: 20vh;
+  margin: auto;
+  font-size: 1.5em;
+  text-align: right;
+}
+
+.buttons {
+  display: grid;
+}
