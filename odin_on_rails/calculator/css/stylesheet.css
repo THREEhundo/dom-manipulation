@@ -15,9 +15,9 @@ button {
   box-shadow: none;
 }
 
-button:hover {
+/* button:hover {
   opacity: 70%;
-}
+} */
 
 span {
   padding-left: 5px;
@@ -77,11 +77,11 @@ span {
 }
 
 .operator:hover {
-  background-color: rgba(185, 49, 79, 1);
+  background-color: #91263e;
 }
 
 .numbers:hover {
-  background-color: rgba(169, 169, 169);
+  background-color: rgba(169, 169, 169, 0.7);
 }
 
 #clear {
@@ -178,6 +178,11 @@ span {
   grid-area: equals;
   grid-column: ;
   grid-row: ;
+  background-color: #D5A18E;
+}
+
+#equals:hover {
+  background-color: #D6886B;
 }
 
 #zero {
