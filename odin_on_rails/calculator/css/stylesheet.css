@@ -15,9 +15,10 @@ button {
   box-shadow: none;
 }
 
-/* button:hover {
-  opacity: 70%;
-} */
+button:hover {
+  transform: scale(1.1);
+  transition: 0.2s;
+}
 
 span {
   padding-left: 5px;
@@ -86,98 +87,66 @@ span {
 
 #clear {
   grid-area: clear;
-  grid-column: 1 / 1;
-  grid-row: ;
 }
 
 #del {
   grid-area: del;
-  grid-column: ;
-  grid-row: ;
 }
 
 #divide {
   grid-area: divide;
-  grid-column: ;
-  grid-row: ;
 }
 
 #multiply {
   grid-area: multi;
-  grid-column: ;
-  grid-row: ;
 }
 
 #seven {
   grid-area: seven;
-  grid-column: ;
-  grid-row: ;
 }
 
 #eight {
   grid-area: eight;
-  grid-column: ;
-  grid-row: ;
 }
 
 #nine {
   grid-area: nine;
-  grid-column: ;
-  grid-row: ;
 }
 
 #minus {
   grid-area: minus;
-  grid-column: ;
-  grid-row: ;
 }
 
 #four {
   grid-area: four;
-  grid-column: ;
-  grid-row: ;
 }
 
 #five {
   grid-area: five;
-  grid-column: ;
-  grid-row: ;
 }
 
 #six {
   grid-area: six;
-  grid-column: ;
-  grid-row: ;
 }
 
 #plus {
   grid-area: plus;
-  grid-column: ;
-  grid-row: ;
 }
 
 #one {
   grid-area: one;
-  grid-column: ;
-  grid-row: ;
 }
 
 #two {
   grid-area: two;
-  grid-column: ;
-  grid-row: ;
 }
 
 #three {
   grid-area: three;
-  grid-column: ;
-  grid-row: ;
 }
 
 #equals {
   grid-area: equals;
-  grid-column: ;
-  grid-row: ;
   background-color: #D5A18E;
 }
 
@@ -187,12 +156,8 @@ span {
 
 #zero {
   grid-area: z;
-  grid-column: ;
-  grid-row: ;
 }
 
 #decimal {
   grid-area: dec;
-  grid-column: ;
-  grid-row: ;
 }
