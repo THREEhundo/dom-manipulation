@@ -91,6 +91,7 @@ span {
 
 #del {
   grid-area: del;
+  padding-bottom: 5px;
 }
 
 #divide {
