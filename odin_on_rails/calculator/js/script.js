@@ -26,30 +26,57 @@ buttons.forEach(button => {
     button.addEventListener('click', function() {
       viewSpan.innerHTML += this.innerHTML;
       tempArr.push(this.innerHTML);
-      console.log(tempArr);
     });
   } else if (button.dataset.key === '27') {
     button.addEventListener('click', function() {
       viewSpan.innerHTML = '';
       historySpan.innerHTML = '';
       tempArr.length = 0;
-      console.log(tempArr)
     });
   } else if (button.dataset.key === '8') {
     button.addEventListener('click', function() {
       if (viewSpan.innerHTML !== '') {
         tempArr.pop();
-        console.log(tempArr)
         viewSpan.innerHTML = tempArr;
       } else {
-        console.log(`nothing to delete`)
         return;
       }
-      // if (!viewSpan.innerHTML === '') {
-      //   return console.log(`viewspan is active`);
-      // } else {
-      //   return console.log(`nothing here`);
-      // }
+    })
+  } else if (button.classList.contains('operator')) {
+    button.addEventListener('click', function() {
+      viewSpan.innerHTML += ` ${button.innerHTML} `;
+      tempArr.push(button.innerHTML);
+    });
+  } else if (button.dataset.key === '13') {
+    button.addEventListener('click', function() {
+      // tempArr should be shown in historySpan
+
+      const history = tempArr.join(' ');
+      historySpan.innerHTML += history;
+      // operation function runs
+      const operator = tempArr[1];
+      const firstArg = parseInt(tempArr[0]);
+      const secondArg = parseInt(tempArr[2]);
+      console.log(tempArr);
+      switch (operator) {
+        case '÷':
+          viewSpan.innerHTML = operate(divide, firstArg, secondArg);
+          break;
+        case 'x':
+          viewSpan.innerHTML = operate(multiply, firstArg, secondArg);
+          break;
+        case '+':
+          console.log(operate(add, firstArg, secondArg));
+          viewSpan.innerHTML = operate(add, firstArg, secondArg);
+          break;
+        case '-':
+          viewSpan.innerHTML = operate(subtract, firstArg, secondArg);
+          break;
+
+      }
+
+      // operation output shown in viewSpan
+
     })
   } else {
     return;
