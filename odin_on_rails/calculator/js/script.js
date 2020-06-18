@@ -1,10 +1,12 @@
 const buttons = document.querySelectorAll('button');
 const viewSpan = document.querySelector('#vSpan');
 const historySpan = document.querySelector('#hSpan');
+const equals = document.querySelector('#equals');
 const first = [];
 const second = [];
 const operation = [];
 let answer;
+let eventCounter;
 // either store individual numbers and operators or store together.
 
 const add = (a, b) => a + b;
@@ -17,21 +19,27 @@ const divide = (a, b) => a / b;
 
 const operate = (operator, a, b) => operator(a, b);
 
-const numDisplay = (b) => {
-  console.log(this)
-}
-
-// add eventlistners to all buttons
-
 buttons.forEach(button => {
   if (button.classList.contains("numbers")) {
     // Numbers
     button.addEventListener('click', function() {
+      if (first.length && second.length && operation.length === 0) {
+        viewSpan.innerHTML = '';
+      }
       viewSpan.innerHTML += this.innerHTML;
       if (operation.length > 0) {
         second.push(this.innerHTML);
         console.log(first, operation, second);
       } else {
+        if (eventCounter > 0) {
+          first.length = 0;
+          viewSpan.innerHTML = '';
+          console.log(first);
+          viewSpan.innerHTML += this.innerHTML;
+          first.push(this.innerHTML);
+          console.log(first);
+          // if number button has been clicked clear first array & push new number
+        }
         first.push(this.innerHTML);
         console.log(first, operation, second);
       }
@@ -65,9 +73,6 @@ buttons.forEach(button => {
   } else if (button.classList.contains('operator')) {
     // Operators
     button.addEventListener('click', function() {
-      if (operation.length > 0) {
-
-      }
       if (second.length > 0) {
         second.reduce((acc, curr) => acc += curr);
       }
@@ -78,14 +83,13 @@ buttons.forEach(button => {
     });
   } else if (button.dataset.key === '13') {
     // Equals
-    button.addEventListener('click', function() {
-      // push 2nd argument to array
+    button.addEventListener('click', function(event) {
       // arrays should be shown in historySpan
       historySpan.innerHTML = '';
       historySpan.innerHTML = viewSpan.innerHTML;
       // return single value if second array is empty.
       if (second.length === 0) {
-        return
+        return;
       }
       // operation function runs
       const firstArg = parseInt(first.reduce((acc, curr) => acc += curr));
@@ -116,6 +120,7 @@ buttons.forEach(button => {
           first.push(answer);
           second.length = 0;
           operation.length = 0;
+          console.log(first, second, operation);
           break;
         case '-':
           answer = operate(subtract, firstArg, secondArg);
@@ -126,7 +131,9 @@ buttons.forEach(button => {
           operation.length = 0;
           break;
       }
-
+      console.log(`Event Detail: ${event.detail}`);
+      eventCounter = event.detail;
+      return console.log(eventCounter);
       // operation output shown in viewSpan
 
     })
