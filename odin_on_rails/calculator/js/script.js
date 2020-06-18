@@ -99,6 +99,9 @@ buttons.forEach(button => {
         case '÷':
           answer = operate(divide, firstArg, secondArg);
           viewSpan.innerHTML = answer;
+          if (second[0] === "0") {
+            viewSpan.innerHTML = "Error";
+          }
           first.length = 0;
           first.push(answer);
           second.length = 0;
