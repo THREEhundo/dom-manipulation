@@ -31,6 +31,8 @@ buttons.forEach(button => {
         second.push(this.innerHTML);
         console.log(first, operation, second);
       } else {
+        first.push(this.innerHTML);
+        console.log(first, operation, second);
         if (eventCounter > 0) {
           first.length = 0;
           viewSpan.innerHTML = '';
@@ -40,8 +42,6 @@ buttons.forEach(button => {
           console.log(first);
           // if number button has been clicked clear first array & push new number
         }
-        first.push(this.innerHTML);
-        console.log(first, operation, second);
       }
     });
   } else if (button.dataset.key === '27') {
