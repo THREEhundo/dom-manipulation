@@ -52,6 +52,14 @@ function clear() {
   first.length = 0;
   second.length = 0;
   operation.length = 0;
+  // check for attribute listener = false
+  // If event listeners are removed, reapply
+  buttons.forEach(function(button) {
+    const attr = button.hasAttribute('listener');
+    if (!attr) {
+      addEvents(button);
+    }
+  })
 }
 
 function backspace() {
@@ -114,14 +122,17 @@ function equal(event) {
   // let answer;
   switch (operation[0]) {
     case '÷':
-      answer = operate(divide, firstArg, secondArg);
-      viewSpan.innerHTML = answer;
       if (second[0] === "0") {
         viewSpan.innerHTML = "Error";
-        // turn off event handlers for all except CE
-        buttons.forEach()
+        // Remove Event Handlers
+        console.log('Found the error');
+        buttons.forEach(function(button) {
+          removeEvents(button);
+        });
         return;
       }
+      answer = operate(divide, firstArg, secondArg);
+      viewSpan.innerHTML = answer;
       first.length = 0;
       first.push(answer);
       second.length = 0;
@@ -157,35 +168,55 @@ function equal(event) {
   return eventCounter = event.detail;
 }
 
-function removeEvents() {
-
-}
-
 function addEvents(button) {
   if (button.classList.contains("numbers")) {
     // Numbers
     button.addEventListener('click', numEvent);
   } else if (button.dataset.key === '27') {
     // Clear
+    const attr = button.getAttribute('listener');
+    if (attr) {
+      return;
+    }
     button.addEventListener('click', clear);
   } else if (button.dataset.key === '8') {
     // Delete
-    button.addEventListener('click', backspace)
+    button.addEventListener('click', backspace);
   } else if (button.classList.contains('operator')) {
     // Operators
     button.addEventListener('click', ops);
   } else if (button.dataset.key === '13') {
     // Equals
-    button.addEventListener('click', equal)
+    button.addEventListener('click', equal);
   } else {
     return;
   }
 }
 
-buttons.forEach(function(button) {
-  addEvents(button);
-});
+function removeEvents(button) {
+  if (button.classList.contains("numbers")) {
+    // Numbers
+    button.removeEventListener('click', numEvent);
+  } else if (button.dataset.key === '8') {
+    // Delete
+    button.removeEventListener('click', backspace);
+  } else if (button.classList.contains('operator')) {
+    // Operators
+    button.removeEventListener('click', ops);
+  } else if (button.dataset.key === '13') {
+    // Equals
+    button.removeEventListener('click', equal);
+  } else {
+    return;
+  }
+  button.removeAttribute('listener');
+}
 
+// Add Event Handlers
+const eventsOn = buttons.forEach(function(button) {
+  addEvents(button);
+  button.setAttribute('listener', 'true');
+});
 
 /*
 Create the functions that populate the display when you click the number buttons… you should be storing the ‘display value’ in a variable somewhere for use in the next step.
