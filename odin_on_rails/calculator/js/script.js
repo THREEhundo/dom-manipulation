@@ -2,6 +2,9 @@ const buttons = document.querySelectorAll('button');
 const viewSpan = document.querySelector('#vSpan');
 const historySpan = document.querySelector('#hSpan');
 const equals = document.querySelector('#equals');
+const num = document.querySelectorAll('.numbers');
+const op = document.querySelectorAll('.operator');
+const del = document.querySelector('#del');
 const first = [];
 const second = [];
 const operation = [];
@@ -55,12 +58,32 @@ function backspace() {
   if (viewSpan.innerHTML !== '') {
     if (second.length > 0) {
       second.pop();
+      operation.unshift(' ');
+      operation.push(' ');
+      const revise = first.concat(operation, second);
+      const joinedRevision = revise.join('');
+      viewSpan.innerHTML = joinedRevision;
+      operation.shift();
+      operation.pop();
+      console.log(first, operation, second);
     } else if (operation.length > 0) {
       operation.pop();
+      viewSpan.innerHTML = first.join('');
     } else {
+      // When answer is shown, it needs to be changed to a string.
+      if (Number.isInteger(first[0])) {
+        const firstString = first.toString();
+        first.length = 0;
+        for (const s of firstString) {
+          first.push(s);
+          console.log('Pushing string back in: ', first);
+        }
+      }
       first.pop();
       viewSpan.innerHTML = first.join('');
-      console.log(first);
+
+
+      console.log('Last operation', first);
     }
   } else {
     return;
@@ -95,6 +118,8 @@ function equal(event) {
       viewSpan.innerHTML = answer;
       if (second[0] === "0") {
         viewSpan.innerHTML = "Error";
+        // turn off event handlers for all except CE
+        buttons.forEach()
         return;
       }
       first.length = 0;
@@ -129,13 +154,14 @@ function equal(event) {
       operation.length = 0;
       break;
   }
-  console.log(`Event Detail: ${event.detail}`);
-  eventCounter = event.detail;
-  return console.log(eventCounter);
-  // operation output shown in viewSpan
+  return eventCounter = event.detail;
 }
 
-buttons.forEach(button => {
+function removeEvents() {
+
+}
+
+function addEvents(button) {
   if (button.classList.contains("numbers")) {
     // Numbers
     button.addEventListener('click', numEvent);
@@ -154,6 +180,10 @@ buttons.forEach(button => {
   } else {
     return;
   }
+}
+
+buttons.forEach(function(button) {
+  addEvents(button);
 });
 
 
