@@ -7,6 +7,8 @@ const op = document.querySelectorAll('.operator');
 const del = document.querySelector('#del');
 const first = [];
 const second = [];
+const third = [];
+const fourth = [];
 const operation = [];
 let answer;
 let eventCounter;
@@ -27,7 +29,15 @@ function numEvent() {
     viewSpan.innerHTML = '';
   }
   viewSpan.innerHTML += this.innerHTML;
-  if (operation.length > 0) {
+  if (operation.length === 3) {
+    fourth.push(this.innerHTML);
+    console.log(first, operation, second, third, fourth);
+    console.log(`Fourth Array ${fourth}`);
+  } else if (operation.length === 2) {
+    third.push(this.innerHTML);
+    console.log(first, operation, second, third);
+    console.log(`Third Array ${third}`);
+  } else if (operation.length === 1) {
     second.push(this.innerHTML);
     console.log(first, operation, second);
   } else {
@@ -52,6 +62,8 @@ function clear() {
   first.length = 0;
   second.length = 0;
   operation.length = 0;
+  third.length = 0;
+  fourth.length = 0;
   // check for attribute listener = false
   // If event listeners are removed, reapply
   buttons.forEach(function(button) {
@@ -64,7 +76,44 @@ function clear() {
 
 function backspace() {
   if (viewSpan.innerHTML !== '') {
-    if (second.length > 0) {
+    // Copy operation array into clone
+    const cloneOperation = operation.slice();
+    if (fourth.length > 0) {
+      fourth.pop();
+      cloneOperation.unshift(' ');
+      cloneOperation.push(' ');
+      cloneOperation.splice(2, 0, ' ', ' ');
+      cloneOperation.splice(5, 0, ' ', ' ');
+      const fourthRevision = first.concat(cloneOperation[0], cloneOperation[1], cloneOperation[2], second, cloneOperation[3], cloneOperation[4], cloneOperation[5], third, cloneOperation[6], cloneOperation[7], cloneOperation[8], fourth);
+      fourthJoined = fourthRevision.join('');
+      viewSpan.innerHTML = fourthJoined;
+    } else if (operation.length === 3) {
+      operation.pop();
+      cloneOperation.pop();
+      cloneOperation.unshift(' ');
+      cloneOperation.push(' ');
+      cloneOperation.splice(2, 0, ' ', ' ');
+      viewSpan.innerHTML = first.concat(cloneOperation[0], cloneOperation[1], cloneOperation[2], second, cloneOperation[3], cloneOperation[4], cloneOperation[5], third).join('');
+    } else if (third.length > 0) {
+      third.pop();
+      cloneOperation.unshift(' ');
+      cloneOperation.push(' ');
+      cloneOperation.splice(2, 0, ' ');
+      cloneOperation.splice(3, 0, ' ');
+      const thirdRevision = first.concat(cloneOperation[0], cloneOperation[1], cloneOperation[2], second, cloneOperation[3], cloneOperation[4], cloneOperation[5], third);
+      const thirdJoined = thirdRevision.join('');
+      viewSpan.innerHTML = thirdJoined;
+      cloneOperation.splice(3, 3);
+    } else if (operation.length === 2) {
+      operation.pop();
+      cloneOperation.pop();
+      cloneOperation.unshift(' ');
+      cloneOperation.push(' ');
+      viewSpan.innerHTML = first.concat(cloneOperation, second).join('');
+    } else if (second.length > 0) {
+      if (second.length === 0) {
+        cloneOperation.pop();
+      }
       second.pop();
       operation.unshift(' ');
       operation.push(' ');
@@ -74,7 +123,7 @@ function backspace() {
       operation.shift();
       operation.pop();
       console.log(first, operation, second);
-    } else if (operation.length > 0) {
+    } else if (operation.length === 1) {
       operation.pop();
       viewSpan.innerHTML = first.join('');
     } else {
@@ -212,8 +261,17 @@ function removeEvents(button) {
   button.removeAttribute('listener');
 }
 
+function pemdas() {
+  //Multiply and divide first, replace their values in the array and then add and subtract (PEMDAS)
+
+}
+
+// Limit length of digits by using e (9 digits)
+
+//
+
 // Add Event Handlers
-const eventsOn = buttons.forEach(function(button) {
+buttons.forEach(function(button) {
   addEvents(button);
   button.setAttribute('listener', 'true');
 });
