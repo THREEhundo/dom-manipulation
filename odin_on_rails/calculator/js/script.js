@@ -2,6 +2,7 @@ let viewContent = '';
 let historyContent = '';
 const view = document.querySelector('#vSpan');
 const historyView = document.querySelector('#hSpan');
+const buttons = document.querySelectorAll('button');
 
 const add = (a, b) => a + b;
 
@@ -11,17 +12,20 @@ const multiply = (a, b) => a * b;
 
 const divide = (a, b) => a / b;
 
-const operate = (operator, a, b) => operator(a, b);
-
 function keydownEvents(e) {
   e.preventDefault();
-  const button = document.querySelector(`button[data-key]="${e.keyCode}"`);
+  const button = document.querySelector(`button[data-key="${e.keyCode}"]`);
+  console.log(button);
   if (!button) return;
-  buttonPressed(button);
+  buttonClicked(button);
   const value = button.textContent;
   const decimalButton = document.querySelector('#decimal');
 
   if (value >= 0) {
+    if (typeof viewContent === 'number') {
+      viewContent = '';
+      decimalButton.disabled = false;
+    }
     viewContent += value;
     view.textContent = viewContent;
   } else if (value === 'CE') {
@@ -30,7 +34,7 @@ function keydownEvents(e) {
     backspace();
   } else if (value === '=') {
     decimalButton.disabled = false;
-    convertDisplay(viewContent);
+    readView(viewContent);
   } else if (value === '.') {
     if (!decimalButton.disabled) {
       viewContent += value;
@@ -49,7 +53,7 @@ function numpadDisplay() {
 }
 
 function restart(e) {
-  e.keyCode === 13 ? clearAll() : void(0);
+  e.keyCode === 13 ? clear() : void(0);
 }
 
 function buttonClicked(btn) {
@@ -69,17 +73,18 @@ function enableButtons() {
 function disableButtons() {
   const buttons = document.querySelectorAll('button');
   buttons.forEach(button => button.disabled = true);
+  document.querySelector('#clear').disabled = false;
   window.removeEventListener('keydown', keydownEvents);
   window.addEventListener('keydown', restart);
 }
 
 function operate(operator, a, b) {
   // Error handling
-  if (isNaN(a) || isNan(b)) {
-    viewContent = 'Error';
+  if (isNaN(a) || isNaN(b)) {
+    viewContent = 'Error: Not a Number';
     historyContent = '';
     disableButtons();
-    view.textContent = displayContent;
+    view.textContent = viewContent;
     historyView.textContent = historyContent;
     return;
   } else if (b === 0 && operator === divide) {
@@ -184,7 +189,7 @@ function multipleOperations(arr) {
   }
 }
 
-function convertDisplay(str) {
+function readView(str) {
   if (typeof str === 'number') return;
   let contentArray = str.split(' ');
   historyContent = str + ' = ';
@@ -204,3 +209,54 @@ function convertDisplay(str) {
     multipleOperations(contentArray);
   }
 }
+
+function buttonSettings() {
+  const keyCodes = [];
+  const buttonValues = [];
+  const buttonsArr = [];
+
+  for (let button of buttons.values()) {
+    keyCodes.push(button.dataset.key);
+    buttonValues.push(button.textContent)
+    buttonsArr.push(button);
+  }
+  buttons.forEach((button, i) => {
+    button.addEventListener('click', e => inputToDisplay(e, buttonValues, i));
+  });
+  console.log(keyCodes, buttonValues, buttonsArr);
+}
+
+function inputToDisplay(e, buttonValues, i) {
+  let buttonSelection = e.target.textContent;
+  let value = buttonValues[i];
+  const decimalButton = document.querySelector('#decimal');
+
+  if (value >= 0) {
+    if (typeof viewContent === 'number') {
+      decimalButton.disabled = false;
+      viewContent = '';
+    }
+    viewContent += buttonSelection;
+    view.textContent = viewContent;
+  } else if (value === 'CE') {
+    clear();
+  } else if (value === '⌫') {
+    backspace();
+  } else if (value === '=') {
+    decimalButton.disabled = false;
+    readView(viewContent);
+  } else if (value === '.') {
+    if (!decimalButton.disabled) {
+      viewContent += buttonSelection;
+      view.textContent = viewContent;
+      decimalButton.disabled = true;
+    }
+  } else {
+    viewContent += ` ${buttonSelection} `;
+    view.textContent = viewContent;
+    decimalButton.disabled = false;
+  }
+}
+
+buttonSettings();
+numpadDisplay();
