@@ -13,15 +13,16 @@ const multiply = (a, b) => a * b;
 const divide = (a, b) => a / b;
 
 function keydownEvents(e) {
+  // Prevents enter from inputting focused button
   e.preventDefault();
   const button = document.querySelector(`button[data-key="${e.keyCode}"]`);
-  console.log(button);
   if (!button) return;
-  buttonClicked(button);
+  // buttonClicked(button);
   const value = button.textContent;
   const decimalButton = document.querySelector('#decimal');
 
   if (value >= 0) {
+    // Allows the clearing of display when a number is immediately pressed after an answer is shown.
     if (typeof viewContent === 'number') {
       viewContent = '';
       decimalButton.disabled = false;
@@ -42,6 +43,7 @@ function keydownEvents(e) {
       decimalButton.disabled = true;
     }
   } else {
+    // Adds space to either side of operators
     viewContent += ` ${value} `;
     view.textContent = viewContent;
     decimalButton.disabled = false;
@@ -54,13 +56,6 @@ function numpadDisplay() {
 
 function restart(e) {
   e.keyCode === 13 ? clear() : void(0);
-}
-
-function buttonClicked(btn) {
-  btn.classList.add('clicked');
-  setTimeout(() => {
-    btn.classList.remove('clicked')
-  }, 100);
 }
 
 function enableButtons() {
@@ -81,7 +76,7 @@ function disableButtons() {
 function operate(operator, a, b) {
   // Error handling
   if (isNaN(a) || isNaN(b)) {
-    viewContent = 'Error: Not a Number';
+    viewContent = 'Not a Number';
     historyContent = '';
     disableButtons();
     view.textContent = viewContent;
@@ -170,7 +165,7 @@ function multipleOperations(arr) {
       let additionIndex = arr.indexOf('+');
       let subtractionIndex = arr.indexOf('-');
 
-      if (additionIndex < subtractionIndex && additionIndex != -1 || subtractionIndex != -1) {
+      if (additionIndex < subtractionIndex && additionIndex !== -1 || subtractionIndex === -1) {
         let a = parseFloat(arr[arr.indexOf('+') - 1]);
         let b = parseFloat(arr[arr.indexOf('+') + 1]);
         let result = operate(add, a, b);
@@ -189,6 +184,7 @@ function multipleOperations(arr) {
   }
 }
 
+// Transfers view to an array
 function readView(str) {
   if (typeof str === 'number') return;
   let contentArray = str.split(' ');
@@ -223,7 +219,6 @@ function buttonSettings() {
   buttons.forEach((button, i) => {
     button.addEventListener('click', e => inputToDisplay(e, buttonValues, i));
   });
-  console.log(keyCodes, buttonValues, buttonsArr);
 }
 
 function inputToDisplay(e, buttonValues, i) {
