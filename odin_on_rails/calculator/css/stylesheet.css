@@ -9,10 +9,10 @@ button {
   text-decoration: none;
   font-size: 2em;
   font-family: inherit;
-  border: 0;
+  border: none;
   padding: 0;
-  margin: 1px;
   box-shadow: none;
+  width: 100%;
 }
 
 *:focus {
@@ -28,58 +28,62 @@ button:hover {
 span {
   padding-left: 5px;
   padding-right: 5px;
+  width: 350px;
+  overflow-wrap: break-word;
+  min-height: 1.5em;
+  height: auto;
+  margin: 0 auto;
 }
 
 #calculator {
   background-color: #3A4F41;
   color: #E1DEE3;
   width: 350px;
-  height: 500px;
+  min-height: 500px;
   margin: auto;
   margin-top: 25vh;
   padding: 0.4em 25px 1em;
   border-radius: 30px;
+}
+
+#displayContainer {
+  display: flex;
+  justify-content: center;
+  flex-flow: column wrap;
+}
+
+#history {
+  width: 100%;
+  height: max-content;
+  margin: auto;
+  padding-top: 15px;
+  font-size: 1.5em;
+  text-align: right;
+  display: flex;
+}
+
+#view {
+  width: 100%;
+  margin: auto;
+  padding-top: 10px;
+  font-size: 2.5em;
+  text-align: right;
+  border-top: 1px dotted #D5A18E;
+  display: flex;
+  justify-content: center;
+}
+
+.buttons {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(7, 1fr);
   grid-template-areas:
-    "history history history history"
-    "view view view view"
     "clear del divide multi"
     "seven eight nine minus"
     "four five six plus"
     "one two three equals"
     "z z dec equals";
-}
-/* 7 rows & 4 columns needed */
-
-#history {
-  width: 100%;
-  height: 3vh;
-  margin: auto;
-  padding-top: 15px;
-  font-size: 1.5em;
-  text-align: right;
-  grid-area: history;
-}
-
-#view {
-  width: 100%;
-  height: 7vh;
-  margin: auto;
-  padding-top: 10px;
-  font-size: 2.5em;
-  text-align: right;
-  grid-area: view;
-  border-top: 1px dotted #D5A18E;
-}
-
-.buttons {
-  display: grid;
-  grid-column: 1 / 5;
-  grid-row: 3 / 8;
-  grid-template-columns: subgrid;
-  grid-template-rows: subgrid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: repeat(5, 70px);
+  grid-gap: 0.09em 0.09em;
 }
 
 .operator:hover {
