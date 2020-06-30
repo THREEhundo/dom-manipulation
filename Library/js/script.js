@@ -1,5 +1,5 @@
 const doc = document.body;
-let myLibrary = ['Harry Potter', 'Lord of the Rings', 'Phantom of the Opera'];
+let myLibrary = ['Harry Potter', 'Lord of the Rings', 'Phantom of the Opera', 'The Hobbit'];
 
 function Book(title, author, pages, read) {
   this.title = title;
