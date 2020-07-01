@@ -1,113 +1,164 @@
-const doc = document.body;
-let myLibrary = ['Harry Potter', 'Lord of the Rings', 'Phantom of the Opera', 'The Hobbit'];
+let myLibrary = [{
+  title: 'Harry Potter and the Sorcerers Stone',
+  author: 'J.K. Rowling',
+  pages: 223,
+  read: true,
+  genre: 'Fantasy'
+}, {
+  title: 'The Lord of the Rings: Fellowship of the Ring',
+  author: 'J.R.R. Tolkien',
+  pages: 423,
+  read: true,
+  genre: 'Fantasy'
+}, {
+  title: 'The Hobbit, or There and Back Again ',
+  author: 'J.R.R. Tolkien',
+  pages: 310,
+  read: true,
+  genre: 'Fantasy'
+}];
+console.log(Object.values(myLibrary))
 
-function Book(title, author, pages, read) {
+function Book(title, author, pages, read, genre) {
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
+  this.genre = genre;
 }
 
-function addBookToLibrary() {
+function addBookToLibrary(title, author, pages, genre) {
+  // take form and push into myLibrary
+  const bookLog = new Book(title, author, pages, genre)
+  myLibrary.push(bookLog) // form data
+}
+
+function render() {
 
 }
 
-// Rendering table from Library
-function render(arr) {
-  // create table
-  // create header
-  // create body
-  // create entries
-  // append table to window
-  const tableContainer = document.createElement('div');
+function createTable(arr) {
   const table = document.createElement('table');
-  table.createTHead().textContent = 'My Library';
-  for (let book of arr) {
-    table.insertRow().textContent = book;
-  }
-  tableContainer.append(table);
-  document.body.append(tableContainer);
+  table.id = 'table';
+  let data = Object.keys(arr[0])
+  generateTHead(table, data);
+  generateTable(table, arr)
+  document.body.append(table);
+
+  // document.createElement('tr')
+  // document.createElement('td')
 }
 
-// Inputs for form
-function addInput(book, inputType, labelTextContent, id, value) {
-  const input = document.createElement('input');
-  const label = document.createElement('label');
+function generateTHead(table, data) {
+  let thead = table.createTHead();
+  let row = thead.insertRow();
+  for (let key of data) {
+    let th = document.createElement('th');
+    let text = document.createTextNode(key);
+    th.appendChild(text);
+    row.appendChild(th);
+  }
+}
 
-  label.textContent = labelTextContent;
-  input.setAttribute('type', inputType);
-
-  input.id = id;
-
-  if (input.type === 'radio' || 'submit') {
-    input.value = value;
-    if (input.type === 'radio') {
-      // Allows for only one choice.
-      input.name = 'reading';
+function generateTable(table, data) {
+  for (let elem of data) {
+    let row = table.insertRow();
+    for (key in elem) {
+      // console.log(key)
+      let cell = row.insertCell();
+      let text = document.createTextNode(elem[key]);
+      cell.appendChild(text)
     }
   }
-
-
-  book.append(label);
-  book.append(input);
-  // Label for radio buttons
-  if (labelTextContent === 'Pages: ') {
-    book.append(value);
-  }
 }
 
-// Create Book with Form Entry
-function createBookEntry() {
-  title.textContent
-}
-
-// New Book Form
-function newBookForm() {
-  // author, title, pages, read
-  const name = document.createElement('div');
-  const bookForm = document.createElement('form');
-  const p = document.createElement('p');
-  bookForm.textContent = 'Add a Book - ';
-  bookForm.name = 'bookForm';
-  p.textContent = 'Have you read this book?';
-
-
-
-  addInput(bookForm, 'text', 'Title: ', 'title', null);
-  addInput(bookForm, 'text', 'Author: ', 'author', null);
-  addInput(bookForm, 'number', 'Pages: ', 'pages', p);
-  addInput(bookForm, 'radio', 'True', 'read', 'read');
-  addInput(bookForm, 'radio', 'False', 'not read', 'not read');
-  addInput(bookForm, 'submit', null, 'submit', 'submit')
-
-  const title = document.querySelector('#title');
-  const author = document.querySelector('#author');
-  const pages = document.querySelector('#pages');
-  const read = document.querySelector('#read');
-  const notRead = document.querySelector('#notRead');
-
-  name.append(bookForm);
-  document.body.append(name);
-}
-
-function getFormInfo(bookForm) {
-  bookForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    new Book(bookForm)
-  })
-}
-
-// Buttons
-function newBtn(btnTxt, eventFunct, appendingTo) {
+function formBtn() {
   const btn = document.createElement('button');
-  btn.textContent = btnTxt;
-  btn.addEventListener('click', eventFunct);
-  appendingTo.append(btn);
+  btn.textContent = 'Add New Book';
+  let data = Object.keys(myLibrary[0]);
+  btn.addEventListener('click', function() {
+    createForm(data);
+    // Prevent new form unless current one is submitted.
+  });
+
+  document.body.append(btn);
 }
 
-// create button that brings up a form allowing users to input the details
+function createForm(data) {
+  const bookForm = document.createElement('form');
+  // let tValue, aValue, pValue, gValue;
+  for (let key of data) {
+    const label = document.createElement('label');
+    const input = document.createElement('input');
+    if (key === 'read') {
+      const input1 = document.createElement('input');
+      const label1 = document.createElement('label');
+      const readContainer = document.createElement('div');
+      input.type = "radio";
+      input1.type = "radio";
+      input.name = "tf";
+      input1.name = "tf";
+      input.id = 'yes';
+      input1.id = 'no';
+      label.for = 'tf';
+      label1.for = 'tf';
+      label.innerHTML = 'Yes';
+      label1.innerHTML = 'No';
+      readContainer.innerHTML = 'Have You Read This Book?'
+      readContainer.append(label);
+      readContainer.append(label1);
+      label.append(input);
+      label1.append(input1);
+      bookForm.append(readContainer);
+      console.log(label.for)
+    } else if (key === 'pages') {
+      input.type = 'number';
+      input.name = key;
+      input.id = key;
+      label.for = key;
+      label.innerHTML = `${capitalize(key)}: `;
+      label.append(input);
+      bookForm.append(label);
+      console.log(label.for)
+    } else {
+      input.type = 'text';
+      input.name = key;
+      input.id = key;
+      label.for = key;
+      label.innerHTML = `${capitalize(key)}: `;
+      input.oninput = function() {
+        console.log(this.value)
+      };
+      bookForm.append(label);
+      label.append(input);
+    }
+  }
+  const submit = document.createElement('input');
+  submit.type = 'submit';
+  submit.onclick = function() {
+    // if radio button is checked input value into add function
+    let checked;
+    const radios = document.querySelectorAll('[name="tf"]');
+    for (var i = 0; i < radios.length; i++) {
+      if (radios[i].checked) {
+        checked = radios[i].id;
+      }
+    }
+    console.log(title.value, author.value, pages.value, genre.value);
+    addBookToLibrary(title.value, author.value, pages.value, checked, genre.value);
+  };
+  bookForm.onsubmit = function() {
+    return false;
+  };
 
+  bookForm.append(submit);
+  document.body.append(bookForm);
+}
 
-render(myLibrary);
-newBtn('New Book', newBookForm, document.body);
+// Capitalize first letter
+const capitalize = (s) => {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+createTable(myLibrary);
+formBtn();
