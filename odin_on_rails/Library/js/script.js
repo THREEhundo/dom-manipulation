@@ -17,7 +17,7 @@ let myLibrary = [{
   read: true,
   genre: 'Fantasy'
 }];
-console.log(Object.values(myLibrary))
+
 
 function Book(title, author, pages, read, genre) {
   this.title = title;
@@ -27,10 +27,10 @@ function Book(title, author, pages, read, genre) {
   this.genre = genre;
 }
 
-function addBookToLibrary(title, author, pages, genre) {
+function addBookToLibrary(title, author, pages, read, genre) {
   // take form and push into myLibrary
-  const bookLog = new Book(title, author, pages, genre)
-  myLibrary.push(bookLog) // form data
+  const bookLog = new Book(title, author, pages, read, genre);
+  myLibrary.push(bookLog); // form data
 }
 
 function render() {
@@ -126,9 +126,6 @@ function createForm(data) {
       input.id = key;
       label.for = key;
       label.innerHTML = `${capitalize(key)}: `;
-      input.oninput = function() {
-        console.log(this.value)
-      };
       bookForm.append(label);
       label.append(input);
     }
