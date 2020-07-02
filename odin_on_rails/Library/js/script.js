@@ -31,11 +31,8 @@ function Book(title, author, pages, read, genre, bookID) {
 function addBookToLibrary(title, author, pages, read, genre, bookID) {
   // take form and push into myLibrary
   const bookLog = new Book(title, author, pages, read, genre, bookID);
-  myLibrary.push(bookLog); // form data
+  myLibrary.push(bookLog);
   bookIndex = myLibrary.indexOf(bookLog);
-  // for (let book of myLibrary) {
-  //   if (myLibrary.indexOf(book) !== tr dataset.book)
-  // }
   render(bookLog, bookIndex);
 }
 
@@ -87,6 +84,7 @@ function generateTable(table, data) {
   }
 }
 
+// New book card
 function addRow(data, index) {
   const tBody = document.querySelector('tBody');
   let row = table.insertRow();
@@ -111,7 +109,6 @@ function deleteBtn(row, index) {
     parent.removeChild(row);
     // delete elem in array
     const num = row.dataset.book;
-    console.log(myLibrary[num]);
     myLibrary.splice(num, 1);
     for (let book of myLibrary) {
       if (myLibrary.indexOf(book) !== book.bookID) {
