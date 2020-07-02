@@ -30,11 +30,13 @@ function Book(title, author, pages, read, genre) {
 function addBookToLibrary(title, author, pages, read, genre) {
   // take form and push into myLibrary
   const bookLog = new Book(title, author, pages, read, genre);
+  console.log(bookLog);
   myLibrary.push(bookLog); // form data
 }
 
-function render() {
-
+function render(arr) {
+  const table = document.querySelector('#table');
+  generateTable(table, arr);
 }
 
 function createTable(arr) {
@@ -42,7 +44,7 @@ function createTable(arr) {
   table.id = 'table';
   let data = Object.keys(arr[0])
   generateTHead(table, data);
-  generateTable(table, arr)
+  generateTable(table, arr);
   document.body.append(table);
 
   // document.createElement('tr')
@@ -60,8 +62,12 @@ function generateTHead(table, data) {
   }
 }
 
+// If table row exists don't create
 function generateTable(table, data) {
   for (let elem of data) {
+    // if () {
+    //   return;
+    // }
     let row = table.insertRow();
     for (key in elem) {
       // console.log(key)
@@ -104,7 +110,7 @@ function createForm(data) {
       label1.for = 'tf';
       label.innerHTML = 'Yes';
       label1.innerHTML = 'No';
-      readContainer.innerHTML = 'Have You Read This Book?'
+      readContainer.innerHTML = 'Have You Read This Book? ';
       readContainer.append(label);
       readContainer.append(label1);
       label.append(input);
@@ -143,9 +149,12 @@ function createForm(data) {
     }
     console.log(title.value, author.value, pages.value, genre.value);
     addBookToLibrary(title.value, author.value, pages.value, checked, genre.value);
+    //render
+    render(myLibrary);
+    return false;
   };
   bookForm.onsubmit = function() {
-    return false;
+    return true;
   };
 
   bookForm.append(submit);
