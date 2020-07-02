@@ -19,19 +19,23 @@ let myLibrary = [{
 }];
 
 
-function Book(title, author, pages, read, genre) {
+function Book(title, author, pages, read, genre, bookID) {
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
   this.genre = genre;
+  this.bookID = bookID;
 }
 
-function addBookToLibrary(title, author, pages, read, genre) {
+function addBookToLibrary(title, author, pages, read, genre, bookID) {
   // take form and push into myLibrary
-  const bookLog = new Book(title, author, pages, read, genre);
+  const bookLog = new Book(title, author, pages, read, genre, bookID);
   myLibrary.push(bookLog); // form data
   bookIndex = myLibrary.indexOf(bookLog);
+  // for (let book of myLibrary) {
+  //   if (myLibrary.indexOf(book) !== tr dataset.book)
+  // }
   render(bookLog, bookIndex);
 }
 
@@ -66,12 +70,17 @@ function generateTable(table, data) {
   for (let elem of data) {
     let row = table.insertRow();
     row.dataset.book = data.indexOf(elem);
+    elem.bookID = data.indexOf(elem);
     for (key in elem) {
-      let cell = row.insertCell();
-      let text = document.createTextNode(elem[key]);
-      cell.append(text);
-      row.append(cell);
-      tBody.append(row);
+      if (key === 'bookID') {
+        void(0);
+      } else {
+        let cell = row.insertCell();
+        let text = document.createTextNode(elem[key]);
+        cell.append(text);
+        row.append(cell);
+        tBody.append(row);
+      }
     }
     deleteBtn(row);
     table.append(tBody);
@@ -89,7 +98,6 @@ function addRow(data, index) {
     row.append(cell);
     tBody.append(row);
   }
-  console.log(index);
   deleteBtn(row, index);
 }
 
@@ -97,9 +105,6 @@ function deleteBtn(row, index) {
   const deleteR = document.createElement('button');
   deleteR.innerHTML = 'x';
   row.append(deleteR);
-  let num = index;
-  // console.log('num');
-  // console.log(num);
   deleteR.addEventListener('click', function() {
     // delete row
     const parent = row.parentNode;
@@ -108,6 +113,17 @@ function deleteBtn(row, index) {
     const num = row.dataset.book;
     console.log(myLibrary[num]);
     myLibrary.splice(num, 1);
+    for (let book of myLibrary) {
+      if (myLibrary.indexOf(book) !== book.bookID) {
+        // Iterate over all cells & find book title
+        // Use the book title to find parent node
+        // Reset data-book to reflect current array element value
+        let tds = [...document.querySelectorAll('td')].find(el => el.textContent = book.title);
+        tds.parentNode.dataset.book = myLibrary.indexOf(book);
+        book.bookID = myLibrary.indexOf(book);
+
+      }
+    }
   });
 }
 
@@ -155,6 +171,8 @@ function createForm(data) {
       label.innerHTML = `${capitalize(key)}: `;
       label.append(input);
       bookForm.append(label);
+    } else if (key === 'bookID') {
+      void(0);
     } else {
       input.type = 'text';
       input.name = key;
@@ -176,7 +194,7 @@ function createForm(data) {
         checked = radios[i].id;
       }
     }
-    addBookToLibrary(title.value, author.value, pages.value, checked, genre.value);
+    addBookToLibrary(title.value, author.value, pages.value, checked, genre.value, myLibrary.length + 1);
   };
   bookForm.onsubmit = function() {
     bookForm.style.display = 'none';
