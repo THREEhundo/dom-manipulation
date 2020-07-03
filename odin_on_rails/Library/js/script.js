@@ -2,19 +2,19 @@ let myLibrary = [{
   title: 'Harry Potter and the Sorcerers Stone',
   author: 'J.K. Rowling',
   pages: 223,
-  read: true,
+  read: 'Yes',
   genre: 'Fantasy'
 }, {
   title: 'The Lord of the Rings: Fellowship of the Ring',
   author: 'J.R.R. Tolkien',
   pages: 423,
-  read: true,
+  read: 'Yes',
   genre: 'Fantasy'
 }, {
   title: 'The Hobbit, or There and Back Again ',
   author: 'J.R.R. Tolkien',
   pages: 310,
-  read: true,
+  read: 'Yes',
   genre: 'Fantasy'
 }];
 
