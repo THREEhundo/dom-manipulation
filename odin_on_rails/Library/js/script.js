@@ -2,19 +2,19 @@ let myLibrary = [{
   title: 'Harry Potter and the Sorcerers Stone',
   author: 'J.K. Rowling',
   pages: 223,
-  read: 'Yes',
+  read: true,
   genre: 'Fantasy'
 }, {
   title: 'The Lord of the Rings: Fellowship of the Ring',
   author: 'J.R.R. Tolkien',
   pages: 423,
-  read: 'Yes',
+  read: true,
   genre: 'Fantasy'
 }, {
   title: 'The Hobbit, or There and Back Again ',
   author: 'J.R.R. Tolkien',
   pages: 310,
-  read: 'Yes',
+  read: true,
   genre: 'Fantasy'
 }];
 
@@ -26,6 +26,10 @@ function Book(title, author, pages, read, genre, bookID) {
   this.read = read;
   this.genre = genre;
   this.bookID = bookID;
+}
+
+Book.prototype.toggleRead = function() {
+  // When checked toggle read value
 }
 
 function addBookToLibrary(title, author, pages, read, genre, bookID) {
@@ -43,11 +47,12 @@ function render(obj, index) {
 
 function createTable(arr) {
   const table = document.createElement('table');
+  const tableContainer = document.querySelector('.table-container');
   table.id = 'table';
   let data = Object.keys(arr[0])
   generateTHead(table, data);
   generateTable(table, arr);
-  document.body.append(table);
+  tableContainer.append(table);
 }
 
 function generateTHead(table, data) {
@@ -71,6 +76,20 @@ function generateTable(table, data) {
     for (key in elem) {
       if (key === 'bookID') {
         void(0);
+      } else if (key === 'read') {
+        const cell = row.insertCell();
+        const checkBox = document.createElement('input');
+        checkBox.type = 'checkbox';
+        checkBox.name = 'readBook';
+        checkBox.value = 'yes';
+        const hiddenCheckBox = document.createElement('input');
+        hiddenCheckBox.type = 'hidden';
+        hiddenCheckBox.name = 'readBook';
+        hiddenCheckBox.value = 'no';
+        cell.append(hiddenCheckBox);
+        cell.append(checkBox);
+        row.append(cell);
+        tBody.append(row);
       } else {
         let cell = row.insertCell();
         let text = document.createTextNode(elem[key]);
@@ -90,19 +109,41 @@ function addRow(data, index) {
   let row = table.insertRow();
   row.dataset.book = index;
   for (key in data) {
-    let cell = row.insertCell();
-    let text = document.createTextNode(data[key]);
-    cell.append(text);
-    row.append(cell);
-    tBody.append(row);
+    console.log(key);
+    if (key === 'bookID') {
+      void(0);
+    } else if (key === 'read') {
+      const cell = row.insertCell();
+      const checkBox = document.createElement('input');
+      checkBox.type = 'checkbox';
+      checkBox.name = 'readBook';
+      checkBox.value = 'yes';
+      const hiddenCheckBox = document.createElement('input');
+      hiddenCheckBox.type = 'hidden';
+      hiddenCheckBox.name = 'readBook';
+      hiddenCheckBox.value = 'no';
+      cell.append(hiddenCheckBox);
+      cell.append(checkBox);
+      row.append(cell);
+      tBody.append(row);
+    } else {
+      let cell = row.insertCell();
+      let text = document.createTextNode(data[key]);
+      cell.append(text);
+      row.append(cell);
+      tBody.append(row);
+    }
   }
   deleteBtn(row, index);
 }
 
 function deleteBtn(row, index) {
   const deleteR = document.createElement('button');
-  deleteR.innerHTML = 'x';
-  row.append(deleteR);
+  deleteR.innerHTML = 'X';
+  const cell = row.insertCell();
+  cell.classList.add('deleteBtnCell');
+  cell.append(deleteR);
+  row.append(cell);
   deleteR.addEventListener('click', function() {
     // delete row
     const parent = row.parentNode;
@@ -126,39 +167,47 @@ function deleteBtn(row, index) {
 
 function formBtn() {
   const btn = document.createElement('button');
+  btn.classList.add('add-book');
+  btn.classList.add('btn');
   btn.textContent = 'Add New Book';
+
   let data = Object.keys(myLibrary[0]);
+
+  // Show form & set focus to first input
   btn.addEventListener('click', function() {
-    createForm(data);
+    const formContainer = document.querySelector('.form-container');
+
+    formContainer.style.display = 'flex';
+    document.querySelector('#title').focus();
   });
-  document.body.append(btn);
+  const tableContainer = document.querySelector('.table-container');
+
+  tableContainer.append(btn);
 }
 
 function createForm(data) {
+  const formContainer = document.createElement('div');
+  formContainer.classList.add('form-container');
   const bookForm = document.createElement('form');
 
   for (let key of data) {
     const label = document.createElement('label');
     const input = document.createElement('input');
     if (key === 'read') {
-      const input1 = document.createElement('input');
-      const label1 = document.createElement('label');
+      const yesInput = document.createElement('input');
       const readContainer = document.createElement('div');
-      input.type = "radio";
-      input1.type = "radio";
-      input.name = "tf";
-      input1.name = "tf";
-      input.id = 'yes';
-      input1.id = 'no';
-      label.for = 'tf';
-      label1.for = 'tf';
-      label.innerHTML = 'Yes';
-      label1.innerHTML = 'No';
-      readContainer.innerHTML = 'Have You Read This Book? ';
+      input.type = "checkbox";
+      input.name = "readBook";
+      input.id = 'readInput';
+      input.value = 'yes';
+      yesInput.type = "hidden";
+      yesInput.name = "readBook";
+      yesInput.value = 'no';
+      label.for = 'readInput';
+      label.innerHTML = 'Have You Read This Book?';
       readContainer.append(label);
-      readContainer.append(label1);
+      label.append(yesInput);
       label.append(input);
-      label1.append(input1);
       bookForm.append(readContainer);
     } else if (key === 'pages') {
       input.type = 'number';
@@ -176,36 +225,70 @@ function createForm(data) {
       input.id = key;
       label.for = key;
       label.innerHTML = `${capitalize(key)}: `;
-      bookForm.append(label);
+
       label.append(input);
+      bookForm.append(label);
+    }
+    if (input.id == 'title') {
+      input.setAttribute("autofocus", "autofocus");
     }
   }
+
   const submit = document.createElement('input');
-  submit.type = 'submit';
-  submit.onclick = function() {
-    // if radio button is checked input value into add function
+  submit.classList.add('btn2');
+  submit.type = 'button';
+  submit.value = 'submit';
+  submit.id = 'btnsubmit';
+  submit.addEventListener('click', addBook)
+
+  function addBook() {
+    // if checkbox is checked input value into add function
     let checked;
     const radios = document.querySelectorAll('[name="tf"]');
     for (var i = 0; i < radios.length; i++) {
       if (radios[i].checked) {
         checked = radios[i].id;
+        radios[i].checked = false;
       }
     }
+
+    const title = document.querySelector('#title');
+    const author = document.querySelector('#author');
+    const pages = document.querySelector('#pages');
+    const genre = document.querySelector('#genre');
+    console.log(title.value, author.value, pages.value, checked, genre.value, myLibrary.length + 1);
     addBookToLibrary(title.value, author.value, pages.value, checked, genre.value, myLibrary.length + 1);
-  };
-  bookForm.onsubmit = function() {
-    bookForm.style.display = 'none';
-    return false;
+    title.value = '';
+    author.value = '';
+    pages.value = '';
+    genre.value = '';
+    formContainer.style.display = 'none';
   };
 
+  formContainer.addEventListener('keydown', (e) => {
+    if (e.code === 'Escape') {
+      formContainer.style.display = 'none';
+    }
+  });
+
   bookForm.append(submit);
-  document.body.append(bookForm);
+  formContainer.append(bookForm);
+  document.body.append(formContainer);
+  formContainer.style.display = 'none';
 }
+
 
 // Capitalize first letter
 const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
+function checkBoxValue() {
+  if (this.is(':checked')) {
+    this.attribute
+  }
+}
+
 createTable(myLibrary);
 formBtn();
+createForm(Object.keys(myLibrary[0]));
