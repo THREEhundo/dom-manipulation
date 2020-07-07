@@ -1,22 +1,4 @@
-let myLibrary = [{
-  title: 'Harry Potter and the Sorcerers Stone',
-  author: 'J.K. Rowling',
-  pages: 223,
-  read: true,
-  genre: 'Fantasy'
-}, {
-  title: 'The Lord of the Rings: Fellowship of the Ring',
-  author: 'J.R.R. Tolkien',
-  pages: 423,
-  read: true,
-  genre: 'Fantasy'
-}, {
-  title: 'The Hobbit, or There and Back Again ',
-  author: 'J.R.R. Tolkien',
-  pages: 310,
-  read: true,
-  genre: 'Fantasy'
-}];
+const myLibrary = [];
 
 
 function Book(title, author, pages, read, genre, bookID) {
@@ -28,8 +10,14 @@ function Book(title, author, pages, read, genre, bookID) {
   this.bookID = bookID;
 }
 
-Book.prototype.toggleRead = function() {
-  // When checked toggle read value
+Book.prototype.toggleRead = function(checkBox) {
+  // if checkbox is checked change read -> yes
+  if (checkBox.checked) {
+    this.read = 'yes';
+  } else if (!checkBox.checked) {
+    // if checkbox is unchecked read -> no
+    this.read = 'no';
+  }
 }
 
 function addBookToLibrary(title, author, pages, read, genre, bookID) {
@@ -59,10 +47,14 @@ function generateTHead(table, data) {
   let thead = table.createTHead();
   let row = thead.insertRow();
   for (let key of data) {
-    let th = document.createElement('th');
-    let text = document.createTextNode(key);
-    th.append(text);
-    row.append(th);
+    if (key === 'bookID') {
+      void(0);
+    } else {
+      let th = document.createElement('th');
+      let text = document.createTextNode(key);
+      th.append(text);
+      row.append(th);
+    }
   }
 }
 
@@ -73,8 +65,8 @@ function generateTable(table, data) {
     let row = table.insertRow();
     row.dataset.book = data.indexOf(elem);
     elem.bookID = data.indexOf(elem);
-    for (key in elem) {
-      if (key === 'bookID') {
+    for (let key in elem) {
+      if (key === 'bookID' || key === 'toggleRead') {
         void(0);
       } else if (key === 'read') {
         const cell = row.insertCell();
@@ -82,6 +74,11 @@ function generateTable(table, data) {
         checkBox.type = 'checkbox';
         checkBox.name = 'readBook';
         checkBox.value = 'yes';
+        checkBox.setAttribute('checked', '');
+        checkBox.onchange = function(checkBox) {
+          elem.toggleRead(checkBox);
+        }
+
         const hiddenCheckBox = document.createElement('input');
         hiddenCheckBox.type = 'hidden';
         hiddenCheckBox.name = 'readBook';
@@ -90,6 +87,7 @@ function generateTable(table, data) {
         cell.append(checkBox);
         row.append(cell);
         tBody.append(row);
+
       } else {
         let cell = row.insertCell();
         let text = document.createTextNode(elem[key]);
@@ -109,8 +107,7 @@ function addRow(data, index) {
   let row = table.insertRow();
   row.dataset.book = index;
   for (key in data) {
-    console.log(key);
-    if (key === 'bookID') {
+    if (key === 'bookID' || key === 'toggleRead') {
       void(0);
     } else if (key === 'read') {
       const cell = row.insertCell();
@@ -118,10 +115,19 @@ function addRow(data, index) {
       checkBox.type = 'checkbox';
       checkBox.name = 'readBook';
       checkBox.value = 'yes';
+      checkBox.onchange = function(checkBox) {
+        data.toggleRead(checkBox);
+      }
+
       const hiddenCheckBox = document.createElement('input');
       hiddenCheckBox.type = 'hidden';
       hiddenCheckBox.name = 'readBook';
       hiddenCheckBox.value = 'no';
+
+      if (data[key] === 'yes') {
+        checkBox.setAttribute('checked', '');
+      }
+
       cell.append(hiddenCheckBox);
       cell.append(checkBox);
       row.append(cell);
@@ -244,12 +250,12 @@ function createForm(data) {
   function addBook() {
     // if checkbox is checked input value into add function
     let checked;
-    const radios = document.querySelectorAll('[name="tf"]');
-    for (var i = 0; i < radios.length; i++) {
-      if (radios[i].checked) {
-        checked = radios[i].id;
-        radios[i].checked = false;
-      }
+    const readCheckBox = document.querySelector('#readInput');
+
+    if (readCheckBox.checked) {
+      checked = 'yes';
+    } else {
+      checked = 'no';
     }
 
     const title = document.querySelector('#title');
@@ -262,6 +268,7 @@ function createForm(data) {
     author.value = '';
     pages.value = '';
     genre.value = '';
+    readCheckBox.checked = false;
     formContainer.style.display = 'none';
   };
 
@@ -283,12 +290,34 @@ const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-function checkBoxValue() {
-  if (this.is(':checked')) {
-    this.attribute
-  }
-}
+const harryPotter = new Book(
+  'Harry Potter and the Sorcerers Stone',
+  'J.K. Rowling',
+  223,
+  'yes',
+  'Fantasy',
+  0
+);
 
+const fellowship = new Book(
+  'The Lord of the Rings: Fellowship of the Ring',
+  'J.R.R. Tolkien',
+  423,
+  'yes',
+  'Fantasy',
+  1
+);
+
+const hobbit = new Book(
+  'The Hobbit, or There and Back Again ',
+  'J.R.R. Tolkien',
+  310,
+  'yes',
+  'Fantasy',
+  2
+);
+
+myLibrary.push(harryPotter, fellowship, hobbit);
 createTable(myLibrary);
 formBtn();
 createForm(Object.keys(myLibrary[0]));
