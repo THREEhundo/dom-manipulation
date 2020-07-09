@@ -1,5 +1,5 @@
 const myLibrary = [];
-
+var database = firebase.database();
 
 function Book(title, author, pages, read, genre, bookID) {
   this.title = title;
@@ -20,12 +20,25 @@ Book.prototype.toggleRead = function(checkBox) {
   }
 }
 
+// function writeBookData(title, author, pages, read, genre, bookID) {
+//   firebase.database().ref('library').set({
+//     title: title,
+//     author: author,
+//     pages: pages,
+//     read: read,
+//     genre: genre,
+//     bookID: bookID
+//   });
+// }
+
 function addBookToLibrary(title, author, pages, read, genre, bookID) {
   // take form and push into myLibrary
   const bookLog = new Book(title, author, pages, read, genre, bookID);
   myLibrary.push(bookLog);
   bookIndex = myLibrary.indexOf(bookLog);
   render(bookLog, bookIndex);
+
+  addBookToDB(title, author, pages, read, genre, bookIndex);
 }
 
 function render(obj, index) {
@@ -92,9 +105,24 @@ function generateTable(table, data) {
       }
     }
     deleteBtn(row);
-    table.append(tBody);
   }
+  // Add stored books to table
+  var ref = database.ref('books');
+  ref.on('value', function(snapshot) {
+    console.log(snapshot.val());
+  }, function(errorObject) {
+    console.log('The read failed: ' + errorObject.code);
+  });
+
+  table.append(tBody);
 }
+
+// function gotData(data) {
+//   var books = data.val();
+//   var keys = Object.keys(books);
+//   console.log(books);
+//
+// }
 
 // New book card
 function addRow(data, index) {
@@ -279,6 +307,57 @@ const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
+/********* DATABASE *********/
+
+// Write books to database
+// (set() Saves data to prevent rewriting the same data)
+database.ref('books').child(0).set({
+  title: 'Harry Potter and the Sorcerers Stone',
+  author: 'J.K. Rowling',
+  pages: 223,
+  read: 'yes',
+  genre: 'Fantasy',
+  bookID: 0
+});
+
+database.ref('books').child(1).set({
+  title: 'The Lord of the Rings: Fellowship of the Ring',
+  author: 'J.R.R. Tolkien',
+  pages: 423,
+  read: 'yes',
+  genre: 'Fantasy',
+  bookID: 1
+});
+
+database.ref('books').child(2).set({
+  title: 'The Hobbit, or There and Back Again ',
+  author: 'J.R.R. Tolkien',
+  pages: 310,
+  read: 'yes',
+  genre: 'Fantasy',
+  bookID: 2
+});
+
+function addBookToDB(title, author, pages, read, genre, bookID) {
+  var bookData = {
+    title: title,
+    author: author,
+    pages: pages,
+    read: read,
+    genre: genre,
+    bookID: bookID
+  };
+
+  // Get a key for a new Book
+  var newBookKey = database.ref().child('books').push().key;
+
+  // Update database
+  var updates = {};
+  updates['/books/' + newBookKey] = bookData;
+
+  return database.ref().update(updates);
+}
+
 const harryPotter = new Book(
   'Harry Potter and the Sorcerers Stone',
   'J.K. Rowling',
@@ -310,3 +389,9 @@ myLibrary.push(harryPotter, fellowship, hobbit);
 createTable(myLibrary);
 formBtn();
 createForm(Object.keys(myLibrary[0]));
+
+const preObject = document.getElementById('object');
+const dbRefObject = firebase.database().ref('books');
+dbRefObject.on('value', snap => {
+  preObject.innerText = JSON.stringify(snap.val(), null, 3);
+});
