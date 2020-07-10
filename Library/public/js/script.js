@@ -1,12 +1,12 @@
 const myLibrary = [];
 var database = firebase.database();
 
-function Book(title, author, pages, read, genre, bookID) {
-  this.title = title;
+function Book(atitle, author, genre, pages, read, bookID) {
+  this.atitle = atitle;
   this.author = author;
+  this.genre = genre;
   this.pages = pages;
   this.read = read;
-  this.genre = genre;
   this.bookID = bookID;
 }
 
@@ -20,25 +20,15 @@ Book.prototype.toggleRead = function(checkBox) {
   }
 }
 
-// function writeBookData(title, author, pages, read, genre, bookID) {
-//   firebase.database().ref('library').set({
-//     title: title,
-//     author: author,
-//     pages: pages,
-//     read: read,
-//     genre: genre,
-//     bookID: bookID
-//   });
-// }
-
-function addBookToLibrary(title, author, pages, read, genre, bookID) {
+function addBookToLibrary(atitle, author, genre, pages, read, bookID) {
   // take form and push into myLibrary
-  const bookLog = new Book(title, author, pages, read, genre, bookID);
+  const bookLog = new Book(atitle, author, genre, pages, read, bookID);
   myLibrary.push(bookLog);
   bookIndex = myLibrary.indexOf(bookLog);
+  addBookToDB(atitle, author, genre, pages, read, bookID);
+  // PROBLEM WITH FORMATTING
   render(bookLog, bookIndex);
 
-  addBookToDB(title, author, pages, read, genre, bookIndex);
 }
 
 function render(obj, index) {
@@ -62,6 +52,11 @@ function generateTHead(table, data) {
   for (let key of data) {
     if (key === 'bookID') {
       void(0);
+    } else if (key === 'atitle') {
+      let th = document.createElement('th');
+      let text = document.createTextNode('title');
+      th.append(text);
+      row.append(th);
     } else {
       let th = document.createElement('th');
       let text = document.createTextNode(key);
@@ -106,23 +101,8 @@ function generateTable(table, data) {
     }
     deleteBtn(row);
   }
-  // Add stored books to table
-  var ref = database.ref('books');
-  ref.on('value', function(snapshot) {
-    console.log(snapshot.val());
-  }, function(errorObject) {
-    console.log('The read failed: ' + errorObject.code);
-  });
-
   table.append(tBody);
 }
-
-// function gotData(data) {
-//   var books = data.val();
-//   var keys = Object.keys(books);
-//   console.log(books);
-//
-// }
 
 // New book card
 function addRow(data, index) {
@@ -179,10 +159,9 @@ function deleteBtn(row, index) {
         // Iterate over all cells & find book title
         // Use the book title to find parent node
         // Reset data-book to reflect current array element value
-        let tds = [...document.querySelectorAll('td')].find(el => el.textContent = book.title);
+        let tds = [...document.querySelectorAll('td')].find(el => el.textContent = book.atitle);
         tds.parentNode.dataset.book = myLibrary.indexOf(book);
         book.bookID = myLibrary.indexOf(book);
-
       }
     }
   });
@@ -201,7 +180,7 @@ function formBtn() {
     const formContainer = document.querySelector('.form-container');
 
     formContainer.style.display = 'flex';
-    document.querySelector('#title').focus();
+    document.querySelector('#atitle').focus();
   });
   const tableContainer = document.querySelector('.table-container');
 
@@ -216,6 +195,7 @@ function createForm(data) {
   for (let key of data) {
     const label = document.createElement('label');
     const input = document.createElement('input');
+    console.log(key);
     if (key === 'read') {
       const yesInput = document.createElement('input');
       const readContainer = document.createElement('div');
@@ -242,17 +222,24 @@ function createForm(data) {
       bookForm.append(label);
     } else if (key === 'bookID') {
       void(0);
+    } else if (key === 'atitle') {
+      input.type = 'text';
+      input.name = key;
+      input.id = key;
+      label.for = key;
+      label.innerHTML = `${capitalize(key.slice(1))}: `;
+      label.append(input);
+      bookForm.append(label);
     } else {
       input.type = 'text';
       input.name = key;
       input.id = key;
       label.for = key;
       label.innerHTML = `${capitalize(key)}: `;
-
       label.append(input);
       bookForm.append(label);
     }
-    if (input.id == 'title') {
+    if (input.id == 'atitle') {
       input.setAttribute("autofocus", "autofocus");
     }
   }
@@ -275,13 +262,12 @@ function createForm(data) {
       checked = 'no';
     }
 
-    const title = document.querySelector('#title');
+    const atitle = document.querySelector('#atitle');
     const author = document.querySelector('#author');
     const pages = document.querySelector('#pages');
     const genre = document.querySelector('#genre');
-    console.log(title.value, author.value, pages.value, checked, genre.value, myLibrary.length + 1);
-    addBookToLibrary(title.value, author.value, pages.value, checked, genre.value, myLibrary.length + 1);
-    title.value = '';
+    addBookToLibrary(atitle.value, author.value, genre.value, pages.value, checked, myLibrary.length + 1);
+    atitle.value = '';
     author.value = '';
     pages.value = '';
     genre.value = '';
@@ -312,7 +298,7 @@ const capitalize = (s) => {
 // Write books to database
 // (set() Saves data to prevent rewriting the same data)
 database.ref('books').child(0).set({
-  title: 'Harry Potter and the Sorcerers Stone',
+  atitle: 'Harry Potter and the Sorcerers Stone',
   author: 'J.K. Rowling',
   pages: 223,
   read: 'yes',
@@ -321,7 +307,7 @@ database.ref('books').child(0).set({
 });
 
 database.ref('books').child(1).set({
-  title: 'The Lord of the Rings: Fellowship of the Ring',
+  atitle: 'The Lord of the Rings: Fellowship of the Ring',
   author: 'J.R.R. Tolkien',
   pages: 423,
   read: 'yes',
@@ -330,7 +316,7 @@ database.ref('books').child(1).set({
 });
 
 database.ref('books').child(2).set({
-  title: 'The Hobbit, or There and Back Again ',
+  atitle: 'The Hobbit, or There and Back Again ',
   author: 'J.R.R. Tolkien',
   pages: 310,
   read: 'yes',
@@ -338,9 +324,9 @@ database.ref('books').child(2).set({
   bookID: 2
 });
 
-function addBookToDB(title, author, pages, read, genre, bookID) {
+function addBookToDB(atitle, author, pages, read, genre, bookID) {
   var bookData = {
-    title: title,
+    atitle: atitle,
     author: author,
     pages: pages,
     read: read,
@@ -358,40 +344,49 @@ function addBookToDB(title, author, pages, read, genre, bookID) {
   return database.ref().update(updates);
 }
 
-const harryPotter = new Book(
-  'Harry Potter and the Sorcerers Stone',
-  'J.K. Rowling',
-  223,
-  'yes',
-  'Fantasy',
-  0
-);
+// const harryPotter = new Book(
+//   'Harry Potter and the Sorcerers Stone',
+//   'J.K. Rowling',
+//   223,
+//   'yes',
+//   'Fantasy',
+//   0
+// );
+//
+// const fellowship = new Book(
+//   'The Lord of the Rings: Fellowship of the Ring',
+//   'J.R.R. Tolkien',
+//   423,
+//   'yes',
+//   'Fantasy',
+//   1
+// );
+//
+// const hobbit = new Book(
+//   'The Hobbit, or There and Back Again ',
+//   'J.R.R. Tolkien',
+//   310,
+//   'yes',
+//   'Fantasy',
+//   2
+// );
+//
+// myLibrary.push(harryPotter, fellowship, hobbit);
 
-const fellowship = new Book(
-  'The Lord of the Rings: Fellowship of the Ring',
-  'J.R.R. Tolkien',
-  423,
-  'yes',
-  'Fantasy',
-  1
-);
+// Initialize table from database
+var ref = database.ref('books');
+ref.once('value', function(snapshot) {
+    const objContainer = snapshot.val();
+    const arrayContainer = Object.values(objContainer);
+    myLibrary.push.apply(myLibrary, arrayContainer);
+    // console.log(myLibrary);
+    createTable(myLibrary);
+    formBtn();
+    createForm(Object.keys(myLibrary[0]));
+  },
+  function(errorObject) {
+    console.log('The read failed: ' + errorObject.code);
+  });
 
-const hobbit = new Book(
-  'The Hobbit, or There and Back Again ',
-  'J.R.R. Tolkien',
-  310,
-  'yes',
-  'Fantasy',
-  2
-);
-
-myLibrary.push(harryPotter, fellowship, hobbit);
-createTable(myLibrary);
-formBtn();
-createForm(Object.keys(myLibrary[0]));
-
-const preObject = document.getElementById('object');
-const dbRefObject = firebase.database().ref('books');
-dbRefObject.on('value', snap => {
-  preObject.innerText = JSON.stringify(snap.val(), null, 3);
-});
+// dbRefObject.on('value', snap => console.log(snap.val()))
+// dbRefObject.orderByKey().on('value', snapshot => console.log(snapshot.val()));
