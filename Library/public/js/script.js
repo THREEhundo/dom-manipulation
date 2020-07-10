@@ -1,13 +1,14 @@
 const myLibrary = [];
 var database = firebase.database();
 
-function Book(atitle, author, genre, pages, read, bookID) {
+function Book(atitle, author, genre, pages, read, bookID, key) {
   this.atitle = atitle;
   this.author = author;
   this.genre = genre;
   this.pages = pages;
   this.read = read;
   this.bookID = bookID;
+  this.key = key
 }
 
 Book.prototype.toggleRead = function(checkBox) {
@@ -22,13 +23,16 @@ Book.prototype.toggleRead = function(checkBox) {
 
 function addBookToLibrary(atitle, author, genre, pages, read, bookID) {
   // take form and push into myLibrary
-  const bookLog = new Book(atitle, author, genre, pages, read, bookID);
-  myLibrary.push(bookLog);
-  bookIndex = myLibrary.indexOf(bookLog);
   addBookToDB(atitle, author, genre, pages, read, bookID);
-  // PROBLEM WITH FORMATTING
-  render(bookLog, bookIndex);
-
+  let key;
+  // Listen for change and set key
+  database.ref('books').on('child_added', function(data) {
+    key = data.key;
+  });
+  const bookLog = new Book(atitle, author, genre, pages, read, bookID, key);
+  myLibrary.push(bookLog);
+  bookID = myLibrary.indexOf(bookLog);
+  render(bookLog, bookID);
 }
 
 function render(obj, index) {
@@ -50,7 +54,7 @@ function generateTHead(table, data) {
   let thead = table.createTHead();
   let row = thead.insertRow();
   for (let key of data) {
-    if (key === 'bookID') {
+    if (key === 'bookID' || key === 'key') {
       void(0);
     } else if (key === 'atitle') {
       let th = document.createElement('th');
@@ -74,7 +78,7 @@ function generateTable(table, data) {
     row.dataset.book = data.indexOf(elem);
     elem.bookID = data.indexOf(elem);
     for (let key in elem) {
-      if (key === 'bookID' || key === 'toggleRead') {
+      if (key === 'bookID' || key === 'toggleRead' || key === 'key') {
         void(0);
       } else if (key === 'read') {
         const cell = row.insertCell();
@@ -99,7 +103,7 @@ function generateTable(table, data) {
         tBody.append(row);
       }
     }
-    deleteBtn(row);
+    deleteBtn(row, row.dataset.book);
   }
   table.append(tBody);
 }
@@ -110,7 +114,7 @@ function addRow(data, index) {
   let row = table.insertRow();
   row.dataset.book = index;
   for (key in data) {
-    if (key === 'bookID' || key === 'toggleRead') {
+    if (key === 'bookID' || key === 'toggleRead' || key === 'key') {
       void(0);
     } else if (key === 'read') {
       const cell = row.insertCell();
@@ -151,18 +155,47 @@ function deleteBtn(row, index) {
     // delete row
     const parent = row.parentNode;
     parent.removeChild(row);
-    // delete elem in array
+
+    /* START HERE */
+    // database.ref('books').on('value', function(snap) {
+    //   var books = snap.val();
+    //   var keys = Object.keys(books);
+    //   for (var i = 0; i < keys.length: i++) {
+    //     var k = keys[i];
+    //     var dbBookID = books[k].bookID;
+    //
+    //   }
+    // })
+    //
     const num = row.dataset.book;
-    myLibrary.splice(num, 1);
+    // delete elem in array
+    myLibrary.splice(index, 1);
     for (let book of myLibrary) {
       if (myLibrary.indexOf(book) !== book.bookID) {
         // Iterate over all cells & find book title
         // Use the book title to find parent node
         // Reset data-book to reflect current array element value
-        let tds = [...document.querySelectorAll('td')].find(el => el.textContent = book.atitle);
+        let tds = [...document.querySelectorAll('td')].find(el => el.textContent = book.author);
         tds.parentNode.dataset.book = myLibrary.indexOf(book);
         book.bookID = myLibrary.indexOf(book);
+      } else {
+        return;
       }
+      //     // if book.title === DB book.title change DBID to book.bookID
+      database.ref('books').on('value', function(snap) {
+        var books = snap.val();
+        var keys = Object.keys(books);
+        for (var i = 0; i < keys.length; i++) {
+          var k = keys[i];
+          var dBBookTitle = books[k].atitle;
+          if (book.atitle === dBBookTitle) {
+
+            database.ref('books').child(books[k]).update({
+              "bookID": book.bookID
+            });
+          }
+        }
+      });
     }
   });
 }
@@ -220,7 +253,7 @@ function createForm(data) {
       label.innerHTML = `${capitalize(key)}: `;
       label.append(input);
       bookForm.append(label);
-    } else if (key === 'bookID') {
+    } else if (key === 'bookID' || key === 'key') {
       void(0);
     } else if (key === 'atitle') {
       input.type = 'text';
@@ -293,36 +326,11 @@ const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-/********* DATABASE *********/
-
-// Write books to database
-// (set() Saves data to prevent rewriting the same data)
-database.ref('books').child(0).set({
-  atitle: 'Harry Potter and the Sorcerers Stone',
-  author: 'J.K. Rowling',
-  pages: 223,
-  read: 'yes',
-  genre: 'Fantasy',
-  bookID: 0
-});
-
-database.ref('books').child(1).set({
-  atitle: 'The Lord of the Rings: Fellowship of the Ring',
-  author: 'J.R.R. Tolkien',
-  pages: 423,
-  read: 'yes',
-  genre: 'Fantasy',
-  bookID: 1
-});
-
-database.ref('books').child(2).set({
-  atitle: 'The Hobbit, or There and Back Again ',
-  author: 'J.R.R. Tolkien',
-  pages: 310,
-  read: 'yes',
-  genre: 'Fantasy',
-  bookID: 2
-});
+// set bookID to db key
+function key2id() {
+  // grab db key
+  database.ref('books')
+}
 
 function addBookToDB(atitle, author, pages, read, genre, bookID) {
   var bookData = {
@@ -331,7 +339,7 @@ function addBookToDB(atitle, author, pages, read, genre, bookID) {
     pages: pages,
     read: read,
     genre: genre,
-    bookID: bookID
+    bookID: bookID,
   };
 
   // Get a key for a new Book
@@ -344,42 +352,13 @@ function addBookToDB(atitle, author, pages, read, genre, bookID) {
   return database.ref().update(updates);
 }
 
-// const harryPotter = new Book(
-//   'Harry Potter and the Sorcerers Stone',
-//   'J.K. Rowling',
-//   223,
-//   'yes',
-//   'Fantasy',
-//   0
-// );
-//
-// const fellowship = new Book(
-//   'The Lord of the Rings: Fellowship of the Ring',
-//   'J.R.R. Tolkien',
-//   423,
-//   'yes',
-//   'Fantasy',
-//   1
-// );
-//
-// const hobbit = new Book(
-//   'The Hobbit, or There and Back Again ',
-//   'J.R.R. Tolkien',
-//   310,
-//   'yes',
-//   'Fantasy',
-//   2
-// );
-//
-// myLibrary.push(harryPotter, fellowship, hobbit);
-
 // Initialize table from database
 var ref = database.ref('books');
 ref.once('value', function(snapshot) {
     const objContainer = snapshot.val();
     const arrayContainer = Object.values(objContainer);
     myLibrary.push.apply(myLibrary, arrayContainer);
-    // console.log(myLibrary);
+
     createTable(myLibrary);
     formBtn();
     createForm(Object.keys(myLibrary[0]));
