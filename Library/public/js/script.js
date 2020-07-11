@@ -26,10 +26,15 @@ function addBookToLibrary(atitle, author, genre, pages, read, bookID) {
   addBookToDB(atitle, author, genre, pages, read, bookID);
   let key;
   // Listen for change and set key
-  database.ref('books').on('child_added', function(data) {
-    key = data.key;
-  });
-  const bookLog = new Book(atitle, author, genre, pages, read, bookID, key);
+  function getKey() {
+    let key;
+    database.ref('books').on('child_added', function(data) {
+      key = data.key;
+    });
+    return key;
+  }
+
+  const bookLog = new Book(atitle, author, genre, pages, read, bookID, getKey());
   myLibrary.push(bookLog);
   bookID = myLibrary.indexOf(bookLog);
   render(bookLog, bookID);
@@ -155,19 +160,12 @@ function deleteBtn(row, index) {
     // delete row
     const parent = row.parentNode;
     parent.removeChild(row);
-
-    /* START HERE */
-    // database.ref('books').on('value', function(snap) {
-    //   var books = snap.val();
-    //   var keys = Object.keys(books);
-    //   for (var i = 0; i < keys.length: i++) {
-    //     var k = keys[i];
-    //     var dbBookID = books[k].bookID;
-    //
-    //   }
-    // })
-    //
     const num = row.dataset.book;
+
+    const key = myLibrary[index].key
+    // Delete database object
+    database.ref('books/' + key).remove();
+
     // delete elem in array
     myLibrary.splice(index, 1);
     for (let book of myLibrary) {
@@ -228,7 +226,6 @@ function createForm(data) {
   for (let key of data) {
     const label = document.createElement('label');
     const input = document.createElement('input');
-    console.log(key);
     if (key === 'read') {
       const yesInput = document.createElement('input');
       const readContainer = document.createElement('div');
