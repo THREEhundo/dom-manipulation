@@ -24,7 +24,7 @@ Book.prototype.toggleRead = function(checkBox) {
 function addBookToLibrary(atitle, author, genre, pages, read, bookID) {
   // take form and push into myLibrary
   addBookToDB(atitle, author, genre, pages, read, bookID);
-  let key;
+
   // Listen for change and set key
   function getKey() {
     let key;
