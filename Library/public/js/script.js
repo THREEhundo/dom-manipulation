@@ -22,22 +22,28 @@ Book.prototype.toggleRead = function(checkBox) {
 }
 
 function addBookToLibrary(atitle, author, genre, pages, read, bookID) {
-  // take form and push into myLibrary
-  addBookToDB(atitle, author, genre, pages, read, bookID);
-
-  // Listen for change and set key
-  function getKey() {
-    let key;
-    database.ref('books').on('child_added', function(data) {
-      key = data.key;
-    });
-    return key;
-  }
+  // take form send to database
+  addBookToDB(atitle, author, 'bookID', genre, pages, read);
 
   const bookLog = new Book(atitle, author, genre, pages, read, bookID, getKey());
+  console.log(bookLog);
   myLibrary.push(bookLog);
   bookID = myLibrary.indexOf(bookLog);
   render(bookLog, bookID);
+
+  // add key property to object
+  var ref = database.ref('books')
+  var bookRef = ref.child(getKey());
+  bookRef.update({
+    'key': getKey()
+  });
+
+  // update the bookID
+  database.ref('books/' + bookLog.key).update({
+    bookID: myLibrary.indexOf(bookLog)
+  });
+
+  database.ref('books').on('value', snap => snap.val());
 }
 
 function render(obj, index) {
@@ -166,7 +172,7 @@ function deleteBtn(row, index) {
     // Delete database object
     database.ref('books/' + key).remove();
 
-    // delete elem in array
+    // delete object in myLibrary array
     myLibrary.splice(index, 1);
     for (let book of myLibrary) {
       if (myLibrary.indexOf(book) !== book.bookID) {
@@ -176,24 +182,26 @@ function deleteBtn(row, index) {
         let tds = [...document.querySelectorAll('td')].find(el => el.textContent = book.author);
         tds.parentNode.dataset.book = myLibrary.indexOf(book);
         book.bookID = myLibrary.indexOf(book);
-      } else {
-        return;
-      }
-      //     // if book.title === DB book.title change DBID to book.bookID
-      database.ref('books').on('value', function(snap) {
-        var books = snap.val();
-        var keys = Object.keys(books);
-        for (var i = 0; i < keys.length; i++) {
-          var k = keys[i];
-          var dBBookTitle = books[k].atitle;
-          if (book.atitle === dBBookTitle) {
-
-            database.ref('books').child(books[k]).update({
-              "bookID": book.bookID
-            });
+        /*********************************************************/
+        for (let key in book) {
+          let k, i;
+          if (key === 'key') {
+            k = book[key];
+          } else if (key === 'bookID') {
+            i = book[key];
           }
+          // Takes Database object key and updates it's ID #
+          database.ref('books').on('value', function(snap) {
+            snap.forEach(function(childSnap) {
+              var childData = childSnap.val();
+              childData.bookID = i;
+            })
+          });
+          console.log(k);
+          console.log(i);
+          // database.ref('books').on('value', snap => snap.val());
         }
-      });
+      }
     }
   });
 }
@@ -323,20 +331,25 @@ const capitalize = (s) => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-// set bookID to db key
-function key2id() {
-  // grab db key
-  database.ref('books')
+/***** DATABASE FUNCTIONS *****/
+
+// Listen for last change and return key
+function getKey() {
+  let key;
+  database.ref('books').on('child_added', function(data) {
+    key = data.key;
+  });
+  return key;
 }
 
-function addBookToDB(atitle, author, pages, read, genre, bookID) {
+function addBookToDB(atitle, author, bookID, genre, pages, read) {
   var bookData = {
     atitle: atitle,
     author: author,
+    bookID: bookID,
+    genre: genre,
     pages: pages,
     read: read,
-    genre: genre,
-    bookID: bookID,
   };
 
   // Get a key for a new Book
@@ -363,6 +376,4 @@ ref.once('value', function(snapshot) {
   function(errorObject) {
     console.log('The read failed: ' + errorObject.code);
   });
-
-// dbRefObject.on('value', snap => console.log(snap.val()))
-// dbRefObject.orderByKey().on('value', snapshot => console.log(snapshot.val()));
+database.ref('books').once('value').then(snap => console.log(snap.val()))
