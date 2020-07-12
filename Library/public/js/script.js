@@ -42,7 +42,6 @@ function addBookToLibrary(atitle, author, genre, pages, read, bookID) {
   database.ref('books/' + bookLog.key).update({
     bookID: myLibrary.indexOf(bookLog)
   });
-
   database.ref('books').on('value', snap => snap.val());
 }
 
@@ -174,35 +173,45 @@ function deleteBtn(row, index) {
 
     // delete object in myLibrary array
     myLibrary.splice(index, 1);
+
     for (let book of myLibrary) {
       if (myLibrary.indexOf(book) !== book.bookID) {
         // Iterate over all cells & find book title
         // Use the book title to find parent node
         // Reset data-book to reflect current array element value
-        let tds = [...document.querySelectorAll('td')].find(el => el.textContent = book.author);
+        let tds = [...document.querySelectorAll('td')].find(el => el.textContent == book.author);
         tds.parentNode.dataset.book = myLibrary.indexOf(book);
         book.bookID = myLibrary.indexOf(book);
         /*********************************************************/
-        for (let key in book) {
-          let k, i;
-          if (key === 'key') {
-            k = book[key];
-          } else if (key === 'bookID') {
-            i = book[key];
-          }
-          // Takes Database object key and updates it's ID #
-          database.ref('books').on('value', function(snap) {
-            snap.forEach(function(childSnap) {
-              var childData = childSnap.val();
-              childData.bookID = i;
-            })
-          });
-          console.log(k);
-          console.log(i);
-          // database.ref('books').on('value', snap => snap.val());
-        }
+        // for (let key in book) {
+        //   let k, i;
+        //   if (key === 'key') {
+        //     k = book[key];
+        //   } else if (key === 'bookID') {
+        //     i = book[key];
+        //   }
+        //   // Takes Database object key and updates it's ID #
+        //   database.ref('books').on('value', function(snap) {
+        //     snap.forEach(function(childSnap) {
+        //       var childData = childSnap.val();
+        //       childData.bookID = i;
+        //     })
+        //   });
+        //   console.log(k);
+        //   console.log(i);
+        //   // database.ref('books').on('value', snap => snap.val());
+        // }
       }
     }
+    database.ref('books').once('value')
+      .then(function(snap) {
+        snap.forEach(function(snapChild) {
+          var childData = snapChild.val();
+          if (childData.bookID !== num) {
+            childData.bookID = num;
+          }
+        });
+      });
   });
 }
 
@@ -304,7 +313,7 @@ function createForm(data) {
     const author = document.querySelector('#author');
     const pages = document.querySelector('#pages');
     const genre = document.querySelector('#genre');
-    addBookToLibrary(atitle.value, author.value, genre.value, pages.value, checked, myLibrary.length + 1);
+    addBookToLibrary(atitle.value, author.value, genre.value, parseInt(pages.value), checked, myLibrary.length + 1);
     atitle.value = '';
     author.value = '';
     pages.value = '';
