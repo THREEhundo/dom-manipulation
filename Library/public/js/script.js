@@ -15,19 +15,14 @@ Book.prototype.toggleRead = function(checkBox) {
   // if checkbox is checked change read -> yes
   if (checkBox.checked) {
     this.read = 'yes';
-    console.log(this.read);
+    console.log(this.key);
+    readYes(this.key);
     // update the database read attribute
-    database.ref('books/' + this.key).update({
-      'read': 'yes'
-    });
   } else if (!checkBox.checked) {
     // if checkbox is unchecked read -> no
     this.read = 'no';
-    console.log(this.read);
-    // update the database read attribute
-    database.ref('books/' + this.key).update({
-      'read': 'no'
-    });
+    console.log(this.key);
+    readNo(this.key);
   }
 }
 
@@ -52,7 +47,7 @@ function addBookToLibrary(atitle, author, genre, pages, read, bookID) {
   database.ref('books/' + bookLog.key).update({
     'bookID': myLibrary.indexOf(bookLog)
   });
-  database.ref('books').on('value', snap => snap.val());
+  // database.ref('books').on('value', snap => snap.val());
 }
 
 function render(obj, index) {
@@ -358,6 +353,21 @@ function addBookToDB(atitle, author, bookID, genre, pages, read) {
   updates['/books/' + newBookKey] = bookData;
 
   return database.ref().update(updates);
+}
+
+// update the database read attribute to yes
+function readYes(key) {
+  database.ref('books/' + key).update({
+    'read': 'yes'
+  });
+
+}
+
+// update the database read attribute to no
+function readNo(key) {
+  database.ref('books/' + key).update({
+    'read': 'no'
+  });
 }
 
 // Initialize table from database
