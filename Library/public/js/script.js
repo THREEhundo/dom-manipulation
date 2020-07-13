@@ -43,7 +43,6 @@ function addBookToLibrary(atitle, author, genre, pages, read, bookID) {
   database.ref('books/' + bookLog.key).update({
     'bookID': myLibrary.indexOf(bookLog)
   });
-  // database.ref('books').on('value', snap => snap.val());
 }
 
 function render(obj, index) {
