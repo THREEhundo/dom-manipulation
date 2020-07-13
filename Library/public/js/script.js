@@ -11,25 +11,14 @@ function Book(atitle, author, genre, pages, read, bookID, key) {
   this.key = key
 }
 
+// Toggling the Read checkbox will change the property in both the myLibrary array and the database
 Book.prototype.toggleRead = function(checkBox) {
-  // if checkbox is checked change read -> yes
-  // const cb = checkbox.clicked;
   if (checkBox) {
     this.read = 'yes';
-
     readYes(this.key);
-
-    console.log('yes', checkBox);
-    // update the database read attribute
   } else if (!checkBox) {
-    // if checkbox is unchecked read -> no
     this.read = 'no';
-
     readNo(this.key);
-
-    console.log('no', checkBox);
-  } else if (checkBox.clicked === undefined) {
-    console.log(undefined);
   }
 }
 
@@ -92,7 +81,6 @@ function generateTHead(table, data) {
   }
 }
 
-// If table row exists don't create
 function generateTable(table, data) {
   const tBody = document.createElement('tbody');
   for (let elem of data) {
@@ -128,12 +116,13 @@ function generateTable(table, data) {
         tBody.append(row);
       }
     }
+    console.log(row, row.dataset.book);
     deleteBtn(row, row.dataset.book);
   }
   table.append(tBody);
 }
 
-// New book card
+// New book row added to table
 function addRow(data, index) {
   const tBody = document.querySelector('tBody');
   let row = table.insertRow();
@@ -147,8 +136,8 @@ function addRow(data, index) {
       checkBox.type = 'checkbox';
       checkBox.name = 'readBook';
       checkBox.value = 'yes';
-      checkBox.onclick = function(checkBox) {
-        data.toggleRead(checkBox);
+      checkBox.onclick = function() {
+        data.toggleRead(checkBox.checked);
       }
 
       if (data[key] === 'yes') {
@@ -180,9 +169,10 @@ function deleteBtn(row, index) {
     // delete row
     const parent = row.parentNode;
     parent.removeChild(row);
-    const num = row.dataset.book;
 
-    const key = myLibrary[index].key
+    const num = row.dataset.book;
+    const key = myLibrary[num].key
+
     // Delete database object
     database.ref('books/' + key).remove();
 
@@ -191,14 +181,14 @@ function deleteBtn(row, index) {
 
     for (let book of myLibrary) {
       if (myLibrary.indexOf(book) !== book.bookID) {
-        // Iterate over all cells & find book title
-        // Use the book title to find parent node
+        // Iterate over all cells & find the author
+        // Use the author to find parent node
         // Reset data-book to reflect current array element value
         let tds = [...document.querySelectorAll('td')].find(el => el.textContent == book.author);
         tds.parentNode.dataset.book = myLibrary.indexOf(book);
         book.bookID = myLibrary.indexOf(book);
 
-        // update the bookID
+        // update the bookID in the database
         database.ref('books/' + book.key).update({
           'bookID': myLibrary.indexOf(book)
         });
@@ -334,7 +324,7 @@ const capitalize = (s) => {
 
 /***** DATABASE FUNCTIONS *****/
 
-// Listen for last change and return key
+// Listen for last change and return key of that object
 function getKey() {
   let key;
   database.ref('books').on('child_added', function(data) {
@@ -353,17 +343,17 @@ function addBookToDB(atitle, author, bookID, genre, pages, read) {
     read: read,
   };
 
-  // Get a key for a new Book
+  // Generate key for a new Book
   var newBookKey = database.ref().child('books').push().key;
 
-  // Update database
+  // Update database with book data
   var updates = {};
   updates['/books/' + newBookKey] = bookData;
 
   return database.ref().update(updates);
 }
 
-// update the database read attribute to yes
+// Update the database read attribute to yes
 function readYes(key) {
   database.ref('books/' + key).update({
     'read': 'yes'
@@ -371,7 +361,7 @@ function readYes(key) {
 
 }
 
-// update the database read attribute to no
+// Update the database read attribute to no
 function readNo(key) {
   database.ref('books/' + key).update({
     'read': 'no'
@@ -394,4 +384,3 @@ ref.once('value', function(snapshot) {
   function(errorObject) {
     console.log('The read failed: ' + errorObject.code);
   });
-// database.ref('books').once('value').then(snap => console.log(snap.val()))
