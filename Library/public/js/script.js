@@ -13,16 +13,23 @@ function Book(atitle, author, genre, pages, read, bookID, key) {
 
 Book.prototype.toggleRead = function(checkBox) {
   // if checkbox is checked change read -> yes
-  if (checkBox.checked) {
+  // const cb = checkbox.clicked;
+  if (checkBox) {
     this.read = 'yes';
-    console.log(this.key);
+
     readYes(this.key);
+
+    console.log('yes', checkBox);
     // update the database read attribute
-  } else if (!checkBox.checked) {
+  } else if (!checkBox) {
     // if checkbox is unchecked read -> no
     this.read = 'no';
-    console.log(this.key);
+
     readNo(this.key);
+
+    console.log('no', checkBox);
+  } else if (checkBox.clicked === undefined) {
+    console.log(undefined);
   }
 }
 
@@ -98,10 +105,11 @@ function generateTable(table, data) {
       } else if (key === 'read') {
         const cell = row.insertCell();
         const checkBox = document.createElement('input');
+        const cbc = checkBox.checked;
         checkBox.type = 'checkbox';
         checkBox.name = 'readBook';
-        checkBox.onchange = function(checkBox) {
-          elem.toggleRead(checkBox);
+        checkBox.onclick = function() {
+          elem.toggleRead(checkBox.checked);
         }
         if (elem[key] === 'yes') {
           checkBox.value = 'yes';
@@ -139,7 +147,7 @@ function addRow(data, index) {
       checkBox.type = 'checkbox';
       checkBox.name = 'readBook';
       checkBox.value = 'yes';
-      checkBox.onchange = function(checkBox) {
+      checkBox.onclick = function(checkBox) {
         data.toggleRead(checkBox);
       }
 
