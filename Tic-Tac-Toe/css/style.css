@@ -1,0 +1,38 @@
+h1 {
+  font-family: 'Ubuntu', sans-serif;
+  margin: 10px auto;
+  font-size: 3em;
+  width: 254px;
+}
+
+.board {
+  background-color: teal;
+  width: 600px;
+  height: 600px;
+  margin: auto;
+  display: flex;
+  flex-flow: wrap;
+}
+
+.square {
+  text-align: center;
+  min-width: 199px;
+  min-height: 197px;
+  font-size: 10em;
+}
+
+.square:nth-child(3n+1) {
+  border-right: 1px solid black;
+}
+
+.square:nth-child(3n+2) {
+  border-right: 1px solid black;
+}
+
+.square:nth-child(-n+3) {
+  border-bottom: 1px solid black;
+}
+
+.square:nth-child(n+7) {
+  border-top: 1px solid black;
+}
