@@ -19,3 +19,8 @@ Game board -> Player -> Game flow
 Changed board.gameboard into a private variable
 
 Changed squares Nodelist into an array to grab index of each node.
+Added method to game board to check if the array element is undefined. (Empty board)
+  Problem -> Splice is not correctly inserting X/O string into array
+  Solution -> Changed the first argument of the method boardSlice from boardArry[index] to index.
+  Problem -> every() method was not working on gameboard.
+  Solution -> Inherited hiddenEmpty method that checks to see if individual array element are undefined.
