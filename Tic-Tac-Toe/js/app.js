@@ -7,6 +7,13 @@ const board = (() => {
   // Check for undefined values in array
   const empty = currVal => currVal === undefined;
 
+  // Find greatest occurance of string in gameboard
+  const mode = array =>
+    array.reduce(
+      (a, b, i, arr) =>
+      (arr.filter(v => v === a).length > arr.filter(v => v === b).length ? a : b),
+      null);
+
   function hiddenBoard() {
     return gameboard;
   }
@@ -15,26 +22,42 @@ const board = (() => {
     return empty;
   }
 
+  function hiddenMode() {
+    return mode;
+  }
+
   return {
     hiddenBoard,
-    hiddenEmpty
+    hiddenEmpty,
+    hiddenMode
   };
 })();
 
 // Game Flow
 const gameFlowController = (() => {
   const {
-    hiddenEmpty
+    hiddenEmpty,
+    hiddenMode,
+    hiddenBoard
   } = board;
+
+  // const {
+  //   hiddenMode
+  // } = board;
+  //
+  // const {
+  //   hiddenBoard
+  // } = board;
 
   function _empty(arr) {
     arr === undefined;
   }
 
-  const boardArr = board.hiddenBoard();
+  const boardArr = hiddenBoard();
+  const mode = hiddenMode();
+  console.log(boardArr);
 
   function _pushGameboard(elem, index, array) {
-    //elem.innerText = board.gameboard[index];
     // How do I choose player1 (X) or player2 (O)
     // player1.boardSplice() || player2.boardSplice()
 
@@ -42,8 +65,11 @@ const gameFlowController = (() => {
     if (array.every(hiddenEmpty()) && player1.score === 0 && player2.score === 0) {
       player1.boardSplice(index, 'X');
       elem.innerText = array[index];
-    } else {
+    } else if (mode(array) === 'X') {
       player2.boardSplice(index, 'O');
+      elem.innerText = array[index];
+    } else if (mode(array) === 'O') {
+      player1.boardSplice(index, 'X');
       elem.innerText = array[index];
     }
   }

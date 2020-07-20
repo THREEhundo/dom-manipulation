@@ -24,3 +24,8 @@ Added method to game board to check if the array element is undefined. (Empty bo
   Solution -> Changed the first argument of the method boardSlice from boardArry[index] to index.
   Problem -> every() method was not working on gameboard.
   Solution -> Inherited hiddenEmpty method that checks to see if individual array element are undefined.
+  Problem -> Need to find mode of gameboard array
+  Solution -> Added mode method to board module.
+              *Just calling the board mode method will return the function. It needs assignment, and then calling to run!*
+  Problem -> reduce() did handle draw state.
+  Solution -> Replaced >= with > in mode method.
