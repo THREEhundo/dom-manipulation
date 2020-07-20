@@ -2,16 +2,24 @@
 
 // Game board
 const board = (() => {
-  const gameboard = ['0', '1', '2', '3', '4', '5', '6', '7', '8', ];
+  const gameboard = ['0', '1', '2', '3', '4', '5', '6', '7', '8'];
 
-  function pushPlayerChar(elem, text) {
-    return console.log(elem);
-    // elem.innerText = text;
+  function _empty(arr) {
+    arr === undefined;
   }
+
+  // function _switchText() {
+  //   if (_gameboard.every(_empty)) {
+  //     return 'X';
+  //   } else if () {
+  //
+  //   }
+  // }
+
 
   const squares = document.querySelectorAll('.square');
   squares.forEach((square) => {
-    square.addEventListener('click', pushPlayerChar.bind(square, square, 'X'));
+    // square.addEventListener('click', _pushPlayerChar.bind(square, square, 'X'));
   });
 
 
@@ -21,14 +29,15 @@ const board = (() => {
 })();
 
 // Game Flow
-const displayController = (() => {
+const gameFlowController = (() => {
 
   function pushGameboard(elem, index, array) {
-    elem.innerText = board.gameboard[index];
+    //elem.innerText = board.gameboard[index];
   }
 
   const squares = document.querySelectorAll('.square');
   squares.forEach(pushGameboard);
+
 
 
 })();
@@ -38,25 +47,41 @@ const displayController = (() => {
 // Players
 const Player = (piece) => {
   let score = 0;
-  const b = board.gameboard;
+  const {
+    gameboard
+  } = board;
 
   // 7 Winning conditions
-  if ((b[0] && b[1] && b[2] === 'piece') ||
-    (b[3] && b[4] && b[5] === 'piece') ||
-    (b[6] && b[7] && b[8] === 'piece') ||
-    (b[0] && b[4] && b[8] === 'piece') ||
-    (b[2] && b[4] && b[6] === 'piece') ||
-    (b[0] && b[3] && b[6] === 'piece') ||
-    (b[1] && b[4] && b[7] === 'piece') ||
-    (b[2] && b[5] && b[8] === 'piece')) {
+  if ((gameboard[0] && gameboard[1] && gameboard[2] === 'piece') ||
+    (gameboard[3] && gameboard[4] && gameboard[5] === 'piece') ||
+    (gameboard[6] && gameboard[7] && gameboard[8] === 'piece') ||
+    (gameboard[0] && gameboard[4] && gameboard[8] === 'piece') ||
+    (gameboard[2] && gameboard[4] && gameboard[6] === 'piece') ||
+    (gameboard[0] && gameboard[3] && gameboard[6] === 'piece') ||
+    (gameboard[1] && gameboard[4] && gameboard[7] === 'piece') ||
+    (gameboard[2] && gameboard[5] && gameboard[8] === 'piece')) {
     // Modal function pops
     // Player wins!
-    score++
+    score++;
+  }
+
+  // Player can splice element in board array
+  function boardSplice(pos, piece) {
+    b.splice(gameboard[pos], 1, piece);
+    console.log(piece);
+  }
+
+  function pushPlayerChar(elem, piece) {
+    if (elem === undefined) {
+      elem.innerText = piece;
+    }
+    // elem.innerText = text;
   }
 
   return {
-    score
-  }
+    score,
+    boardSplice
+  };
 }
 
 const player1 = Player('X');
