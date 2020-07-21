@@ -29,3 +29,8 @@ Added method to game board to check if the array element is undefined. (Empty bo
               *Just calling the board mode method will return the function. It needs assignment, and then calling to run!*
   Problem -> reduce() did handle draw state.
   Solution -> Replaced >= with > in mode method.
+
+Problem -> Build logic for win condition
+Either use 5th turn to check for winning condition or check against all winning conditions every round.
+  Problem -> Score would not update on the win condition.
+  Solution -> Set score's this to object that it was called on.

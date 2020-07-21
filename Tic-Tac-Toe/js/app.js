@@ -1,6 +1,6 @@
 /***** Modules *****/
 
-// Game board
+// Game Board Module
 const board = (() => {
   const gameboard = [, , , , , , , , ];
 
@@ -33,7 +33,7 @@ const board = (() => {
   };
 })();
 
-// Game Flow
+// Game Flow Module
 const gameFlowController = (() => {
   const {
     hiddenEmpty,
@@ -41,22 +41,9 @@ const gameFlowController = (() => {
     hiddenBoard
   } = board;
 
-  // const {
-  //   hiddenMode
-  // } = board;
-  //
-  // const {
-  //   hiddenBoard
-  // } = board;
-
-  function _empty(arr) {
-    arr === undefined;
-  }
-
   const boardArr = hiddenBoard();
   const mode = hiddenMode();
   const empty = hiddenEmpty();
-  console.log(boardArr);
 
   function _pushGameboard(elem, index, array) {
     // If array element is not undefined return
@@ -71,47 +58,51 @@ const gameFlowController = (() => {
     } else if (mode(array) === 'X') {
       player2.boardSplice(index, 'O');
       elem.innerText = array[index];
+      player2.winningCondition('O');
     } else if (mode(array) === 'O') {
       player1.boardSplice(index, 'X');
       elem.innerText = array[index];
+      player1.winningCondition('X');
     }
 
   }
 
   const squares = document.querySelectorAll('.square');
-
   // Change Nodelist to array to grab index
   const squaresArr = [...squares];
 
   squaresArr.forEach(square => {
     square.addEventListener('click', _pushGameboard.bind(square, square, squaresArr.indexOf(square), boardArr))
   });
-
-
-
 })();
 
 /***** Factory Functions *****/
 
-// Players
+// Player Factory Function
 const Player = (piece) => {
   let score = 0;
 
   const boardArr = board.hiddenBoard();
 
-  // 7 Winning conditions
-  if ((boardArr[0] && boardArr[1] && boardArr[2] === 'piece') ||
-    (boardArr[3] && boardArr[4] && boardArr[5] === 'piece') ||
-    (boardArr[6] && boardArr[7] && boardArr[8] === 'piece') ||
-    (boardArr[0] && boardArr[4] && boardArr[8] === 'piece') ||
-    (boardArr[2] && boardArr[4] && boardArr[6] === 'piece') ||
-    (boardArr[0] && boardArr[3] && boardArr[6] === 'piece') ||
-    (boardArr[1] && boardArr[4] && boardArr[7] === 'piece') ||
-    (boardArr[2] && boardArr[5] && boardArr[8] === 'piece')) {
-    // Modal function pops
-    // Player wins!
-    score++;
+  function winningCondition(piece) {
+    console.log(piece);
+    if ((boardArr[0] === piece && boardArr[1] === piece && boardArr[2] === piece) ||
+      (boardArr[3] === piece && boardArr[4] === piece && boardArr[5] === piece) ||
+      (boardArr[6] === piece && boardArr[7] === piece && boardArr[8] === piece) ||
+      (boardArr[0] === piece && boardArr[4] === piece && boardArr[8] === piece) ||
+      (boardArr[2] === piece && boardArr[4] === piece && boardArr[6] === piece) ||
+      (boardArr[0] === piece && boardArr[3] === piece && boardArr[6] === piece) ||
+      (boardArr[1] === piece && boardArr[4] === piece && boardArr[7] === piece) ||
+      (boardArr[2] === piece && boardArr[5] === piece && boardArr[8] === piece)) {
+      console.log(`you win`);
+      // Modal function pops
+      // Player wins!
+      this.score++;
+    } else {
+      void(0);
+    }
   }
+  // 7 Winning conditions
 
   // Player can splice element in board array
   function boardSplice(index, piece) {
@@ -128,7 +119,8 @@ const Player = (piece) => {
 
   return {
     score,
-    boardSplice
+    boardSplice,
+    winningCondition
   };
 }
 
