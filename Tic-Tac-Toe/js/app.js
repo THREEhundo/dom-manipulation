@@ -55,14 +55,17 @@ const gameFlowController = (() => {
 
   const boardArr = hiddenBoard();
   const mode = hiddenMode();
+  const empty = hiddenEmpty();
   console.log(boardArr);
 
   function _pushGameboard(elem, index, array) {
-    // How do I choose player1 (X) or player2 (O)
-    // player1.boardSplice() || player2.boardSplice()
-
+    // If array element is not undefined return
+    if (array[index] !== undefined) {
+      console.log('void')
+      return;
+    }
     // Checks for empty array and nil/nil score
-    if (array.every(hiddenEmpty()) && player1.score === 0 && player2.score === 0) {
+    if (array.every(empty) && player1.score === 0 && player2.score === 0) {
       player1.boardSplice(index, 'X');
       elem.innerText = array[index];
     } else if (mode(array) === 'X') {
@@ -72,6 +75,7 @@ const gameFlowController = (() => {
       player1.boardSplice(index, 'X');
       elem.innerText = array[index];
     }
+
   }
 
   const squares = document.querySelectorAll('.square');
