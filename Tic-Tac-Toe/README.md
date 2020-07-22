@@ -27,6 +27,7 @@ Added method to game board to check if the array element is undefined. (Empty bo
   Problem -> Need to find mode of gameboard array
   Solution -> Added mode method to board module.
               *Just calling the board mode method will return the function. It needs assignment, and then calling to run!*
+              Added logic for draw state to always produce 'O' so that 'X' is placed on the board following a draw state.
   Problem -> reduce() did handle draw state.
   Solution -> Replaced >= with > in mode method.
 

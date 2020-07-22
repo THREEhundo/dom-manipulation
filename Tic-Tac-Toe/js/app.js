@@ -12,21 +12,13 @@ const board = (() => {
 
   // Find greatest occurance of string in gameboard
   const mode = array =>
-    // array.reduce(
-    //   (a, b, i, arr) =>
-    //   (arr.filter(v => v === a).length > arr.filter(v => v === b).length ? a : b),
-    //   null);
     array.reduce(
       (a, b, i, arr) => {
         if (arr.filter(v => v === a).length > arr.filter(v => v === b).length) {
-          console.log(`a: ${a} // b: ${b}`);
           return a;
         } else if (arr.filter(v => v === a).length < arr.filter(v => v === b).length) {
-          console.log(`a: ${a} // b: ${b}`);
           return b;
         } else if (arr.filter(v => v === a).length === arr.filter(v => v === b).length) {
-          console.log(`A: (${a}) ${a.length} is equal to B: (${b}) ${b.length}`);
-          console.log((a === 'O' ? b : a));
           return (a === 'O' ? a : b);
         }
       });
