@@ -22,16 +22,25 @@ Changed squares Nodelist into an array to grab index of each node.
 Added method to game board to check if the array element is undefined. (Empty board)
   Problem -> Splice is not correctly inserting X/O string into array
   Solution -> Changed the first argument of the method boardSlice from boardArry[index] to index.
+
   Problem -> every() method was not working on gameboard.
   Solution -> Inherited hiddenEmpty method that checks to see if individual array element are undefined.
+
   Problem -> Need to find mode of gameboard array
   Solution -> Added mode method to board module.
               *Just calling the board mode method will return the function. It needs assignment, and then calling to run!*
               Added logic for draw state to always produce 'O' so that 'X' is placed on the board following a draw state.
+
   Problem -> reduce() did handle draw state.
   Solution -> Replaced >= with > in mode method.
 
 Problem -> Build logic for win condition
 Either use 5th turn to check for winning condition or check against all winning conditions every round.
+
   Problem -> Score would not update on the win condition.
   Solution -> Set score's this to object that it was called on.
+
+  Problem -> Array being called to check for undefined was not correct.
+  Solution -> Switched undefined values to Number values.
+
+  Problem -> empty function's this is set to the global scope.

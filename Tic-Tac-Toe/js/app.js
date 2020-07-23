@@ -2,13 +2,10 @@
 
 // Game Board Module
 const board = (() => {
-  const gameboard = [, , , , , , , , ];
+  const gameboard = [1, 2, 3, 4, 5, 6, 7, 8];
 
-  // Check for undefined values in array
-  const empty = currVal => currVal === undefined;
-
-  // Check for existence of values in array
-  const full = (currVal, i, boardArr) => currVal in boardArr;
+  // Check for Number values in array
+  const empty = currVal => Number.isInteger(currVal);
 
   // Find greatest occurance of string in gameboard
   const mode = array =>
@@ -42,8 +39,7 @@ const board = (() => {
   return {
     hiddenBoard,
     hiddenEmpty,
-    hiddenMode,
-    hiddenFull
+    hiddenMode
   };
 })();
 
@@ -59,11 +55,10 @@ const gameFlowController = (() => {
   const boardArr = hiddenBoard();
   const mode = hiddenMode();
   const empty = hiddenEmpty();
-  const full = hiddenFull();
 
   function _pushGameboard(elem, index, array) {
-    // If array element is not undefined return
-    if (array[index] !== undefined) {
+    // If array element is not Number return
+    if (array[index] === empty(elem)) {
       console.log('void')
       return;
     }
@@ -71,22 +66,20 @@ const gameFlowController = (() => {
     if (array.every(empty) && player1.score === 0 && player2.score === 0) {
       player1.boardSplice(index, 'X');
       elem.innerText = array[index];
-    } /* Checks X > O */
+      console.log(player1.boardArr);
+    } /* Checks X.length > O.length */
     else if (mode(array) === 'X') {
       player2.boardSplice(index, 'O');
       elem.innerText = array[index];
-      // player2.winningCondition('O');
-    } /* Checks O > X */
+      player2.winningCondition('O');
+      console.log(player2.boardArr);
+    } /* Checks O.length > X.length */
     else if (mode(array) === 'O') {
       player1.boardSplice(index, 'X');
       elem.innerText = array[index];
-      // player1.winningCondition('X');
+      player1.winningCondition('X');
+      console.log(player1.boardArr);
     }
-    //  else if (mode(array) === 'Equal') {
-    //   player1.boardSplice(index, 'X');
-    //   elem.innerText = array[index];
-    // }
-
   }
 
   const squares = document.querySelectorAll('.square');
@@ -105,11 +98,11 @@ const Player = (piece) => {
   let score = 0;
   const {
     hiddenBoard,
-    hiddenFull
+    hiddenEmpty,
   } = board;
 
   const boardArr = hiddenBoard();
-  const full = hiddenFull();
+  const empty = hiddenEmpty();
 
   function winningCondition(piece) {
     console.log(piece);
@@ -125,8 +118,8 @@ const Player = (piece) => {
       // Modal function pops
       // Player wins!
       this.score++;
-    } else if (boardArr) {
-      console.log(`tie`)
+    } else if (fullCheck() === `yes`) {
+      console.log(`tie, ${boardArr}`)
     } else {
       void(0);
     }
@@ -136,20 +129,13 @@ const Player = (piece) => {
   // Player can splice element in board array
   function boardSplice(index, piece) {
     boardArr.splice(index, 1, piece);
-    // console.log(piece);
-  }
-
-  function pushPlayerChar(elem, piece) {
-    if (elem === undefined) {
-      elem.innerText = piece;
-    }
-    // elem.innerText = text;
   }
 
   return {
     score,
     boardSplice,
-    winningCondition
+    winningCondition,
+    boardArr
   };
 }
 
