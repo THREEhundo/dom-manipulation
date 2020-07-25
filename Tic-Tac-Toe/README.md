@@ -44,3 +44,4 @@ Either use 5th turn to check for winning condition or check against all winning 
   Solution -> Switched undefined values to Number values.
 
   Problem -> empty function's this is set to the global scope.
+  Solution -> Scrapped empty function and went with a counter variable to check for full board that ends in a tie.
