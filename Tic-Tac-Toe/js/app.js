@@ -2,20 +2,27 @@
 
 // Game Board Module
 const board = (() => {
-  const gameboard = [1, 2, 3, 4, 5, 6, 7, 8];
+  const gameboard = [, , , , , , , , ];
 
-  // Check for Number values in array
-  const empty = currVal => Number.isInteger(currVal);
+  // Check for undefined values in array
+  const empty = currVal => currVal === undefined;
+
+  // Check for existence of values in array
+  const full = (currVal, i, boardArr) => currVal in boardArr;
 
   // Find greatest occurance of string in gameboard
   const mode = array =>
     array.reduce(
       (a, b, i, arr) => {
         if (arr.filter(v => v === a).length > arr.filter(v => v === b).length) {
+          console.log(`a: ${a} // b: ${b}`);
           return a;
         } else if (arr.filter(v => v === a).length < arr.filter(v => v === b).length) {
+          console.log(`a: ${a} // b: ${b}`);
           return b;
         } else if (arr.filter(v => v === a).length === arr.filter(v => v === b).length) {
+          console.log(`A: (${a}) ${a.length} is equal to B: (${b}) ${b.length}`);
+          console.log((a === 'O' ? b : a));
           return (a === 'O' ? a : b);
         }
       });
@@ -39,7 +46,8 @@ const board = (() => {
   return {
     hiddenBoard,
     hiddenEmpty,
-    hiddenMode
+    hiddenMode,
+    hiddenFull
   };
 })();
 
@@ -55,30 +63,46 @@ const gameFlowController = (() => {
   const boardArr = hiddenBoard();
   const mode = hiddenMode();
   const empty = hiddenEmpty();
+  const full = hiddenFull();
+
+  let movesLeft = 9;
 
   function _pushGameboard(elem, index, array) {
-    // If array element is not Number return
-    if (array[index] === empty(elem)) {
-      console.log('void')
+    // If array element is not undefined return
+    if (array[index] !== undefined) {
       return;
     }
     // Checks for empty array and nil/nil score
     if (array.every(empty) && player1.score === 0 && player2.score === 0) {
       player1.boardSplice(index, 'X');
       elem.innerText = array[index];
-      console.log(player1.boardArr);
-    } /* Checks X.length > O.length */
+      movesLeft--;
+
+
+    } /* Checks X > O */
     else if (mode(array) === 'X') {
       player2.boardSplice(index, 'O');
       elem.innerText = array[index];
-      player2.winningCondition('O');
-      console.log(player2.boardArr);
-    } /* Checks O.length > X.length */
+      movesLeft--;
+      console.log(movesLeft);
+      if (movesLeft < 4 && movesLeft > 0) {
+        player2.winningCondition('O');
+      } else if (movesLeft === 0) {
+        console.log(`${movesLeft} Moves left. Tie!`);
+        // Modal
+      }
+    } /* Checks O > X */
     else if (mode(array) === 'O') {
       player1.boardSplice(index, 'X');
       elem.innerText = array[index];
-      player1.winningCondition('X');
-      console.log(player1.boardArr);
+      movesLeft--;
+      console.log(movesLeft);
+      if (movesLeft < 4 && movesLeft > 0) {
+        player1.winningCondition('X');
+      } else if (movesLeft === 0) {
+        // Modal
+        console.log(`${movesLeft} Moves left. Tie!`);
+      }
     }
   }
 
@@ -98,11 +122,12 @@ const Player = (piece) => {
   let score = 0;
   const {
     hiddenBoard,
-    hiddenEmpty,
+    hiddenFull
   } = board;
 
   const boardArr = hiddenBoard();
-  const empty = hiddenEmpty();
+  const full = hiddenFull();
+  const playerScore = document.querySelector("#player1score");
 
   function winningCondition(piece) {
     console.log(piece);
@@ -118,24 +143,24 @@ const Player = (piece) => {
       // Modal function pops
       // Player wins!
       this.score++;
-    } else if (fullCheck() === `yes`) {
-      console.log(`tie, ${boardArr}`)
+
     } else {
       void(0);
     }
   }
+
   // 7 Winning conditions
 
   // Player can splice element in board array
   function boardSplice(index, piece) {
     boardArr.splice(index, 1, piece);
+    // console.log(piece);
   }
 
   return {
     score,
     boardSplice,
-    winningCondition,
-    boardArr
+    winningCondition
   };
 }
 

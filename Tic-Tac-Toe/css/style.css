@@ -8,9 +8,17 @@ h1 {
   width: 254px;
 }
 
+img {
+  width: 50px;
+}
+
 p {
   font-weight: bold;
   font-size: 1.2em;
+}
+
+footer {
+  font-size: .6em;
 }
 
 .board {
@@ -45,7 +53,7 @@ p {
   border-top: 1px solid black;
 }
 
-#scoreboard, .modal {
+#scoreboard, .modal, footer {
   display: grid;
   place-items: center;
   min-width: 600px;
