@@ -45,3 +45,9 @@ Either use 5th turn to check for winning condition or check against all winning 
 
   Problem -> empty function's this is set to the global scope.
   Solution -> Scrapped empty function and went with a counter variable to check for full board that ends in a tie.
+
+Problem -> Modal pops up upon winning or tying.
+  Problem -> a. toggle display none - grid
+             b. Link winner name to modal
+             c. Link winner score to modal
+             d. 
