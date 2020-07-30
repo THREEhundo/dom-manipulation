@@ -50,4 +50,5 @@ Problem -> Modal pops up upon winning or tying.
   Problem -> a. toggle display none - grid
              b. Link winner name to modal
              c. Link winner score to modal
-             d. 
+
+Problem -> boardgame array would not reset to empty array because the reference to boardgame from the resetGameboard method points to a new boardgame array and not the one already instantiated.

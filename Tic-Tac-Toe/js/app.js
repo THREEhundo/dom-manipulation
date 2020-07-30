@@ -2,7 +2,7 @@
 
 // Game Board Module
 const board = (() => {
-  let gameboard = [, , , , , , , , ];
+  let gameboard = [];
 
   // Check for undefined values in array
   const empty = currVal => currVal === undefined;
@@ -23,12 +23,12 @@ const board = (() => {
         }
       });
 
-  const reset = () => {
-    // reset gameboard & movesLeft
-    gameboard = [, , , , , , , , ];
-    gameFlowController.movesLeft = 9;
-    const squares = document.querySelectorAll('.square');
-    squares.forEach(square => square.innerText = '');
+  // Reset gameboard
+  // const resetGameboard = (gameboard) => gameboard = [, , , , , , , , , ];
+  const resetGameboard = () => {
+    while (gameboard.length > 0) {
+      gameboard.pop();
+    }
   }
 
   function hiddenBoard() {
@@ -52,7 +52,7 @@ const board = (() => {
     hiddenEmpty,
     hiddenMode,
     hiddenFull,
-    reset
+    resetGameboard
   };
 })();
 
@@ -62,7 +62,8 @@ const gameFlowController = (() => {
     hiddenEmpty,
     hiddenMode,
     hiddenBoard,
-    hiddenFull
+    hiddenFull,
+    resetGameboard
   } = board;
 
   const boardArr = hiddenBoard();
@@ -70,50 +71,57 @@ const gameFlowController = (() => {
   const empty = hiddenEmpty();
   const full = hiddenFull();
 
-  let movesLeft = 9;
+  let movesLeft = [null, null, null, null, null, null, null, null, null];
 
   const pushGameboard = (elem, index, array) => {
     // If array element is not undefined return
+    console.log(array);
     if (array[index] !== undefined) {
       return;
     }
     // Checks for empty array and nil/nil score
-    if (array.every(empty) && player1.getScore() === 0 && player2.getScore() === 0) {
-      movesLeft--;
+    // && player1.getScore() === 0 && player2.getScore() === 0
+    if (array.every(empty)) {
+      movesLeft.pop();
+      console.log(movesLeft.length);
       player1.boardSplice(index, 'X');
       elem.innerText = array[index];
-
-
     } /* Checks X > O */
     else if (mode(array) === 'X') {
-      movesLeft--;
+      movesLeft.pop();
+      console.log(movesLeft.length);
       player2.boardSplice(index, 'O');
-      elem.innerText = array[index];
-      if (movesLeft < 5 && movesLeft > 0) {
-        movesLeft--;
+      elem.innerText = 'O';
+      if (movesLeft.length < 5 && movesLeft.length > 0) {
+        movesLeft.pop();
+        console.log(movesLeft.length);
         player2.winningCondition('O');
-      } else if (movesLeft === 0) {
+      } else if (movesLeft.length === 9) {
         // Modal
       }
     } /* Checks O > X */
     else if (mode(array) === 'O') {
-      movesLeft--;
+      movesLeft.pop();
+      console.log(movesLeft.length);
       player1.boardSplice(index, 'X');
-      elem.innerText = array[index];
+      elem.innerText = 'X';
       console.log(`Moves left: ${movesLeft}`);
-      if (movesLeft < 5 && movesLeft > 0) {
+      if (movesLeft.length < 5 && movesLeft.length > 0) {
         console.log(`if Moves left: ${movesLeft}`);
-        movesLeft--;
+        movesLeft.pop();
+        console.log(movesLeft.length);
         player1.winningCondition('X');
-      } else if (movesLeft === 0) {
+      } else if (movesLeft.length === 9) {
         // Modal
       }
     }
   }
 
+  const resetMovesLeft = () => movesLeft = [null, null, null, null, null, null, null, null, null];
+
   return {
     pushGameboard,
-    movesLeft
+    resetMovesLeft
   }
 })();
 
@@ -121,12 +129,13 @@ const gameFlowController = (() => {
 
 const view = (() => {
   const {
-    pushGameboard
+    pushGameboard,
+    resetMovesLeft
   } = gameFlowController;
 
   const {
     hiddenBoard,
-    reset
+    resetGameboard
   } = board;
 
   const modal = document.querySelector('.modal');
@@ -173,9 +182,20 @@ const view = (() => {
     square.addEventListener('click', pushGameboard.bind(square, square, squaresArr.indexOf(square), boardArr));
   });
 
+  // Reset
+  const reset = () => {
+    // reset gameboard & movesLeft
+    resetGameboard();
+    console.log(hiddenBoard());
+    resetMovesLeft();
+    squaresArr.forEach(square => square.innerText = '');
+  }
+
+
   return {
     showWinner,
-    updateScoreboard
+    updateScoreboard,
+    reset
   }
 })();
 
@@ -200,17 +220,21 @@ const Player = (piece, name) => {
   const getName = () => name;
   const getScore = () => score;
   const upScore = () => score++;
+  // Squares
+  const squares = document.querySelectorAll('.square');
+  // Change Nodelist to array to grab index
+  const squaresArr = [...squares];
 
   const winningCondition = piece => {
     console.log(piece);
-    if ((boardArr[0] === piece && boardArr[1] === piece && boardArr[2] === piece) ||
-      (boardArr[3] === piece && boardArr[4] === piece && boardArr[5] === piece) ||
-      (boardArr[6] === piece && boardArr[7] === piece && boardArr[8] === piece) ||
-      (boardArr[0] === piece && boardArr[4] === piece && boardArr[8] === piece) ||
-      (boardArr[2] === piece && boardArr[4] === piece && boardArr[6] === piece) ||
-      (boardArr[0] === piece && boardArr[3] === piece && boardArr[6] === piece) ||
-      (boardArr[1] === piece && boardArr[4] === piece && boardArr[7] === piece) ||
-      (boardArr[2] === piece && boardArr[5] === piece && boardArr[8] === piece)) {
+    if ((squaresArr[0].innerText === piece && squaresArr[1].innerText === piece && squaresArr[2].innerText === piece) ||
+      (squaresArr[3].innerText === piece && squaresArr[4].innerText === piece && squaresArr[5].innerText === piece) ||
+      (squaresArr[6].innerText === piece && squaresArr[7].innerText === piece && squaresArr[8].innerText === piece) ||
+      (squaresArr[0].innerText === piece && squaresArr[4].innerText === piece && squaresArr[8].innerText === piece) ||
+      (squaresArr[2].innerText === piece && squaresArr[4].innerText === piece && squaresArr[6].innerText === piece) ||
+      (squaresArr[0].innerText === piece && squaresArr[3].innerText === piece && squaresArr[6].innerText === piece) ||
+      (squaresArr[1].innerText === piece && squaresArr[4].innerText === piece && squaresArr[7].innerText === piece) ||
+      (squaresArr[2].innerText === piece && squaresArr[5].innerText === piece && squaresArr[8].innerText === piece)) {
       console.log(`you win`);
       upScore();
       console.log(score);
@@ -227,7 +251,6 @@ const Player = (piece, name) => {
   // Player can splice element in board array
   function boardSplice(index, piece) {
     boardArr.splice(index, 1, piece);
-    // console.log(piece);
   }
 
   return {
