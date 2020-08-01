@@ -27,6 +27,7 @@ const board = (() => {
   // const resetGameboard = (gameboard) => gameboard = [, , , , , , , , , ];
   const resetGameboard = () => {
     while (gameboard.length > 0) {
+      console.log(gameboard);
       gameboard.pop();
     }
   }
@@ -75,46 +76,38 @@ const gameFlowController = (() => {
 
   const pushGameboard = (elem, index, array) => {
     // If array element is not undefined return
-    console.log(array);
-    if (array[index] !== undefined) {
+    if (elem.innerText !== '') {
       return;
     }
-    // Checks for empty array and nil/nil score
-    // && player1.getScore() === 0 && player2.getScore() === 0
+    // Checks for empty array
     if (array.every(empty)) {
       movesLeft.pop();
-      console.log(movesLeft.length);
-      player1.boardSplice(index, 'X');
-      elem.innerText = array[index];
+      boardArr.push('X');
+      elem.innerText = 'X';
     } /* Checks X > O */
     else if (mode(array) === 'X') {
       movesLeft.pop();
-      console.log(movesLeft.length);
-      player2.boardSplice(index, 'O');
+      boardArr.push('O');
       elem.innerText = 'O';
       if (movesLeft.length < 5 && movesLeft.length > 0) {
-        movesLeft.pop();
-        console.log(movesLeft.length);
         player2.winningCondition('O');
-      } else if (movesLeft.length === 9) {
+      } else if (movesLeft.length === 0) {
         // Modal
+        player2.winningCondition('O');
       }
     } /* Checks O > X */
     else if (mode(array) === 'O') {
       movesLeft.pop();
-      console.log(movesLeft.length);
-      player1.boardSplice(index, 'X');
+      boardArr.push('X');
       elem.innerText = 'X';
-      console.log(`Moves left: ${movesLeft}`);
       if (movesLeft.length < 5 && movesLeft.length > 0) {
-        console.log(`if Moves left: ${movesLeft}`);
-        movesLeft.pop();
-        console.log(movesLeft.length);
         player1.winningCondition('X');
-      } else if (movesLeft.length === 9) {
+      } else if (movesLeft.length === 0) {
         // Modal
+        player1.winningCondition('X');
       }
     }
+    console.log(array);
   }
 
   const resetMovesLeft = () => movesLeft = [null, null, null, null, null, null, null, null, null];
@@ -151,8 +144,10 @@ const view = (() => {
   const updateScoreboard = (name, score) => {
     if (name === 'Computer') {
       compScore.innerText = score;
-    } else {
+    } else if (name === 'Ninja') {
       playerScore.innerText = score;
+    } else {
+      return;
     }
   }
 
@@ -161,17 +156,28 @@ const view = (() => {
     modalContainer.style.display = 'block';
     winnerName.innerText = name;
     winnerScore.innerText = score;
-    reset();
     document.onkeydown = evt => {
       if (evt.keyCode === 27) {
         modalContainer.style.display = 'none';
+        reset();
       }
     }
     button.onclick = () => {
       modalContainer.style.display = 'none';
+      reset();
     }
 
   }
+
+  // toggle show & hide
+  const show = (elem) => {
+    elem.classList.replace("hide", "show");
+  }
+
+  const hide = (elem) => {
+    elem.classList.replace("show", "hide");
+  }
+
 
   // Squares
   const squares = document.querySelectorAll('.square');
@@ -186,7 +192,6 @@ const view = (() => {
   const reset = () => {
     // reset gameboard & movesLeft
     resetGameboard();
-    console.log(hiddenBoard());
     resetMovesLeft();
     squaresArr.forEach(square => square.innerText = '');
   }
@@ -195,7 +200,9 @@ const view = (() => {
   return {
     showWinner,
     updateScoreboard,
-    reset
+    reset,
+    show,
+    hide
   }
 })();
 
@@ -212,7 +219,9 @@ const Player = (piece, name) => {
 
   const {
     showWinner,
-    updateScoreboard
+    updateScoreboard,
+    show,
+    hide
   } = view;
 
   const boardArr = hiddenBoard();
@@ -226,7 +235,9 @@ const Player = (piece, name) => {
   const squaresArr = [...squares];
 
   const winningCondition = piece => {
-    console.log(piece);
+    const tieDiv = document.querySelector('.tie');
+    const winDiv = document.querySelector('.win');
+
     if ((squaresArr[0].innerText === piece && squaresArr[1].innerText === piece && squaresArr[2].innerText === piece) ||
       (squaresArr[3].innerText === piece && squaresArr[4].innerText === piece && squaresArr[5].innerText === piece) ||
       (squaresArr[6].innerText === piece && squaresArr[7].innerText === piece && squaresArr[8].innerText === piece) ||
@@ -240,13 +251,26 @@ const Player = (piece, name) => {
       console.log(score);
       updateScoreboard(getName(), getScore())
       showWinner(getName(), getScore());
-
+      if (winDiv.classList.contains('hide')) {
+        showWinner(getName(), getScore());
+        show(winDiv);
+        hide(tieDiv);
+      }
+    } else if (boardArr.length === 9) {
+      if (winDiv.classList.contains('show')) {
+        showWinner(getName(), getScore());
+        show(tieDiv);
+        hide(winDiv);
+      }
+      //  else {
+      //   showWinner(getName(), getScore());
+      //   show(winDiv);
+      //   hide(tieDiv);
+      // }
     } else {
       void(0);
     }
   }
-
-  // 7 Winning conditions
 
   // Player can splice element in board array
   function boardSplice(index, piece) {

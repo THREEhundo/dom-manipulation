@@ -52,3 +52,7 @@ Problem -> Modal pops up upon winning or tying.
              c. Link winner score to modal
 
 Problem -> boardgame array would not reset to empty array because the reference to boardgame from the resetGameboard method points to a new boardgame array and not the one already instantiated.
+Solution -> changed boardgame from a sparse array to an empty one. Changed winningCondition method to check div innerText for 3 in a row instead of checking array positions.
+
+Problem -> Modal needs to pop on ties.
+Solution -> 
