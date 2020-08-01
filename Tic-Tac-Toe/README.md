@@ -55,4 +55,4 @@ Problem -> boardgame array would not reset to empty array because the reference 
 Solution -> changed boardgame from a sparse array to an empty one. Changed winningCondition method to check div innerText for 3 in a row instead of checking array positions.
 
 Problem -> Modal needs to pop on ties.
-Solution -> 
+Solution -> classList.replace() switches between show & hide for the corresponding messages.

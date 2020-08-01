@@ -262,11 +262,6 @@ const Player = (piece, name) => {
         show(tieDiv);
         hide(winDiv);
       }
-      //  else {
-      //   showWinner(getName(), getScore());
-      //   show(winDiv);
-      //   hide(tieDiv);
-      // }
     } else {
       void(0);
     }
