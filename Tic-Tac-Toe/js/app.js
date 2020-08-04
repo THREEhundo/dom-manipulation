@@ -24,7 +24,6 @@ const board = (() => {
       });
 
   // Reset gameboard
-  // const resetGameboard = (gameboard) => gameboard = [, , , , , , , , , ];
   const resetGameboard = () => {
     while (gameboard.length > 0) {
       console.log(gameboard);
@@ -107,7 +106,6 @@ const gameFlowController = (() => {
         player1.winningCondition('X');
       }
     }
-    console.log(array);
   }
 
   const resetMovesLeft = () => movesLeft = [null, null, null, null, null, null, null, null, null];
@@ -133,12 +131,14 @@ const view = (() => {
 
   const modal = document.querySelector('.modal');
   const winnerName = document.querySelector('#winner');
-  const modalContainer = document.querySelector('.container');
+  const modalContainer = document.querySelector('#container2');
   const playerScore = document.querySelector("#player1score");
   const compScore = document.querySelector('#player2score');
   const winnerScore = document.querySelector('#score');
   const button = document.querySelector('button');
+  const tab = document.querySelector('.tab');
   const boardArr = hiddenBoard();
+  const playTxt = document.querySelector('#play');
 
   // Scoreboard
   const updateScoreboard = (name, score) => {
@@ -190,12 +190,17 @@ const view = (() => {
 
   // Reset
   const reset = () => {
-    // reset gameboard & movesLeft
+    // reset gameboard & movesLeft array
     resetGameboard();
     resetMovesLeft();
     squaresArr.forEach(square => square.innerText = '');
   }
 
+  // Add retracting animation
+  tab.addEventListener('mouseout', () => tab.classList.add('scale-down-bottom'));
+
+  // Keep play text visible
+  playTxt.addEventListener('mouseout', () => playTxt.classList.add('fadeOut'));
 
   return {
     showWinner,
@@ -229,6 +234,7 @@ const Player = (piece, name) => {
   const getName = () => name;
   const getScore = () => score;
   const upScore = () => score++;
+
   // Squares
   const squares = document.querySelectorAll('.square');
   // Change Nodelist to array to grab index
@@ -246,9 +252,7 @@ const Player = (piece, name) => {
       (squaresArr[0].innerText === piece && squaresArr[3].innerText === piece && squaresArr[6].innerText === piece) ||
       (squaresArr[1].innerText === piece && squaresArr[4].innerText === piece && squaresArr[7].innerText === piece) ||
       (squaresArr[2].innerText === piece && squaresArr[5].innerText === piece && squaresArr[8].innerText === piece)) {
-      console.log(`you win`);
       upScore();
-      console.log(score);
       updateScoreboard(getName(), getScore())
       showWinner(getName(), getScore());
       if (winDiv.classList.contains('hide')) {

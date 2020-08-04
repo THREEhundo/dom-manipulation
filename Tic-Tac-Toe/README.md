@@ -56,3 +56,6 @@ Solution -> changed boardgame from a sparse array to an empty one. Changed winni
 
 Problem -> Modal needs to pop on ties.
 Solution -> classList.replace() switches between show & hide for the corresponding messages.
+
+Problem -> Create modal to allow player to enter their name.
+Solution -> Use modal & form

@@ -1,5 +1,5 @@
 * {
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Nanum Myeongjo', sans-serif;
 }
 
 button {
@@ -26,6 +26,7 @@ p {
 
 footer {
   font-size: .6em;
+  margin-top: 1em;
 }
 
 .board {
@@ -60,7 +61,7 @@ footer {
   border-top: 1px solid black;
 }
 
-#scoreboard, .modal, footer {
+#scoreboard, .modal {
   display: grid;
   place-items: center;
   min-width: 600px;
@@ -100,4 +101,82 @@ footer {
 
 .hide {
   display: none;
+}
+
+#container1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(121, 23, 242, 1);
+}
+
+#heading {
+  font-size: 5em;
+  width: auto;
+}
+
+.tab {
+  width: 150px;
+  background-color: #FF6F91;
+  text-align: center;
+}
+
+.scale-up-bottom:hover {
+  animation: scale-up-bottom 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+  transform: scale(1.5);
+  transform-origin: 50% 100%;
+}
+
+@keyframes scale-up-bottom {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+  }
+  100% {
+    -webkit-transform: scale(2);
+    transform: scale(2);
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+  }
+}
+
+.scale-down-bottom {
+  animation: scale-down-bottom 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) reverse both;
+  transform: scale(1.5);
+  transform-origin: 50% 100%;
+}
+
+@keyframes scale-down-bottom {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+  }
+  100% {
+    -webkit-transform: scale(2);
+    transform: scale(2);
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+  }
+}
+
+#play {
+  color: white;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#play:hover {
+  opacity: 1;
+  transition: opacity 1s ease 0s;
+}
+
+.fadeOut {
+  opacity: 0;
+  transition: opacity 1s ease 0s;
 }
