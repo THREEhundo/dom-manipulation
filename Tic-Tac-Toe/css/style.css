@@ -14,8 +14,9 @@ h1 {
   width: 254px;
 }
 
-img {
+img, #play-button, .image {
   width: 50px;
+  margin: 15px 12px;
 }
 
 p {
@@ -109,8 +110,11 @@ footer {
   justify-content: space-between;
   align-items: center;
   background-color: rgba(121, 23, 242, 1);
+  overflow: hidden;
 }
-
+.headingDiv {
+  z-index: 4;
+}
 #heading {
   font-size: 5em;
   width: auto;
@@ -120,6 +124,7 @@ footer {
   width: 150px;
   background-color: #FF6F91;
   text-align: center;
+  z-index: 3;
 }
 
 .scale-up-bottom:hover {
@@ -130,15 +135,11 @@ footer {
 
 @keyframes scale-up-bottom {
   0% {
-    -webkit-transform: scale(1);
     transform: scale(1);
-    -webkit-transform-origin: 50% 100%;
     transform-origin: 50% 100%;
   }
   100% {
-    -webkit-transform: scale(2);
     transform: scale(2);
-    -webkit-transform-origin: 50% 100%;
     transform-origin: 50% 100%;
   }
 }
@@ -151,15 +152,11 @@ footer {
 
 @keyframes scale-down-bottom {
   0% {
-    -webkit-transform: scale(1);
     transform: scale(1);
-    -webkit-transform-origin: 50% 100%;
     transform-origin: 50% 100%;
   }
   100% {
-    -webkit-transform: scale(2);
     transform: scale(2);
-    -webkit-transform-origin: 50% 100%;
     transform-origin: 50% 100%;
   }
 }
@@ -173,10 +170,55 @@ footer {
 
 #play:hover {
   opacity: 1;
-  transition: opacity 1s ease 0s;
+  transition: opacity 0.5s ease 0s;
 }
 
 .fadeOut {
   opacity: 0;
-  transition: opacity 1s ease 0s;
+  transition: opacity 0.5s ease 0s;
+}
+
+#play-button {
+  margin: 10px auto;
+  display: inline-block;
+}
+
+.input-container {
+  text-align: center;
+}
+
+.menu {
+  display: none;
+  z-index: 2;
+  margin-bottom: 15vh;
+}
+
+.fade-in {
+  animation: fadeIn ease 1.2s;
+}
+
+@keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+.banner {
+  width: 300px;
+  bottom: 0;
+  animation: scale-up-ver-bottom 1.5s ease-out both;
+  background-color: #FF6F91;
+  position:absolute;
+  height: 150px;;
+  z-index: 1;
+}
+
+@keyframes scale-up-ver-bottom {
+  0% {
+    transform: scaleY(0.3);
+    transform-origin: 0% 100%;
+  }
+  100% {
+    transform: scaleY(5);
+    transform-origin: 0% 100%;
+  }
 }

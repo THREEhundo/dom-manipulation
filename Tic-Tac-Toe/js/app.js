@@ -139,6 +139,9 @@ const view = (() => {
   const tab = document.querySelector('.tab');
   const boardArr = hiddenBoard();
   const playTxt = document.querySelector('#play');
+  const inputs = document.querySelectorAll('input');
+  const menu = document.querySelector('.menu');
+  const banner = document.querySelector('.scale-up-ver-bottom');
 
   // Scoreboard
   const updateScoreboard = (name, score) => {
@@ -178,7 +181,6 @@ const view = (() => {
     elem.classList.replace("show", "hide");
   }
 
-
   // Squares
   const squares = document.querySelectorAll('.square');
   // Change Nodelist to array to grab index
@@ -201,6 +203,24 @@ const view = (() => {
 
   // Keep play text visible
   playTxt.addEventListener('mouseout', () => playTxt.classList.add('fadeOut'));
+
+  // Show menu
+  tab.addEventListener('click', () => {
+    window.setTimeout(() => {
+      menu.style.display = 'block';
+      menu.classList.add('fade-in');
+    }, 1000);
+    banner.classList.add('banner');
+  })
+
+  // Change text input value to blank
+  inputs.forEach(input => {
+    input.onclick = () => input.value = ""
+  });
+
+  // Change Players Names
+
+
 
   return {
     showWinner,
