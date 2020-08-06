@@ -222,7 +222,13 @@ const view = (() => {
   // Change text input value to blank on focus
   pvp.addEventListener('click', () => {
     textInputsArr.forEach(input => {
-      input.onclick = () => input.value = "";
+      input.onclick = () => {
+        if (input.value === `Player ${textInputsArr.indexOf(input) + 1} Name`) {
+          input.value = ""
+        } else {
+          return;
+        }
+      };
       input.onblur = () => {
         if (input.value === "") {
           input.value = `Player ${textInputsArr.indexOf(input) + 1} Name`;
