@@ -142,6 +142,10 @@ const view = (() => {
   const inputs = document.querySelectorAll('input');
   const menu = document.querySelector('.menu');
   const banner = document.querySelector('.scale-up-ver-bottom');
+  const textInputs = document.querySelectorAll('input[type="text"]');
+  const pvp = document.querySelector('#pvp');
+  const pvc = document.querySelector('#pvc');
+  const p2TextBox = document.querySelector('#p2name');
 
   // Scoreboard
   const updateScoreboard = (name, score) => {
@@ -213,10 +217,21 @@ const view = (() => {
     banner.classList.add('banner');
   })
 
-  // Change text input value to blank
-  inputs.forEach(input => {
-    input.onclick = () => input.value = ""
-  });
+  // Make text inputs visible when player button is clicked
+  // Change text input value to blank on focus
+  pvp.addEventListener('click', () => textInputs.forEach(input => {
+    input.onclick = () => input.value = "";
+    input.style.visibility = 'visible';
+    input.classList.add('fade-in');
+  }))
+
+  // Hides second player name input when vs'ing computer
+  pvc.addEventListener('click', () => {
+    if (p2TextBox.style.visibility === 'visible') {
+      p2TextBox.classList.add('fade-out');
+      window.setTimeout(() => p2TextBox.style.visibility = 'hidden', 1200);
+    }
+  })
 
   // Change Players Names
 

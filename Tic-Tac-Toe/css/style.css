@@ -198,8 +198,25 @@ footer {
 }
 
 @keyframes fadeIn {
-0% {opacity:0;}
-100% {opacity:1;}
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-out {
+  animation: fadeOut ease 1.2s;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .banner {
@@ -221,4 +238,8 @@ footer {
     transform: scaleY(5);
     transform-origin: 0% 100%;
   }
+}
+
+#p1name, #p2name {
+  visibility: hidden;
 }
