@@ -146,6 +146,7 @@ const view = (() => {
   const pvp = document.querySelector('#pvp');
   const pvc = document.querySelector('#pvc');
   const p2TextBox = document.querySelector('#p2name');
+  const textInputsArr = [...textInputs];
 
   // Scoreboard
   const updateScoreboard = (name, score) => {
@@ -220,8 +221,13 @@ const view = (() => {
   // Make text inputs visible when player button is clicked
   // Change text input value to blank on focus
   pvp.addEventListener('click', () => {
-    textInputs.forEach(input => {
+    textInputsArr.forEach(input => {
       input.onclick = () => input.value = "";
+      input.onblur = () => {
+        if (input.value === "") {
+          input.value = `Player ${textInputsArr.indexOf(input) + 1} Name`;
+        }
+      }
       input.style.visibility = 'visible';
       input.classList.add('fade-in');
     })
