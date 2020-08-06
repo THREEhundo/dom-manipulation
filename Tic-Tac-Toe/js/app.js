@@ -219,16 +219,21 @@ const view = (() => {
 
   // Make text inputs visible when player button is clicked
   // Change text input value to blank on focus
-  pvp.addEventListener('click', () => textInputs.forEach(input => {
-    input.onclick = () => input.value = "";
-    input.style.visibility = 'visible';
-    input.classList.add('fade-in');
-  }))
+  pvp.addEventListener('click', () => {
+    textInputs.forEach(input => {
+      input.onclick = () => input.value = "";
+      input.style.visibility = 'visible';
+      input.classList.add('fade-in');
+    })
+    if (p2TextBox.classList.contains('fade-out')) {
+      p2TextBox.classList.replace('fade-out', 'fade-in');
+    }
+  });
 
   // Hides second player name input when vs'ing computer
   pvc.addEventListener('click', () => {
     if (p2TextBox.style.visibility === 'visible') {
-      p2TextBox.classList.add('fade-out');
+      p2TextBox.classList.replace('fade-in', 'fade-out');
       window.setTimeout(() => p2TextBox.style.visibility = 'hidden', 1200);
     }
   })
