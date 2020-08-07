@@ -117,7 +117,6 @@ const gameFlowController = (() => {
 })();
 
 // View Module
-
 const view = (() => {
   const {
     pushGameboard,
@@ -132,7 +131,7 @@ const view = (() => {
   const modal = document.querySelector('.modal');
   const winnerName = document.querySelector('#winner');
   const modalContainer = document.querySelector('#container2');
-  const playerScore = document.querySelector("#player1score");
+  const player1Score = document.querySelector("#player1score");
   const compScore = document.querySelector('#player2score');
   const winnerScore = document.querySelector('#score');
   const button = document.querySelector('button');
@@ -145,15 +144,20 @@ const view = (() => {
   const textInputs = document.querySelectorAll('input[type="text"]');
   const pvp = document.querySelector('#pvp');
   const pvc = document.querySelector('#pvc');
+  const p1TextBox = document.querySelector('#p1name');
   const p2TextBox = document.querySelector('#p2name');
+  const p1ScoreboardName = document.querySelector('#player1name');
+  const p2ScoreboardName = document.querySelector('#player2name');
   const textInputsArr = [...textInputs];
+  const playButton = document.querySelector('#play-button');
+  const menuContainer = document.querySelector('#container1');
 
   // Scoreboard
-  const updateScoreboard = (name, score) => {
-    if (name === 'Computer') {
+  const updateScoreboard = (piece, score) => {
+    if (piece === 'O') {
       compScore.innerText = score;
-    } else if (name === 'Ninja') {
-      playerScore.innerText = score;
+    } else if (piece === 'X') {
+      player1Score.innerText = score;
     } else {
       return;
     }
@@ -250,8 +254,20 @@ const view = (() => {
     }
   })
 
-  // Change Players Names
-
+  // Submitting names / difficulty & fading out menu
+  playButton.addEventListener('click', () => {
+    menuContainer.classList.add('fade-out');
+    window.setTimeout(() => menuContainer.style.display = 'none', 1200);
+    // change names
+    p1ScoreboardName.innerText = p1TextBox.value;
+    p2ScoreboardName.innerText = p2TextBox.value;
+    player1 = Player('X', p1TextBox.value);
+    if (p2TextBox.value === "Player 2 Name") {
+      player2 = Player('O', 'Computer')
+    } else {
+      player2 = Player('O', p2TextBox.value);
+    }
+  })
 
 
   return {
@@ -286,6 +302,7 @@ const Player = (piece, name) => {
   const getName = () => name;
   const getScore = () => score;
   const upScore = () => score++;
+  const getPiece = () => piece;
 
   // Squares
   const squares = document.querySelectorAll('.square');
@@ -305,8 +322,8 @@ const Player = (piece, name) => {
       (squaresArr[1].innerText === piece && squaresArr[4].innerText === piece && squaresArr[7].innerText === piece) ||
       (squaresArr[2].innerText === piece && squaresArr[5].innerText === piece && squaresArr[8].innerText === piece)) {
       upScore();
-      updateScoreboard(getName(), getScore())
       showWinner(getName(), getScore());
+      updateScoreboard(getPiece(), getScore())
       if (winDiv.classList.contains('hide')) {
         showWinner(getName(), getScore());
         show(winDiv);
@@ -333,12 +350,13 @@ const Player = (piece, name) => {
     boardSplice,
     winningCondition,
     getName,
-    getScore
+    getScore,
+    getPiece
   };
 }
 
-const player1 = Player('X', 'Ninja');
-const player2 = Player('O', 'Computer');
+let player1 = Player('X', 'Ninja');
+let player2 = Player('O', 'Computer');
 /*
   Eventlistener on squares listening for a click & adds either X or O value to square
   If X or O value is present don't allow the click to produce a value
