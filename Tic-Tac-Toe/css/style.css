@@ -243,3 +243,7 @@ footer {
 #p1name, #p2name {
   visibility: hidden;
 }
+
+.scoreboardImg {
+  margin-bottom: 0;
+}

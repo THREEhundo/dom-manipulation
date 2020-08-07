@@ -267,7 +267,11 @@ const view = (() => {
     } else {
       player2 = Player('O', p2TextBox.value);
     }
-  })
+    window.setTimeout(() => {
+      p1TextBox.value = 'Player 1 Name';
+      p2TextBox.value = 'Player 2 Name';
+    }, 2400);
+  });
 
 
   return {
