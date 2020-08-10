@@ -134,7 +134,7 @@ const view = (() => {
   const player1Score = document.querySelector("#player1score");
   const compScore = document.querySelector('#player2score');
   const winnerScore = document.querySelector('#score');
-  const button = document.querySelector('button');
+  const buttonX = document.querySelector('#button');
   const tab = document.querySelector('.tab');
   const boardArr = hiddenBoard();
   const playTxt = document.querySelector('#play');
@@ -151,6 +151,9 @@ const view = (() => {
   const textInputsArr = [...textInputs];
   const playButton = document.querySelector('#play-button');
   const menuContainer = document.querySelector('#container1');
+  const p1Label = document.querySelector('#p1-label');
+  const p2Label = document.querySelector('#p2-label');
+  const form = document.querySelector('form');
 
   // Scoreboard
   const updateScoreboard = (piece, score) => {
@@ -174,10 +177,10 @@ const view = (() => {
         reset();
       }
     }
-    button.onclick = () => {
+    buttonX.addEventListener('click', () => {
       modalContainer.style.display = 'none';
       reset();
-    }
+    });
 
   }
 
@@ -226,22 +229,15 @@ const view = (() => {
   // Change text input value to blank on focus
   pvp.addEventListener('click', () => {
     textInputsArr.forEach(input => {
-      input.onclick = () => {
-        if (input.value === `Player ${textInputsArr.indexOf(input) + 1} Name`) {
-          input.value = ""
-        } else {
-          return;
-        }
-      };
-      input.onblur = () => {
-        if (input.value === "") {
-          input.value = `Player ${textInputsArr.indexOf(input) + 1} Name`;
-        }
-      }
+      const label = document.querySelector(`label[for="${input.name}"]`);
+      label.style.visibility = 'visible';
+      label.classList.add('fade-in');
       input.style.visibility = 'visible';
       input.classList.add('fade-in');
-    })
+    });
+    //Show second player text input
     if (p2TextBox.classList.contains('fade-out')) {
+      p2Label.classList.replace('fade-out', 'fade-in');
       p2TextBox.classList.replace('fade-out', 'fade-in');
     }
   });
@@ -249,29 +245,57 @@ const view = (() => {
   // Hides second player name input when vs'ing computer
   pvc.addEventListener('click', () => {
     if (p2TextBox.style.visibility === 'visible') {
+      p2Label.classList.replace('fade-in', 'fade-out');
       p2TextBox.classList.replace('fade-in', 'fade-out');
-      window.setTimeout(() => p2TextBox.style.visibility = 'hidden', 1200);
+      window.setTimeout(() => {
+        p2Label.style.visibility = 'hidden';
+        p2TextBox.style.visibility = 'hidden';
+      }, 1200);
+    } else {
+      p1Label.style.visibility = 'visible';
+      p1Label.classList.add('fade-in');
+      p1TextBox.style.visibility = 'visible';
+      p1TextBox.classList.add('fade-in');
     }
   })
 
   // Submitting names / difficulty & fading out menu
-  playButton.addEventListener('click', () => {
+  playButton.addEventListener('click', (e) => {
+    console.log(`default`);
+    (p1TextBox.value == "") ? (e.preventDefault()) : (player1 = Player('X', p1TextBox.value));
+
+    // Single Player Mode
+    (p2TextBox.value == "" && p2TextBox.style.visibility == 'hidden') ? (player2 = Player('O', 'Computer')) :
+    (p2TextBox.value.length > 0 && p2TextBox.style.visibility == 'visible') ? (Player('O', p2TextBox.value)) :
+    (e.preventDefault());
+
     menuContainer.classList.add('fade-out');
     window.setTimeout(() => menuContainer.style.display = 'none', 1200);
     // change names
     p1ScoreboardName.innerText = p1TextBox.value;
     p2ScoreboardName.innerText = p2TextBox.value;
-    player1 = Player('X', p1TextBox.value);
-    if (p2TextBox.value === "Player 2 Name") {
-      player2 = Player('O', 'Computer')
-    } else {
-      player2 = Player('O', p2TextBox.value);
-    }
-    window.setTimeout(() => {
-      p1TextBox.value = 'Player 1 Name';
-      p2TextBox.value = 'Player 2 Name';
-    }, 2400);
+
+    menuContainer.classList.add('fade-out');
+    window.setTimeout(() => menuContainer.style.display = 'none', 1200);
+    // change names
+    p1ScoreboardName.innerText = p1TextBox.value;
+    p2ScoreboardName.innerText = p2TextBox.value;
+
   });
+
+  textInputsArr.forEach(input => {
+    input.addEventListener('input', (e) => {
+      input.onfocus = () => {
+        if (input.validity.valueMissing) {
+          input.setCustomValidity('Enter your username!');
+        } else {
+          input.setCustomValidity("");
+        }
+      }
+    });
+
+  })
+
 
 
   return {

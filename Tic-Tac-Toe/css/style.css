@@ -25,9 +25,17 @@ p {
   margin: 5px;
 }
 
+label {
+  visibility: hidden;
+}
+
 footer {
   font-size: .6em;
   margin-top: 1em;
+}
+
+input:required {
+  border: 1px solid blue;
 }
 
 .board {
@@ -69,7 +77,6 @@ footer {
 }
 
 .container {
-  display: none;
   position: absolute;
   z-index: 1;
   width: 100%;
@@ -179,8 +186,14 @@ footer {
 }
 
 #play-button {
+  background: center/100% no-repeat url("imgs/play-button.png");
+  height: 50px;
+  width: 50px;
   margin: 10px auto;
-  display: inline-block;
+  display: block;
+  border: 0;
+  font-size: 0;
+  line-height: 0;
 }
 
 .input-container {
@@ -245,5 +258,10 @@ footer {
 }
 
 .scoreboardImg {
+  width: 100px;
   margin-bottom: 0;
+}
+
+#container2 {
+  display: none;
 }
