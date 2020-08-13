@@ -25,9 +25,6 @@ p {
   margin: 5px;
 }
 
-label {
-  visibility: hidden;
-}
 
 footer {
   font-size: .6em;
@@ -253,8 +250,8 @@ input:required {
   }
 }
 
-#p1name, #p2name {
-  visibility: hidden;
+#p1nameContainer, #p2nameContainer {
+  display: none;
 }
 
 .scoreboardImg {
@@ -264,4 +261,8 @@ input:required {
 
 #container2 {
   display: none;
+}
+
+#dual-textbox-wrapper {
+  min-height: 40px;
 }

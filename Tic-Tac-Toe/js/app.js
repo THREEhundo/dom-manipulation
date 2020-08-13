@@ -145,6 +145,8 @@ const view = (() => {
   const pvp = document.querySelector('#pvp');
   const pvc = document.querySelector('#pvc');
   const p1TextBox = document.querySelector('#p1name');
+  const p1nameContainer = document.querySelector('#p1nameContainer');
+  const p2nameContainer = document.querySelector('#p2nameContainer');
   const p2TextBox = document.querySelector('#p2name');
   const p1ScoreboardName = document.querySelector('#player1name');
   const p2ScoreboardName = document.querySelector('#player2name');
@@ -154,6 +156,7 @@ const view = (() => {
   const p1Label = document.querySelector('#p1-label');
   const p2Label = document.querySelector('#p2-label');
   const form = document.querySelector('form');
+  const player2Img = document.querySelector('#player2-img');
 
   // Scoreboard
   const updateScoreboard = (piece, score) => {
@@ -227,65 +230,77 @@ const view = (() => {
 
   // Make text inputs visible when player button is clicked
   // Change text input value to blank on focus
-  pvp.addEventListener('click', () => {
+  pvp.addEventListener('click', (e) => {
+    // e.preventDefault()
     textInputsArr.forEach(input => {
-      const label = document.querySelector(`label[for="${input.name}"]`);
-      label.style.visibility = 'visible';
-      label.classList.add('fade-in');
-      input.style.visibility = 'visible';
-      input.classList.add('fade-in');
+      const container = document.querySelector(`#${input.name}Container`);
+      container.style.display = 'block';
+      container.classList.add('fade-in');
     });
     //Show second player text input
-    if (p2TextBox.classList.contains('fade-out')) {
-      p2Label.classList.replace('fade-out', 'fade-in');
-      p2TextBox.classList.replace('fade-out', 'fade-in');
+    if (p2nameContainer.classList.contains('fade-out')) {
+      p2nameContainer.classList.replace('fade-out', 'fade-in');
     }
   });
 
   // Hides second player name input when vs'ing computer
   pvc.addEventListener('click', () => {
-    if (p2TextBox.style.visibility === 'visible') {
-      p2Label.classList.replace('fade-in', 'fade-out');
-      p2TextBox.classList.replace('fade-in', 'fade-out');
+    // e.preventDefault()
+
+    // p1nameContainer.style.display = 'block';
+    // if (p1nameContainer.classList.contains())
+    // p1nameContainer.classList.add('fade-in');
+    //Show second player text input
+    // if (p2nameContainer.classList.contains('fade-out')) {
+    //   p2nameContainer.classList.replace('fade-out', 'fade-in');
+    // }
+
+
+    if (p1nameContainer.style.display === 'block') {
+      console.log('a');
+      p2nameContainer.classList.replace('fade-in', 'fade-out');
       window.setTimeout(() => {
-        p2Label.style.visibility = 'hidden';
-        p2TextBox.style.visibility = 'hidden';
+        p2nameContainer.style.display = 'none';
       }, 1200);
     } else {
-      p1Label.style.visibility = 'visible';
-      p1Label.classList.add('fade-in');
-      p1TextBox.style.visibility = 'visible';
-      p1TextBox.classList.add('fade-in');
+      p1nameContainer.classList.add('fade-in');
+      p1nameContainer.style.display = 'block';
     }
-  })
+  });
 
   // Submitting names / difficulty & fading out menu
   playButton.addEventListener('click', (e) => {
-    console.log(`default`);
-    (p1TextBox.value == "") ? (e.preventDefault()) : (player1 = Player('X', p1TextBox.value));
-
+    if (p1TextBox.value == "") {
+      console.log(`false1`);
+      return false;
+    } else if (typeof p1TextBox.value == "string") {
+      console.log(1);
+      player1 = Player('X', p1TextBox.value);
+    }
+    console.log(1.1);
     // Single Player Mode
-    (p2TextBox.value == "" && p2TextBox.style.visibility == 'hidden') ? (player2 = Player('O', 'Computer')) :
-    (p2TextBox.value.length > 0 && p2TextBox.style.visibility == 'visible') ? (Player('O', p2TextBox.value)) :
-    (e.preventDefault());
-
+    if (p2TextBox.value == "" && p2nameContainer.style.display == 'none') {
+      player2 = Player('O', 'Computer');
+      console.log(2);
+    } else if (p2TextBox.value.length > 0 && p2nameContainer.style.display == 'block') {
+      player2 = Player('O', p2TextBox.value);
+      player2Img.src = "css/imgs/gninja.png";
+      console.log(3);
+    } else {
+      return false;
+    }
+    console.log(4);
     menuContainer.classList.add('fade-out');
     window.setTimeout(() => menuContainer.style.display = 'none', 1200);
     // change names
-    p1ScoreboardName.innerText = p1TextBox.value;
-    p2ScoreboardName.innerText = p2TextBox.value;
-
-    menuContainer.classList.add('fade-out');
-    window.setTimeout(() => menuContainer.style.display = 'none', 1200);
-    // change names
-    p1ScoreboardName.innerText = p1TextBox.value;
-    p2ScoreboardName.innerText = p2TextBox.value;
+    p1ScoreboardName.innerText = player1.getName();
+    p2ScoreboardName.innerText = player2.getName();
 
   });
 
   textInputsArr.forEach(input => {
     input.addEventListener('input', (e) => {
-      input.onfocus = () => {
+      input.onblur = () => {
         if (input.validity.valueMissing) {
           input.setCustomValidity('Enter your username!');
         } else {
@@ -293,8 +308,7 @@ const view = (() => {
         }
       }
     });
-
-  })
+  });
 
 
 
