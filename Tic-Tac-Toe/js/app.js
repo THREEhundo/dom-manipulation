@@ -81,15 +81,13 @@ const gameFlowController = (() => {
     if (player2.getName() != 'Computer') {
       pushGameboard(elem, index, array, player2);
     } else if (player2.getName() == 'Computer') {
-      console.log(`computer`);
-      console.log(elem, openSquare(), array);
       pushGameboard(openSquare(), index, array, player2);
     }
   }
 
   const emptySquares = () => squaresArr.filter(s => s.innerText == "");
 
-  const openSquare = () => emptySquares()[0];
+  const openSquare = () => emptySquares()[Math.round(Math.random() * (emptySquares().length - 1))];
 
   const pushGameboard = (elem, index, array, player) => {
     // If array element is not undefined return
