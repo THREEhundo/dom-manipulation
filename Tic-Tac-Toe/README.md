@@ -62,5 +62,6 @@ Solution -> Use modal
 
 Problem -> Create Simple AI
 Solution -> filtered all empty divs and set the first empty div to AI's move.
+Set the AI's move to random open spot.
 
 Problem -> Implement restart button
