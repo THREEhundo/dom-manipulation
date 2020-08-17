@@ -70,10 +70,28 @@ const gameFlowController = (() => {
   const mode = hiddenMode();
   const empty = hiddenEmpty();
   const full = hiddenFull();
+  const squares = document.querySelectorAll('.square');
+  const squaresArr = [...squares];
 
   let movesLeft = [null, null, null, null, null, null, null, null, null];
 
-  const pushGameboard = (elem, index, array) => {
+  const turn = (elem, index, array) => {
+    pushGameboard(elem, index, array, player1);
+    // if player2 is not human
+    if (player2.getName() != 'Computer') {
+      pushGameboard(elem, index, array, player2);
+    } else if (player2.getName() == 'Computer') {
+      console.log(`computer`);
+      console.log(elem, openSquare(), array);
+      pushGameboard(openSquare(), index, array, player2);
+    }
+  }
+
+  const emptySquares = () => squaresArr.filter(s => s.innerText == "");
+
+  const openSquare = () => emptySquares()[0];
+
+  const pushGameboard = (elem, index, array, player) => {
     // If array element is not undefined return
     if (elem.innerText !== '') {
       return;
@@ -82,27 +100,22 @@ const gameFlowController = (() => {
     if (array.every(empty)) {
       movesLeft.pop();
       boardArr.push('X');
-      elem.innerText = 'X';
+      elem.innerText = player1.getPiece();
     } /* Checks X > O */
     else if (mode(array) === 'X') {
       movesLeft.pop();
       boardArr.push('O');
-      elem.innerText = 'O';
-      if (movesLeft.length < 5 && movesLeft.length > 0) {
-        player2.winningCondition('O');
-      } else if (movesLeft.length === 0) {
-        // Modal
+      console.log(elem.innerText, elem);
+      elem.innerText = player2.getPiece();
+      if (movesLeft.length < 5) {
         player2.winningCondition('O');
       }
     } /* Checks O > X */
     else if (mode(array) === 'O') {
       movesLeft.pop();
       boardArr.push('X');
-      elem.innerText = 'X';
-      if (movesLeft.length < 5 && movesLeft.length > 0) {
-        player1.winningCondition('X');
-      } else if (movesLeft.length === 0) {
-        // Modal
+      elem.innerText = player1.getPiece();
+      if (movesLeft.length < 5) {
         player1.winningCondition('X');
       }
     }
@@ -111,6 +124,9 @@ const gameFlowController = (() => {
   const resetMovesLeft = () => movesLeft = [null, null, null, null, null, null, null, null, null];
 
   return {
+    openSquare,
+    emptySquares,
+    turn,
     pushGameboard,
     resetMovesLeft
   }
@@ -119,6 +135,7 @@ const gameFlowController = (() => {
 // View Module
 const view = (() => {
   const {
+    turn,
     pushGameboard,
     resetMovesLeft
   } = gameFlowController;
@@ -134,7 +151,7 @@ const view = (() => {
   const player1Score = document.querySelector("#player1score");
   const compScore = document.querySelector('#player2score');
   const winnerScore = document.querySelector('#score');
-  const buttonX = document.querySelector('#button');
+  const buttonX = document.querySelector('#buttonX');
   const tab = document.querySelector('.tab');
   const boardArr = hiddenBoard();
   const playTxt = document.querySelector('#play');
@@ -202,7 +219,7 @@ const view = (() => {
   const squaresArr = [...squares];
 
   squaresArr.forEach(square => {
-    square.addEventListener('click', pushGameboard.bind(square, square, squaresArr.indexOf(square), boardArr));
+    square.addEventListener('click', turn.bind(square, square, squaresArr.indexOf(square), boardArr));
   });
 
   // Reset
@@ -231,7 +248,6 @@ const view = (() => {
   // Make text inputs visible when player button is clicked
   // Change text input value to blank on focus
   pvp.addEventListener('click', (e) => {
-    // e.preventDefault()
     textInputsArr.forEach(input => {
       const container = document.querySelector(`#${input.name}Container`);
       container.style.display = 'block';
@@ -245,58 +261,49 @@ const view = (() => {
 
   // Hides second player name input when vs'ing computer
   pvc.addEventListener('click', () => {
-    // e.preventDefault()
-
-    // p1nameContainer.style.display = 'block';
-    // if (p1nameContainer.classList.contains())
-    // p1nameContainer.classList.add('fade-in');
-    //Show second player text input
-    // if (p2nameContainer.classList.contains('fade-out')) {
-    //   p2nameContainer.classList.replace('fade-out', 'fade-in');
-    // }
-
-
-    if (p1nameContainer.style.display === 'block') {
-      console.log('a');
+    if (p2nameContainer.classList.contains('fade-in')) {
       p2nameContainer.classList.replace('fade-in', 'fade-out');
-      window.setTimeout(() => {
-        p2nameContainer.style.display = 'none';
-      }, 1200);
     } else {
-      p1nameContainer.classList.add('fade-in');
-      p1nameContainer.style.display = 'block';
+      p2nameContainer.classList.add('fade-out');
     }
+    window.setTimeout(() => {
+      p2nameContainer.style.display = 'none';
+    }, 1200);
   });
 
+  // Prevents second textbox from showing
+  p1TextBox.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      nextScreen();
+    }
+  })
+
   // Submitting names / difficulty & fading out menu
-  playButton.addEventListener('click', (e) => {
+  playButton.addEventListener('click', nextScreen);
+
+  function nextScreen() {
     if (p1TextBox.value == "") {
-      console.log(`false1`);
       return false;
     } else if (typeof p1TextBox.value == "string") {
-      console.log(1);
       player1 = Player('X', p1TextBox.value);
     }
-    console.log(1.1);
     // Single Player Mode
     if (p2TextBox.value == "" && p2nameContainer.style.display == 'none') {
       player2 = Player('O', 'Computer');
-      console.log(2);
     } else if (p2TextBox.value.length > 0 && p2nameContainer.style.display == 'block') {
       player2 = Player('O', p2TextBox.value);
       player2Img.src = "css/imgs/gninja.png";
-      console.log(3);
     } else {
       return false;
     }
-    console.log(4);
     menuContainer.classList.add('fade-out');
     window.setTimeout(() => menuContainer.style.display = 'none', 1200);
     // change names
     p1ScoreboardName.innerText = player1.getName();
     p2ScoreboardName.innerText = player2.getName();
 
-  });
+  }
 
   textInputsArr.forEach(input => {
     input.addEventListener('input', (e) => {
@@ -309,8 +316,6 @@ const view = (() => {
       }
     });
   });
-
-
 
   return {
     showWinner,
@@ -388,6 +393,9 @@ const Player = (piece, name) => {
   }
 
   return {
+    // get type() {
+    //   return getPiece();
+    // },
     upScore,
     boardSplice,
     winningCondition,

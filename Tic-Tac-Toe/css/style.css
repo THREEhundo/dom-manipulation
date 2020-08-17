@@ -251,7 +251,7 @@ input:required {
 }
 
 #p1nameContainer, #p2nameContainer {
-  display: none;
+  display: block;
 }
 
 .scoreboardImg {
