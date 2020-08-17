@@ -4,14 +4,16 @@
 
 button {
   justify-self: end;
-  padding: 0 0;
   margin: 2px;
+  color: white;
+  background-color: #EB0EEB;
 }
 
 h1 {
   margin: 10px auto;
   font-size: 3em;
   width: 254px;
+  color: white;
 }
 
 img, #play-button, .image {
@@ -23,8 +25,8 @@ p {
   font-weight: bold;
   font-size: 1.2em;
   margin: 5px;
+  color: white;
 }
-
 
 footer {
   font-size: .6em;
@@ -35,9 +37,12 @@ input:required {
   border: 1px solid blue;
 }
 
+label {
+  color: white;
+}
+
 .board {
-  background-color: teal;
-  width: 600px;
+  background-image: linear-gradient(to bottom, #7917f2, #9c0ef1, #b905ef, #d305ed, #eb0eeb);  width: 600px;
   height: 600px;
   margin: auto;
   display: flex;
@@ -49,22 +54,23 @@ input:required {
   min-width: 199px;
   min-height: 197px;
   font-size: 10em;
+  color: white;
 }
 
 .square:nth-child(3n+1) {
-  border-right: 1px solid black;
+  border-right: 1px solid white;
 }
 
 .square:nth-child(3n+2) {
-  border-right: 1px solid black;
+  border-right: 1px solid white;
 }
 
 .square:nth-child(-n+3) {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid white;
 }
 
 .square:nth-child(n+7) {
-  border-top: 1px solid black;
+  border-top: 1px solid white;
 }
 
 #scoreboard, .modal {
@@ -114,7 +120,7 @@ input:required {
 
 .tab {
   width: 150px;
-  background-color: #FF6F91;
+  background-color: rgba(121, 23, 242, 1);
   text-align: center;
   z-index: 3;
 }
@@ -158,9 +164,9 @@ input:required {
   width: 300px;
   bottom: 0;
   animation: scale-up-ver-bottom 1.5s ease-out both;
-  background-color: #FF6F91;
+  background-color: rgba(121, 23, 242, 1);
   position:absolute;
-  height: 150px;;
+  height: 170px;;
   z-index: 1;
 }
 
@@ -174,13 +180,14 @@ input:required {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(121, 23, 242, 1);
   overflow: hidden;
+  background-image: linear-gradient(to bottom, #7917f2, #9c0ef1, #b905ef, #d305ed, #eb0eeb);
 }
 
 #heading {
   font-size: 5em;
   width: auto;
+  z-index: 2;
 }
 
 #play {
@@ -233,6 +240,11 @@ input:required {
 #resetBtn:hover {
   animation: rotation 1s 1 linear;
 }
+
+#player1name, #player1score, #player2name, #player2score, #text {
+  color: #EB0EEB;
+}
+
 
 @keyframes rotation {
   50% {

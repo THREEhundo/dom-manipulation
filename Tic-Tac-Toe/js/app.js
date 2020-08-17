@@ -285,7 +285,7 @@ const view = (() => {
       e.preventDefault();
       nextScreen();
     }
-  })
+  });
 
   // Submitting names / difficulty & fading out menu
   playButton.addEventListener('click', nextScreen);
@@ -302,7 +302,7 @@ const view = (() => {
     } else if (p2TextBox.value.length > 0 && p2nameContainer.style.display == 'block') {
       player2 = Player('O', p2TextBox.value);
       player2Img.src = "css/imgs/gninja.png";
-    } else {
+    } else if (p2TextBox.value == "" && p2TextBox.value == "") {
       return false;
     }
     menuContainer.classList.add('fade-out');
