@@ -65,3 +65,4 @@ Solution -> filtered all empty divs and set the first empty div to AI's move.
 Set the AI's move to random open spot.
 
 Problem -> Implement restart button
+Solution -> Added button img and animation. Made the reset button itself wipe the scoreboard since the reset function was used in other areas and caused a full wipe when not necessary.
