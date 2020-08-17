@@ -81,6 +81,9 @@ const gameFlowController = (() => {
     if (player2.getName() != 'Computer') {
       pushGameboard(elem, index, array, player2);
     } else if (player2.getName() == 'Computer') {
+      if (movesLeft.length == 0) {
+        return;
+      }
       pushGameboard(openSquare(), index, array, player2);
     }
   }
@@ -125,7 +128,6 @@ const gameFlowController = (() => {
     openSquare,
     emptySquares,
     turn,
-    pushGameboard,
     resetMovesLeft
   }
 })();
@@ -134,7 +136,6 @@ const gameFlowController = (() => {
 const view = (() => {
   const {
     turn,
-    pushGameboard,
     resetMovesLeft
   } = gameFlowController;
 
