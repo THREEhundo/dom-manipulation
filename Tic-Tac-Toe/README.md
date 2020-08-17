@@ -60,4 +60,7 @@ Solution -> classList.replace() switches between show & hide for the correspondi
 Problem -> Create modal to allow player to enter their name.
 Solution -> Use modal
 
+Problem -> Create Simple AI
+Solution -> filtered all empty divs and set the first empty div to AI's move.
+
 Problem -> Implement restart button
