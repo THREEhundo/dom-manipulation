@@ -108,20 +108,8 @@ input:required {
   display: none;
 }
 
-#container1 {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgba(121, 23, 242, 1);
-  overflow: hidden;
-}
 .headingDiv {
   z-index: 4;
-}
-#heading {
-  font-size: 5em;
-  width: auto;
 }
 
 .tab {
@@ -137,60 +125,15 @@ input:required {
   transform-origin: 50% 100%;
 }
 
-@keyframes scale-up-bottom {
-  0% {
-    transform: scale(1);
-    transform-origin: 50% 100%;
-  }
-  100% {
-    transform: scale(2);
-    transform-origin: 50% 100%;
-  }
-}
-
 .scale-down-bottom {
   animation: scale-down-bottom 1s cubic-bezier(0.390, 0.575, 0.565, 1.000) reverse both;
   transform: scale(1.5);
   transform-origin: 50% 100%;
 }
 
-@keyframes scale-down-bottom {
-  0% {
-    transform: scale(1);
-    transform-origin: 50% 100%;
-  }
-  100% {
-    transform: scale(2);
-    transform-origin: 50% 100%;
-  }
-}
-
-#play {
-  color: white;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-}
-
-#play:hover {
-  opacity: 1;
-  transition: opacity 0.5s ease 0s;
-}
-
 .fadeOut {
   opacity: 0;
   transition: opacity 0.5s ease 0s;
-}
-
-#play-button {
-  background: center/100% no-repeat url("imgs/play-button.png");
-  height: 50px;
-  width: 50px;
-  margin: 10px auto;
-  display: block;
-  border: 0;
-  font-size: 0;
-  line-height: 0;
 }
 
 .input-container {
@@ -207,26 +150,8 @@ input:required {
   animation: fadeIn ease 1.2s;
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
 .fade-out {
   animation: fadeOut ease 1.2s;
-}
-
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
 }
 
 .banner {
@@ -239,24 +164,50 @@ input:required {
   z-index: 1;
 }
 
-@keyframes scale-up-ver-bottom {
-  0% {
-    transform: scaleY(0.3);
-    transform-origin: 0% 100%;
-  }
-  100% {
-    transform: scaleY(5);
-    transform-origin: 0% 100%;
-  }
+.scoreboardImg {
+  width: 100px;
+  margin-bottom: 0;
+}
+
+#container1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(121, 23, 242, 1);
+  overflow: hidden;
+}
+
+#heading {
+  font-size: 5em;
+  width: auto;
+}
+
+#play {
+  color: white;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#play:hover {
+  opacity: 1;
+  transition: opacity 0.5s ease 0s;
+}
+
+#play-button {
+  background: center/100% no-repeat url("imgs/play-button.png");
+  height: 50px;
+  width: 50px;
+  margin: 10px auto;
+  display: block;
+  border: 0;
+  font-size: 0;
+  line-height: 0;
 }
 
 #p1nameContainer, #p2nameContainer {
   display: block;
-}
-
-.scoreboardImg {
-  width: 100px;
-  margin-bottom: 0;
 }
 
 #container2 {
@@ -271,6 +222,7 @@ input:required {
   justify-self: center;
   background: center/60% no-repeat url("imgs/update.svg");
   border: 0;
+  outline: none;
   font-size: 0;
   line-height: 0;
   height: 50px;
@@ -297,5 +249,56 @@ input:required {
   }
   100% {
     transform: rotate(-360deg);
+  }
+}
+
+@keyframes scale-down-bottom {
+  0% {
+    transform: scale(1);
+    transform-origin: 50% 100%;
+  }
+  100% {
+    transform: scale(2);
+    transform-origin: 50% 100%;
+  }
+}
+
+@keyframes scale-up-bottom {
+  0% {
+    transform: scale(1);
+    transform-origin: 50% 100%;
+  }
+  100% {
+    transform: scale(2);
+    transform-origin: 50% 100%;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes scale-up-ver-bottom {
+  0% {
+    transform: scaleY(0.3);
+    transform-origin: 0% 100%;
+  }
+  100% {
+    transform: scaleY(5);
+    transform-origin: 0% 100%;
   }
 }
