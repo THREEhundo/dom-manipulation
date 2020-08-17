@@ -72,6 +72,7 @@ const gameFlowController = (() => {
   const full = hiddenFull();
   const squares = document.querySelectorAll('.square');
   const squaresArr = [...squares];
+  const winDiv = document.querySelector('.win');
 
   let movesLeft = [null, null, null, null, null, null, null, null, null];
 
@@ -81,7 +82,7 @@ const gameFlowController = (() => {
     if (player2.getName() != 'Computer') {
       pushGameboard(elem, index, array, player2);
     } else if (player2.getName() == 'Computer') {
-      if (movesLeft.length == 0) {
+      if (movesLeft.length == 0 || winDiv.classList.replace('hide', 'show')) {
         return;
       }
       pushGameboard(openSquare(), index, array, player2);
@@ -173,6 +174,7 @@ const view = (() => {
   const p2Label = document.querySelector('#p2-label');
   const form = document.querySelector('form');
   const player2Img = document.querySelector('#player2-img');
+  const resetBtn = document.querySelector('#resetBtn');
 
   // Scoreboard
   const updateScoreboard = (piece, score) => {
@@ -228,6 +230,13 @@ const view = (() => {
     resetMovesLeft();
     squaresArr.forEach(square => square.innerText = '');
   }
+
+  resetBtn.addEventListener('click', () => {
+    reset();
+    player1score.innerText = 0;
+    compScore.innerText = 0;
+  });
+
 
   // Add retracting animation
   tab.addEventListener('mouseout', () => tab.classList.add('scale-down-bottom'));
@@ -392,9 +401,6 @@ const Player = (piece, name) => {
   }
 
   return {
-    // get type() {
-    //   return getPiece();
-    // },
     upScore,
     boardSplice,
     winningCondition,

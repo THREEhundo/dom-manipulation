@@ -266,3 +266,36 @@ input:required {
 #dual-textbox-wrapper {
   min-height: 40px;
 }
+
+#resetBtn {
+  justify-self: center;
+  background: center/60% no-repeat url("imgs/update.svg");
+  border: 0;
+  font-size: 0;
+  line-height: 0;
+  height: 50px;
+  width: 50px;
+  animation: rotate-back 1s 1 linear;
+}
+
+#resetBtn:hover {
+  animation: rotation 1s 1 linear;
+}
+
+@keyframes rotation {
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate-back {
+  50% {
+    transform: rotate(-180deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
