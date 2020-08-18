@@ -145,6 +145,7 @@ const view = (() => {
     resetGameboard
   } = board;
 
+  const boardArr = hiddenBoard();
   const modal = document.querySelector('.modal');
   const winnerName = document.querySelector('#winner');
   const modalContainer = document.querySelector('#container2');
@@ -153,7 +154,6 @@ const view = (() => {
   const winnerScore = document.querySelector('#score');
   const buttonX = document.querySelector('#buttonX');
   const tab = document.querySelector('.tab');
-  const boardArr = hiddenBoard();
   const playTxt = document.querySelector('#play');
   const inputs = document.querySelectorAll('input');
   const menu = document.querySelector('.menu');
@@ -162,7 +162,6 @@ const view = (() => {
   const pvp = document.querySelector('#pvp');
   const pvc = document.querySelector('#pvc');
   const p1TextBox = document.querySelector('#p1name');
-  const p1nameContainer = document.querySelector('#p1nameContainer');
   const p2nameContainer = document.querySelector('#p2nameContainer');
   const p2TextBox = document.querySelector('#p2name');
   const p1ScoreboardName = document.querySelector('#player1name');
@@ -170,9 +169,6 @@ const view = (() => {
   const textInputsArr = [...textInputs];
   const playButton = document.querySelector('#play-button');
   const menuContainer = document.querySelector('#container1');
-  const p1Label = document.querySelector('#p1-label');
-  const p2Label = document.querySelector('#p2-label');
-  const form = document.querySelector('form');
   const player2Img = document.querySelector('#player2-img');
   const resetBtn = document.querySelector('#resetBtn');
 
@@ -202,7 +198,6 @@ const view = (() => {
       modalContainer.style.display = 'none';
       reset();
     });
-
   }
 
   // toggle show & hide
@@ -412,14 +407,3 @@ const Player = (piece, name) => {
 
 let player1 = Player('X', 'Ninja');
 let player2 = Player('O', 'Computer');
-/*
-  Eventlistener on squares listening for a click & adds either X or O value to square
-  If X or O value is present don't allow the click to produce a value
-
-  Player 1 = X
-  Player 2 = O
-  If player 1 clicks on square add X
-  If player 2 clicks on square add O
-
-
-*/

@@ -1,68 +1,21 @@
 # Tic-Tac-Toe
 
 # Functionality
+This game has two modes, player vs. player, and player vs. AI. Games can be played with a score count. Scoreboard can be wiped.
 
 # Process
-Figure out which method and variables fit in each module or factory function.
-What remains hidden & what remains visible?
+I had a tough time deciding what each module would do. I boiled it down to three modules. One for the board, one for the view, and lastly the interaction between the board and view. Having these modules allowed for me to break down my needs down even further into smaller methods.
 
-Player should keep track of score & moves.
-Game board should keep track of the moves being placed on the board.
-Game flow should control the methods that go between Player factory functions and game board module.
+I created a factory function to be a template for the players that were going to be created, which kept track of the scores and moves.
 
-Problem - X's & O's
-Players input either X or O values using splice.
-Game board makes use of Player splice method?
-Game flow places X's & O's on DOM.
-Game board -> Player -> Game flow
+This project got me comfortable with using closures to hide data and making what's necessary available.
 
-Changed board.gameboard into a private variable
+I changed the squares Nodelist into an array so that I could grab the index of each node.
+Added a method to the game board to check if the array element's innerText was undefined. (Empty board)
 
-Changed squares Nodelist into an array to grab index of each node.
-Added method to game board to check if the array element is undefined. (Empty board)
-  Problem -> Splice is not correctly inserting X/O string into array
-  Solution -> Changed the first argument of the method boardSlice from boardArry[index] to index.
+Having the turn switch between player 1 and player 2 took me a bit to figure out. I decided on using reduce in conjunction with filter to determine the mode. With this function I was able to switch between the two even when in a tie condition.
+  *Just calling the board mode method will return the function. It needs assignment, and then calling to run!*
 
-  Problem -> every() method was not working on gameboard.
-  Solution -> Inherited hiddenEmpty method that checks to see if individual array element are undefined.
+The biggest problem I ran into was when the boardgame array was referenced from the resetGameboard method, it would point to a different version of the array and not the one already instantiated. I changed the boardgame array from a sparse array to an empty one and pushed values into it. Switched the winningCondition method to check the square's innerText instead of boardgame array elements positions.
 
-  Problem -> Need to find mode of gameboard array
-  Solution -> Added mode method to board module.
-              *Just calling the board mode method will return the function. It needs assignment, and then calling to run!*
-              Added logic for draw state to always produce 'O' so that 'X' is placed on the board following a draw state.
-
-  Problem -> reduce() did handle draw state.
-  Solution -> Replaced >= with > in mode method.
-
-Problem -> Build logic for win condition
-Either use 5th turn to check for winning condition or check against all winning conditions every round.
-
-  Problem -> Score would not update on the win condition.
-  Solution -> Set score's this to object that it was called on.
-
-  Problem -> Array being called to check for undefined was not correct.
-  Solution -> Switched undefined values to Number values.
-
-  Problem -> empty function's this is set to the global scope.
-  Solution -> Scrapped empty function and went with a counter variable to check for full board that ends in a tie.
-
-Problem -> Modal pops up upon winning or tying.
-  Problem -> a. toggle display none - grid
-             b. Link winner name to modal
-             c. Link winner score to modal
-
-Problem -> boardgame array would not reset to empty array because the reference to boardgame from the resetGameboard method points to a new boardgame array and not the one already instantiated.
-Solution -> changed boardgame from a sparse array to an empty one. Changed winningCondition method to check div innerText for 3 in a row instead of checking array positions.
-
-Problem -> Modal needs to pop on ties.
-Solution -> classList.replace() switches between show & hide for the corresponding messages.
-
-Problem -> Create modal to allow player to enter their name.
-Solution -> Use modal
-
-Problem -> Create Simple AI
-Solution -> filtered all empty divs and set the first empty div to AI's move.
-Set the AI's move to random open spot.
-
-Problem -> Implement restart button
-Solution -> Added button img and animation. Made the reset button itself wipe the scoreboard since the reset function was used in other areas and caused a full wipe when not necessary.
+I created an turn based AI that would randomly select an open square by filtering all the available squares and choosing one at random.
