@@ -1,6 +1,3 @@
-function getWindow() {
-  return global ? global.window : window;
-}
 const myLibrary = [];
 var database = firebase.database();
 
@@ -32,7 +29,6 @@ function addBookToLibrary(atitle, author, genre, pages, read, bookID) {
   addBookToDB(atitle, author, 'bookID', genre, pages, read);
 
   const bookLog = new Book(atitle, author, genre, pages, read, bookID, getKey());
-  // console.log(bookLog);
   myLibrary.push(bookLog);
   bookID = myLibrary.indexOf(bookLog);
   render(bookLog, bookID);
@@ -120,7 +116,6 @@ function generateTable(table, data) {
         tBody.append(row);
       }
     }
-    console.log(row, row.dataset.book);
     deleteBtn(row, row.dataset.book);
   }
   table.append(tBody);
