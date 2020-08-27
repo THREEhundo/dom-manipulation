@@ -1,26 +1,31 @@
+function getWindow() {
+  return global ? global.window : window;
+}
 const myLibrary = [];
 var database = firebase.database();
 
-function Book(atitle, author, genre, pages, read, bookID, key) {
-  this.atitle = atitle;
-  this.author = author;
-  this.genre = genre;
-  this.pages = pages;
-  this.read = read;
-  this.bookID = bookID;
-  this.key = key
-}
-
-// Toggling the Read checkbox will change the property in both the myLibrary array and the database
-Book.prototype.toggleRead = function(checkBox) {
-  if (checkBox) {
-    this.read = 'yes';
-    readYes(this.key);
-  } else if (!checkBox) {
-    this.read = 'no';
-    readNo(this.key);
+class Book {
+  constructor(atitle, author, genre, pages, read, bookID, key) {
+    this.atitle = atitle;
+    this.author = author;
+    this.genre = genre;
+    this.pages = pages;
+    this.read = read;
+    this.bookID = bookID;
+    this.key = key;
+  }
+  // Toggling the Read checkbox will change the property in both the myLibrary array and the database
+  toggleRead(checkBox) {
+    if (checkBox) {
+      this.read = 'yes';
+      readYes(this.key);
+    } else if (!checkBox) {
+      this.read = 'no';
+      readNo(this.key);
+    }
   }
 }
+
 
 function addBookToLibrary(atitle, author, genre, pages, read, bookID) {
   // take form send to database
