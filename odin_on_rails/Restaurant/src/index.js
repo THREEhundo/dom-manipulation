@@ -4,8 +4,8 @@ import home from './home';
 import menu from './menu';
 import firstLoad from './firstLoad';
 
+firstLoad();
 about();
 contact();
 home();
 menu();
-firstLoad();

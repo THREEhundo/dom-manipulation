@@ -28,6 +28,9 @@ function about() {
   container.appendChild(secondDiv);
   secondDiv.appendChild(secondH2);
   secondDiv.appendChild(secondP);
+  container.appendChild(thirdDiv);
+  thirdDiv.appendChild(thirdH2);
+  thirdDiv.appendChild(thirdP);
 
 
 }
