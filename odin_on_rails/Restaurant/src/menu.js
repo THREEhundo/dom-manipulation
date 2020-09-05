@@ -1,5 +1,8 @@
 function menu() {
   const content = document.querySelector('#content');
+  const itemsContainer = document.createElement('div');
+
+  itemsContainer.classList.add('menuContainer');
 
   const meat = {
     'BLACK ANGUS BEEF BRISKET': 'Sliced beef brisket, is slow smoked in house and coated with our house made dry rub blend.',
@@ -27,7 +30,8 @@ function menu() {
       itemDescription.innerHTML = value;
       itemDescription.classList.add('itemDescription');
 
-      content.appendChild(itemContainer);
+      content.appendChild(itemsContainer);
+      itemsContainer.appendChild(itemContainer);
       itemContainer.appendChild(item);
       itemContainer.appendChild(itemDescription);
     }
@@ -35,6 +39,7 @@ function menu() {
 
   menuItems(meat);
   menuItems(sides);
+  console.log(`hi`);
 }
 
 export default menu
