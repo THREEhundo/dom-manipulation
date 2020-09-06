@@ -4,6 +4,6 @@ import home from './home';
 import menu from './menu';
 
 home();
-about();
-contact();
-menu();
+// about();
+// contact();
+// menu();

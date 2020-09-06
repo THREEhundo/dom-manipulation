@@ -39,7 +39,6 @@ function menu() {
 
   menuItems(meat);
   menuItems(sides);
-  console.log(`hi`);
 }
 
 export default menu
