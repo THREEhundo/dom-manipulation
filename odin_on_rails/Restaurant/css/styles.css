@@ -18,6 +18,7 @@ h1 {
 #content {
   background-color: black;
   text-align: center;
+  height: 100vh;
 }
 
 #bannerHeader {
@@ -29,11 +30,13 @@ h1 {
   -webkit-text-stroke-color: gray;
   left: 0;
   right: 0;
+  top: 20vh;
   text-align: center;
 }
 
 .banner {
-  max-height: 100vh;
+  max-height: 95vh;
+  height: 95vh;
   width: 100%;
   object-fit: contain;
   display: block;
@@ -43,4 +46,46 @@ h1 {
 
 .menuContainer {
   display: none;
+}
+
+#tabsContainer {
+  display: flex;
+  width: 100%;
+  align-items: flex-end;
+}
+
+.tab {
+  width: 25vw;
+  height: 50px;
+}
+
+#home {
+  background-color: #f59b42;
+}
+
+#about {
+  background-color: #f57e42;
+}
+
+#menu {
+  background-color: #f56642;
+}
+
+#contact {
+  background-color:  #f54b42;
+}
+
+@media (max-width: 800px) {
+  #bannerHeader {
+    width: 678px;
+    top: 7vh;
+  }
+}
+
+@media (max-width: 678px) {
+  #bannerHeader {
+    top: 7vh;
+    font-size: 2.5em;
+    width: auto;
+  }
 }

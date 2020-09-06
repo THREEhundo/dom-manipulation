@@ -11,6 +11,20 @@ const home = () => {
 
   content.appendChild(header);
   content.appendChild(bImg);
+
+  // tabs for pages
+  const pages = ['home', 'about', 'menu', 'contact'];
+  const tabsContainer = document.createElement('div');
+  tabsContainer.id = 'tabsContainer';
+  pages.forEach((page) => {
+    const tab = document.createElement('div');
+    tab.classList.add('tab');
+    tab.id = page;
+    tabsContainer.appendChild(tab);
+  });
+
+  content.appendChild(tabsContainer);
+
 }
 
 export default home
