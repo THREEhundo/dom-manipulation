@@ -21,6 +21,16 @@ const home = () => {
     tab.classList.add('tab');
     tab.id = page;
     tabsContainer.appendChild(tab);
+    tab.addEventListener('mouseover', (e) => {
+      if (tab.classList.contains('scale-down-ver-bottom')) {
+        tab.classList.remove('scale-down-ver-bottom');
+      }
+      tab.classList.add('scale-up-ver-bottom')
+    });
+    tab.addEventListener('mouseout', (e) => {
+      tab.classList.add('scale-down-ver-bottom');
+      tab.classList.remove('scale-up-ver-bottom');
+    });
   });
 
   content.appendChild(tabsContainer);

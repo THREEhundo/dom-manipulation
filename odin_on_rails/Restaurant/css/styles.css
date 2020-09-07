@@ -34,29 +34,11 @@ h1 {
   text-align: center;
 }
 
-.banner {
-  max-height: 95vh;
-  height: 95vh;
-  width: 100%;
-  object-fit: contain;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.menuContainer {
-  display: none;
-}
 
 #tabsContainer {
   display: flex;
   width: 100%;
   align-items: flex-end;
-}
-
-.tab {
-  width: 25vw;
-  height: 50px;
 }
 
 #home {
@@ -75,6 +57,27 @@ h1 {
   background-color:  #f54b42;
 }
 
+.tab {
+  width: 25vw;
+  height: 50px;
+}
+
+.banner {
+  max-height: 95vh;
+  height: 95vh;
+  width: 100%;
+  object-fit: contain;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.menuContainer {
+  display: none;
+}
+
+/* Responsive View */
+
 @media (max-width: 800px) {
   #bannerHeader {
     width: 678px;
@@ -87,5 +90,37 @@ h1 {
     top: 7vh;
     font-size: 2.5em;
     width: auto;
+  }
+}
+
+/* Animation */
+
+.scale-up-ver-bottom {
+  animation: scale-up-ver-bottom 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@keyframes scale-up-ver-bottom {
+  0% {
+    transform: scaleY(1);
+    transform-origin: 0% 100%;
+  }
+  100% {
+    transform: scaleY(1.84);
+    transform-origin: 0% 100%;
+  }
+}
+
+.scale-down-ver-bottom {
+  animation: scale-down-ver-bottom 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) reverse both;
+}
+
+@keyframes scale-down-ver-bottom {
+  0% {
+    transform: scaleY(1);
+    transform-origin: 0% 100%;
+  }
+  100% {
+    transform: scaleY(1.84);
+    transform-origin: 0% 100%;
   }
 }
