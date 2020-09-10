@@ -21,6 +21,12 @@ h1 {
   height: 100vh;
 }
 
+/* Home */
+
+#homeContainer {
+  display: block;
+}
+
 #bannerHeader {
   position: absolute;
   margin: auto;
@@ -39,7 +45,8 @@ h1 {
   display: flex;
   width: 100%;
   align-items: flex-end;
-  z-index: 0;
+  position: absolute;
+  bottom: 0vh;
 }
 
 #titleContainer {
@@ -49,23 +56,6 @@ h1 {
   z-index: 1;
   position: absolute;
   bottom: 5vh;
-  /* opacity: 0; */
-}
-
-#title0 {
-
-}
-
-#title1 {
-
-}
-
-#title2 {
-
-}
-
-#title3 {
-
 }
 
 .home {
@@ -101,12 +91,14 @@ h1 {
   margin-right: auto;
 }
 
-.menuContainer {
-  display: none;
-}
-
 .tabTitle {
   opacity: 0;
+}
+
+/* About */
+
+#aboutContainer {
+  display: block;
 }
 
 /* Responsive View */
@@ -159,14 +151,14 @@ h1 {
 }
 
 .fade-in {
+  opacity: 1;
   transition-timing-function: ease-out;
   transform: translateY(0);
-  opacity: 1;
   transition: 2.2s;
 }
 
 .fade-out {
-  transition-timing-function: ease-out;
+  transition-timing-function: ease-in;
   transition: 1s;
   transform: translateY(200%);
   opacity: 0;

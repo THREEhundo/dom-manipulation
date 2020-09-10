@@ -1,5 +1,7 @@
 const home = () => {
   const content = document.querySelector('#content');
+  const homeContainer = document.createElement('div');
+  homeContainer.id = 'homeContainer';
   const pages = ['home', 'about', 'menu', 'contact'];
 
   const header = document.createElement('h1');
@@ -10,13 +12,8 @@ const home = () => {
   bImg.classList.add('banner');
   bImg.src = "../img/coals.png"
 
-  content.appendChild(header);
-  content.appendChild(bImg);
-
-  function show(title) {
-    title.style.opacity = 100;
-    console.log(1);
-  }
+  homeContainer.appendChild(header);
+  homeContainer.appendChild(bImg);
 
   // tabs for pages
   const tabsContainer = document.createElement('div');
@@ -56,9 +53,9 @@ const home = () => {
       title.classList.add('fade-out');
     });
   });
+  content.appendChild(homeContainer);
   content.appendChild(tabsTitleContainer);
   content.appendChild(tabsContainer);
-
 }
 
 export default home

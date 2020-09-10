@@ -1,6 +1,6 @@
 function about() {
   const content = document.querySelector('#content');
-  const container = document.createElement('div');
+  const aboutContainer = document.createElement('div');
   const firstDiv = document.createElement('div');
   const firstH2 = document.createElement('h2');
   const firstP = document.createElement('p');
@@ -10,6 +10,7 @@ function about() {
   const thirdDiv = document.createElement('div');
   const thirdH2 = document.createElement('h2');
   const thirdP = document.createElement('p');
+  aboutContainer.id = 'aboutContainer';
 
 
   firstH2.innerHTML = 'GO WHERE THE LOCALS GO';
@@ -21,14 +22,14 @@ function about() {
   thirdH2.innerHTML = 'AWARD WINNING';
   thirdP.innerHTML = "Our founders Sam Baik and Jon Jones met on the barbecue circuit in the mid-80s and after competing in Memphis' May’s World Championship Barbecue Cooking Contest and many other local and regional BBQ competitions, they made the leap from friends to business partners. The pit at the first Central BBQ on Central Avenue was fired up in 2002 and has been stoked ever since thanks to our wonderful customers.";
 
-  content.appendChild(container);
-  container.appendChild(firstDiv);
+  content.appendChild(aboutContainer);
+  aboutContainer.appendChild(firstDiv);
   firstDiv.appendChild(firstH2);
   firstDiv.appendChild(firstP);
-  container.appendChild(secondDiv);
+  aboutContainer.appendChild(secondDiv);
   secondDiv.appendChild(secondH2);
   secondDiv.appendChild(secondP);
-  container.appendChild(thirdDiv);
+  aboutContainer.appendChild(thirdDiv);
   thirdDiv.appendChild(thirdH2);
   thirdDiv.appendChild(thirdP);
 
