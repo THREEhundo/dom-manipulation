@@ -13,6 +13,11 @@ const home = () => {
   content.appendChild(header);
   content.appendChild(bImg);
 
+  function show(title) {
+    title.style.opacity = 100;
+    console.log(1);
+  }
+
   // tabs for pages
   const tabsContainer = document.createElement('div');
   tabsContainer.id = 'tabsContainer';
@@ -33,25 +38,22 @@ const home = () => {
     tab.classList.add(page);
     tabsContainer.appendChild(tab);
     tab.addEventListener('mouseover', (e) => {
-      console.log(title);
-      title.setTimeout(() => title.style.opactiy = 100, 1000)
-      // title.style.opacity = 100;
-      // causes tab animation to fire twice
-      title.classList.add('tracking-in-expand-fwd-bottom');
       if (tab.classList.contains('scale-down-ver-bottom')) {
         tab.classList.remove('scale-down-ver-bottom');
       }
       tab.classList.add('scale-up-ver-bottom');
-      if (title.classList.contains('tracking-in-expand-fwd-bottom')) {
-        title.classList.remove('tracking-in-expand-fwd-bottom');
+      if (title.classList.contains('fade-out')) {
+        title.classList.remove('fade-out');
       }
+      title.classList.add('fade-in');
     });
     tab.addEventListener('mouseout', (e) => {
-      title.style.opacity = 0;
       tab.classList.add('scale-down-ver-bottom');
       tab.classList.remove('scale-up-ver-bottom');
-      // title.classList.add('tracking-in-expand-fwd-top');
-      // title.classList.remove('tracking-in-expand-fwd-bottom');
+      if (title.classList.contains('fade-in')) {
+        title.classList.remove('fade-in');
+      }
+      title.classList.add('fade-out');
     });
   });
   content.appendChild(tabsTitleContainer);
