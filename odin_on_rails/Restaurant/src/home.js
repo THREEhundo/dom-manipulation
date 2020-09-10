@@ -33,6 +33,11 @@ const home = () => {
     tab.classList.add(page);
     tabsContainer.appendChild(tab);
     tab.addEventListener('mouseover', (e) => {
+      console.log(title);
+      title.setTimeout(() => title.style.opactiy = 100, 1000)
+      // title.style.opacity = 100;
+      // causes tab animation to fire twice
+      title.classList.add('tracking-in-expand-fwd-bottom');
       if (tab.classList.contains('scale-down-ver-bottom')) {
         tab.classList.remove('scale-down-ver-bottom');
       }
@@ -40,9 +45,9 @@ const home = () => {
       if (title.classList.contains('tracking-in-expand-fwd-bottom')) {
         title.classList.remove('tracking-in-expand-fwd-bottom');
       }
-      title.classList.add('tracking-in-expand-fwd-bottom');
     });
     tab.addEventListener('mouseout', (e) => {
+      title.style.opacity = 0;
       tab.classList.add('scale-down-ver-bottom');
       tab.classList.remove('scale-up-ver-bottom');
       // title.classList.add('tracking-in-expand-fwd-top');
