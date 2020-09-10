@@ -8,6 +8,7 @@
 
 body {
   background-color: #150D15;
+  overflow: hidden;
 }
 
 h1 {
