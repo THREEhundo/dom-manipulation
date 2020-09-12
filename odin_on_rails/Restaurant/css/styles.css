@@ -19,6 +19,7 @@ h1 {
 #content {
   text-align: center;
   height: 100vh;
+  overflow: auto;
 }
 
 /* Home */
@@ -45,7 +46,7 @@ h1 {
   display: flex;
   width: 100%;
   align-items: flex-end;
-  position: absolute;
+  position: fixed;
   bottom: 0vh;
 }
 
@@ -98,10 +99,62 @@ h1 {
 /* About */
 
 #aboutContainer {
-  display: block;
+  display: none;
+  color: white;
+  margin: auto;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+#aboutHeading {
+  font-family: 'Permanent Marker', cursive;
+  width: 100vw;
+}
+
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  background-color: gray;
+  border-radius: 5px;
+  max-width: 30vw;
+  min-width: 250px;
+  margin: 15px auto 55px auto;
+  justify-content: space-around;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.avatar-column {
+  flex: 1;
+  flex-basis: 100px;
+}
+
+.details-column {
+  flex: 2;
+  min-width: 200px;
+}
+
+.img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.aboutH2 {
+  font-family: 'Permanent Marker', cursive;
 }
 
 /* Responsive View */
+
+@media (max-width: 833px) {
+  #aboutHeading {
+    font-size: 5em;
+  }
+}
 
 @media (max-width: 800px) {
   #bannerHeader {

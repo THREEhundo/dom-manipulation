@@ -4,7 +4,7 @@ import home from './home';
 import menu from './menu';
 
 home();
-// about();
+about();
 // contact();
 // menu();
 const homeTab = document.querySelector('.home');
@@ -19,7 +19,14 @@ const contactContainer = document.querySelector('#contactContainer');
 
 homeTab.addEventListener('click', () => {
   homeContainer.style.display = 'block';
-  // aboutPage.style.display = 'none';
-  // menuPage.style.display = 'none';
-  // contactPage.style.display = 'none';
+  aboutContainer.style.display = 'none';
+  // menuContainer.style.display = 'none';
+  // contactContainer.style.display = 'none';
 });
+
+aboutTab.addEventListener('click', () => {
+  aboutContainer.style.display = 'flex';
+  homeContainer.style.display = 'none';
+  // menuContainer.style.display = 'none';
+  // contactContainer.style.display = 'none';
+})
