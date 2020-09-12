@@ -157,7 +157,7 @@ h1 {
   color: white;
   flex-flow: row wrap;
   display: none;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 #menuHeader {
@@ -167,6 +167,14 @@ h1 {
   background: linear-gradient(to bottom, #f59b42, #f6893d, #f7773c, #f7623e, #f54b42);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+#meatContainer {
+  border: 1px #f59b42 solid;
+}
+
+#sidesContainer {
+  border: 1px #f54b42 solid;
 }
 
 #meatItem {
@@ -204,6 +212,12 @@ h1 {
     top: 7vh;
     font-size: 2.5em;
     width: auto;
+  }
+}
+
+@media (max-width: 550px) {
+  #menuHeader {
+    font-size: 5em;
   }
 }
 
