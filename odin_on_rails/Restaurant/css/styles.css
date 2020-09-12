@@ -109,13 +109,16 @@ h1 {
 #aboutHeading {
   font-family: 'Permanent Marker', cursive;
   width: 100vw;
+  background: linear-gradient(to bottom, #f59b42, #f6893d, #f7773c, #f7623e, #f54b42);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .card {
   display: flex;
   flex-wrap: wrap;
   padding: 10px;
-  background-color: gray;
+  background-image: linear-gradient(to bottom, #f59b42, #f6893d, #f7773c, #f7623e, #f54b42);
   border-radius: 5px;
   max-width: 30vw;
   min-width: 250px;
@@ -146,6 +149,26 @@ h1 {
 
 .aboutH2 {
   font-family: 'Permanent Marker', cursive;
+}
+
+/* Menu */
+
+#menuContainer {
+  color: white;
+  flex-wrap: wrap;
+}
+
+#menuHeader {
+  width: 100vw;
+  color: white;
+  font-family: 'Permanent Marker', cursive;
+  background: linear-gradient(to bottom, #f59b42, #f6893d, #f7773c, #f7623e, #f54b42);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.menuItemContainer {
+  width: 200px;
 }
 
 /* Responsive View */
@@ -215,4 +238,49 @@ h1 {
   transition: 1s;
   transform: translateY(200%);
   opacity: 0;
+}
+
+.slide-in-bottom {
+  animation: slide-in-bottom 1.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes slide-in-bottom {
+  0% {
+    transform: translateY(1000px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-bottom1 {
+  animation: slide-in-bottom 2.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes slide-in-bottom1 {
+  0% {
+    transform: translateY(1000px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-bottom2 {
+  animation: slide-in-bottom 3.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes slide-in-bottom1 {
+  0% {
+    transform: translateY(1000px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
