@@ -155,7 +155,9 @@ h1 {
 
 #menuContainer {
   color: white;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
+  display: none;
+  justify-content: space-evenly;
 }
 
 #menuHeader {
@@ -167,8 +169,19 @@ h1 {
   -webkit-text-fill-color: transparent;
 }
 
+#meatItem {
+  padding: 5px;
+}
+
+#sideItem {
+  padding: 5px;
+}
+
 .menuItemContainer {
   width: 200px;
+  display: flex;
+  flex-flow: column wrap;
+  margin-bottom: 75px;
 }
 
 /* Responsive View */
