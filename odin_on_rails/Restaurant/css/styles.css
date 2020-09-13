@@ -106,7 +106,7 @@ h1 {
   justify-content: space-around;
 }
 
-#aboutHeading {
+.heading {
   font-family: 'Permanent Marker', cursive;
   width: 100vw;
   background: linear-gradient(to bottom, #f59b42, #f6893d, #f7773c, #f7623e, #f54b42);
@@ -192,7 +192,23 @@ h1 {
   margin-bottom: 75px;
 }
 
+/* Contacts */
+
+#contactContainer {
+  display: none;
+  color: white;
+  margin: auto;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
 /* Responsive View */
+
+@media (max-width: 1204px) {
+  #contactHeader {
+    font-size: 5em;
+  }
+}
 
 @media (max-width: 833px) {
   #aboutHeading {

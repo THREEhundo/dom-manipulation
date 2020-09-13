@@ -5,7 +5,7 @@ function about() {
   aboutContainer.id = 'aboutContainer';
   const heading = document.createElement('h1');
   heading.innerHTML = 'ABOUT US';
-  heading.id = 'aboutHeading';
+  heading.classList.add('heading');
   aboutContainer.appendChild(heading);
 
   for (let i = 0; i < 3; i++) {

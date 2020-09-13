@@ -55,11 +55,6 @@ function menu() {
         sideItem.appendChild(item);
         sideItem.appendChild(itemDescription);
       }
-
-
-      // menuContainer.appendChild(menuItemContainer);
-      // menuItemContainer.appendChild(item);
-      // menuItemContainer.appendChild(itemDescription);
     }
   }
 
