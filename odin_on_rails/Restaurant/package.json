@@ -4,7 +4,8 @@
   "description": "Restaurant App",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -13,6 +14,7 @@
   "author": "threeHUNDO",
   "license": "ISC",
   "devDependencies": {
+    "@webpack-cli/update": "^0.1.8",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   },

@@ -21,27 +21,68 @@ function contact() {
   hoursHeader.id = 'hoursHeader';
 
   const hoursArr = {
-    'Mon - Fri': '11AM - 11PM',
-    Sat: '11AM - MIDNIGHT',
-    Sun: '11AM - 2AM'
+    'MON - FRI': '11AM - 11PM',
+    'SAT': '11AM - MIDNIGHT',
+    'SUN': '11AM - 2AM'
   };
 
-  for (let x of hoursArr) {
-    const label = document.createElement('p');
-    const num = document.createElement('p');
-    label.innerHTML = x;
-    num.innerHTML = hoursArr[x];
+  for (let hours in hoursArr) {
+    const label = document.createElement('h3');
+    const num = document.createElement('h3');
+    label.innerHTML = hours;
+    num.innerHTML = hoursArr[hours];
     hoursContainer.appendChild(label);
     hoursContainer.appendChild(num);
+  };
+
+  const google = window.google;
+
+  function addGoogleMapScript() {
+    const script2 = document.createElement('script');
+    const url2 = 'https://polyfill.io/v3/polyfill.min.js?features=default';
+    script2.src = url2;
+    document.head.appendChild(script2);
+
+    const apiKey = 'AIzaSyAC6gFO8cSruaArgwqVrDi5wRZbWfB52DE';
+    const url = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
+    const script = document.createElement('script');
+    script.src = url;
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+  addGoogleMapScript();
+
+  const mapContainer = document.createElement('div');
+  mapContainer.id = 'map';
+
+  let map;
+  let marker;
+
+  function initMap() {
+    var slab = {
+      lat: 40.717896,
+      lng: -73.989821
+    }
+    map = new google.maps.Map(
+      document.getElementById('map'), {
+        center: slab,
+        zoom: 16
+      });
+    marker = new google.maps.Marker({
+      position: slab,
+      map: map
+    });
   }
 
+  window.initMap = initMap;
 
-  content.appendChild(contactContainer);
   contactContainer.appendChild(contactHeader);
   contactContainer.appendChild(locationContainer);
   locationContainer.appendChild(locationHeader);
   locationContainer.appendChild(address);
   contactContainer.appendChild(hoursContainer);
+  contactContainer.appendChild(mapContainer);
+  content.appendChild(contactContainer);
 
   let container = content.insertBefore(contactContainer, titleContainer);
 }

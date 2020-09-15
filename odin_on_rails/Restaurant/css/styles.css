@@ -202,6 +202,12 @@ h1 {
   justify-content: space-around;
 }
 
+#map {
+  height: 400px;
+  width: 650px;
+  background-color: gray;
+}
+
 /* Responsive View */
 
 @media (max-width: 1204px) {
