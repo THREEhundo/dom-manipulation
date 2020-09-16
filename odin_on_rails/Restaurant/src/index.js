@@ -45,3 +45,5 @@ contactTab.addEventListener('click', () => {
   aboutContainer.style.display = 'none';
   menuContainer.style.display = 'none';
 });
+
+const google = window.google;

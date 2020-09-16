@@ -5,10 +5,22 @@
     <title>COALS & SLABS</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Permanent+Marker&display=swap" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script>
+      function initMap() {
+        const mapLoc = {
+          center: { lat: 40.717896, lng: -73.989821 },
+          zoom: 16
+        };
+        const gMap = new google.maps.Map(document.getElementById('map'), mapLoc);
+        const marker = new google.maps.Marker({
+          position: { lat: 40.717896, lng: -73.989821 },
+          map: gMap
+        });
+      }
+    </script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAC6gFO8cSruaArgwqVrDi5wRZbWfB52DE&callback=initMap"></script>
   </head>
   <body>
-
     <div id="content"></div>
     <script src="main.js"></script>
   </body>
