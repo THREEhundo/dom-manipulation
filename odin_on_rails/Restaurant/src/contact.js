@@ -38,6 +38,33 @@ function contact() {
   const mapContainer = document.createElement('div');
   mapContainer.id = 'map';
 
+  const socials = ['facebook', 'instagram', 'ubereats'];
+  const appsContainer = document.createElement('div');
+  appsContainer.id = 'apps-container';
+
+  socials.forEach((app, i) => {
+    const socialContainer = document.createElement('div');
+    socialContainer.classList.add('social-container');
+    const socialLink = document.createElement('a');
+    socialLink.classList.add('social-link');
+    socialLink.href = `https://${app}.com`
+    const socialImg = document.createElement('img');
+    socialImg.classList.add('social-img');
+    socialImg.id = app;
+
+    if (i == 0) {
+      socialImg.src = '../img/facebook.png';
+    } else if (i == 1) {
+      socialImg.src = '../img/instagram.png';
+    } else {
+      socialImg.src = '../img/ubereats.png';
+    }
+
+    socialLink.appendChild(socialImg);
+    socialContainer.appendChild(socialLink);
+    appsContainer.appendChild(socialContainer);
+  });
+
   contactContainer.appendChild(contactHeader);
   contactContainer.appendChild(locationContainer);
   locationContainer.appendChild(locationHeader);
@@ -45,6 +72,7 @@ function contact() {
   contactContainer.appendChild(hoursContainer);
   contactContainer.appendChild(mapContainer);
   content.appendChild(contactContainer);
+  contactContainer.appendChild(appsContainer);
 
   let container = content.insertBefore(contactContainer, titleContainer);
 }

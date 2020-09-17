@@ -53,9 +53,10 @@ const home = () => {
       title.classList.add('fade-out');
     });
   });
-  content.appendChild(homeContainer);
-  content.appendChild(tabsTitleContainer);
+
   content.appendChild(tabsContainer);
+  content.appendChild(tabsTitleContainer);
+  content.appendChild(homeContainer);
 }
 
 export default home
