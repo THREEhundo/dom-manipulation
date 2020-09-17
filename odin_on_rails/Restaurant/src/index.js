@@ -13,10 +13,10 @@ const aboutTab = document.querySelector('.about');
 const menuTab = document.querySelector('.menu');
 const contactTab = document.querySelector('.contact');
 
-const homeContainer = document.querySelector('#homeContainer');
-const aboutContainer = document.querySelector('#aboutContainer');
-const menuContainer = document.querySelector('#menuContainer');
-const contactContainer = document.querySelector('#contactContainer');
+const homeContainer = document.querySelector('#home-container');
+const aboutContainer = document.querySelector('#about-container');
+const menuContainer = document.querySelector('#menu-container');
+const contactContainer = document.querySelector('#contact-container');
 
 homeTab.addEventListener('click', () => {
   homeContainer.style.display = 'block';

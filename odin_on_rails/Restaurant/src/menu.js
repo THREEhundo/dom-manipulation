@@ -1,9 +1,10 @@
 function menu() {
   const content = document.querySelector('#content');
+  const titleContainer = document.querySelector('#title-container');
   const menuContainer = document.createElement('div');
   const header = document.createElement('h1');
-  menuContainer.id = 'menuContainer';
-  header.id = 'menuHeader';
+  menuContainer.id = 'menu-container';
+  header.id = 'menu-header';
   header.innerHTML = 'MENU';
   menuContainer.appendChild(header);
   content.appendChild(menuContainer);
@@ -24,32 +25,32 @@ function menu() {
 
   function menuItems(items) {
     const meatContainer = document.createElement('div');
-    meatContainer.id = 'meatContainer';
-    meatContainer.classList.add('menuItemContainer');
+    meatContainer.id = 'meat-container';
+    meatContainer.classList.add('menu-item-container');
     const sidesContainer = document.createElement('div');
-    sidesContainer.id = 'sidesContainer';
-    sidesContainer.classList.add('menuItemContainer');
+    sidesContainer.id = 'sides-container';
+    sidesContainer.classList.add('menu-item-container');
     for (let [key, value] of Object.entries(items)) {
       const menuItemContainer = document.createElement('div');
       const item = document.createElement('h2');
       const itemDescription = document.createElement('p');
 
-      menuItemContainer.classList.add('menuItemContainer');
+      menuItemContainer.classList.add('menu-item-container');
       item.innerHTML = key;
       item.classList.add('item');
       itemDescription.innerHTML = value;
-      itemDescription.classList.add('itemDescription');
+      itemDescription.classList.add('item-description');
 
       if (items == meat) {
         const meatItem = document.createElement('div');
-        meatItem.id = 'meatItem';
+        meatItem.id = 'meat-item';
         menuContainer.appendChild(meatContainer);
         meatContainer.appendChild(meatItem);
         meatItem.appendChild(item);
         meatItem.appendChild(itemDescription);
       } else if (items == sides) {
         const sideItem = document.createElement('div');
-        sideItem.id = 'sideItem';
+        sideItem.id = 'side-item';
         menuContainer.appendChild(sidesContainer);
         sidesContainer.appendChild(sideItem);
         sideItem.appendChild(item);

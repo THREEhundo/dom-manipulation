@@ -1,8 +1,8 @@
 function about() {
   const content = document.querySelector('#content');
   const aboutContainer = document.createElement('div');
-  const titleContainer = document.querySelector('#titleContainer');
-  aboutContainer.id = 'aboutContainer';
+  const titleContainer = document.querySelector('#title-container');
+  aboutContainer.id = 'about-container';
   const heading = document.createElement('h1');
   heading.innerHTML = 'ABOUT US';
   heading.classList.add('heading');
@@ -22,11 +22,11 @@ function about() {
     const secondColumn = document.createElement('div');
     secondColumn.classList.add('details-column')
     const cardContent = document.createElement('div');
-    cardContent.classList.add('cardContent');
+    cardContent.classList.add('card-content');
     const h2 = document.createElement('h2');
-    h2.classList.add('aboutH2');
+    h2.classList.add('about-h2');
     const p = document.createElement('p');
-    p.classList.add('aboutP');
+    p.classList.add('about-p');
     if (i == 0) {
       card.classList.add('slide-in-bottom');
       img.src = '../img/meat.jpg';

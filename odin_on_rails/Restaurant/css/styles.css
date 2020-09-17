@@ -24,11 +24,11 @@ h1 {
 
 /* Home */
 
-#homeContainer {
+#home-container {
   display: block;
 }
 
-#bannerHeader {
+#banner-header {
   position: absolute;
   margin: auto;
   font-family: 'Permanent Marker', cursive;
@@ -42,7 +42,7 @@ h1 {
 }
 
 
-#tabsContainer {
+#tabs-container {
   display: flex;
   width: 100%;
   align-items: flex-end;
@@ -50,7 +50,7 @@ h1 {
   bottom: 0vh;
 }
 
-#titleContainer {
+#title-container {
   display: flex;
   width: 100%;
   height: 50px;
@@ -92,13 +92,13 @@ h1 {
   margin-right: auto;
 }
 
-.tabTitle {
+.tab-title {
   opacity: 0;
 }
 
 /* About */
 
-#aboutContainer {
+#about-container {
   display: none;
   color: white;
   margin: auto;
@@ -147,20 +147,20 @@ h1 {
   border-radius: 50%;
 }
 
-.aboutH2 {
+.about-h2 {
   font-family: 'Permanent Marker', cursive;
 }
 
 /* Menu */
 
-#menuContainer {
+#menu-container {
   color: white;
   flex-flow: row wrap;
   display: none;
   justify-content: center;
 }
 
-#menuHeader {
+#menu-header {
   width: 100vw;
   color: white;
   font-family: 'Permanent Marker', cursive;
@@ -169,23 +169,23 @@ h1 {
   -webkit-text-fill-color: transparent;
 }
 
-#meatContainer {
+#meat-container {
   border: 1px #f59b42 solid;
 }
 
-#sidesContainer {
+#sides-container {
   border: 1px #f54b42 solid;
 }
 
-#meatItem {
+#meat-item {
   padding: 5px;
 }
 
-#sideItem {
+#side-item {
   padding: 5px;
 }
 
-.menuItemContainer {
+.menu-item-container {
   width: 200px;
   display: flex;
   flex-flow: column wrap;
@@ -194,7 +194,7 @@ h1 {
 
 /* Contacts */
 
-#contactContainer {
+#contact-container {
   display: none;
   color: white;
   margin: auto;
@@ -226,26 +226,26 @@ h1 {
 /* Responsive View */
 
 @media (max-width: 1204px) {
-  #contactHeader {
+  #contact-header {
     font-size: 5em;
   }
 }
 
 @media (max-width: 833px) {
-  #aboutHeading {
+  #about-heading {
     font-size: 5em;
   }
 }
 
 @media (max-width: 800px) {
-  #bannerHeader {
+  #banner-header {
     width: 678px;
     top: 7vh;
   }
 }
 
 @media (max-width: 678px) {
-  #bannerHeader {
+  #banner-header {
     top: 7vh;
     font-size: 2.5em;
     width: auto;
@@ -253,7 +253,7 @@ h1 {
 }
 
 @media (max-width: 550px) {
-  #menuHeader {
+  #menu-header {
     font-size: 5em;
   }
 }

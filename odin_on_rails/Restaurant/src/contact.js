@@ -1,24 +1,25 @@
 function contact() {
   const content = document.querySelector('#content');
+  const titleContainer = document.querySelector('#title-container');
   const contactContainer = document.createElement('div');
-  contactContainer.id = 'contactContainer';
+  contactContainer.id = 'contact-container';
   const contactHeader = document.createElement('h1');
   contactHeader.classList.add('heading');
-  contactHeader.id = 'contactHeader';
+  contactHeader.id = 'contact-header';
   contactHeader.innerHTML = 'GET IN TOUCH';
 
   const locationContainer = document.createElement('div');
-  locationContainer.id = 'locationContainer';
+  locationContainer.id = 'location-container';
   const locationHeader = document.createElement('h2');
   locationHeader.innerHTML = 'LOWER EAST SIDE';
   const address = document.createElement('h3');
   address.id = 'address';
   address.innerHTML = '247 Broome St. New York, NY 10002';
   const hoursContainer = document.createElement('div');
-  hoursContainer.id = 'hoursContainer';
+  hoursContainer.id = 'hours-container';
   const hoursHeader = document.createElement('h2');
   hoursHeader.innerHTML = 'HOURS';
-  hoursHeader.id = 'hoursHeader';
+  hoursHeader.id = 'hours-header';
 
   const hoursArr = {
     'MON - FRI': '11AM - 11PM',
@@ -27,8 +28,8 @@ function contact() {
   };
 
   for (let hours in hoursArr) {
-    const label = document.createElement('h3');
-    const num = document.createElement('h3');
+    const label = document.createElement('h2');
+    const num = document.createElement('h2');
     label.innerHTML = hours;
     num.innerHTML = hoursArr[hours];
     hoursContainer.appendChild(label);

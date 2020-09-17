@@ -1,11 +1,11 @@
 const home = () => {
   const content = document.querySelector('#content');
   const homeContainer = document.createElement('div');
-  homeContainer.id = 'homeContainer';
+  homeContainer.id = 'home-container';
   const pages = ['home', 'about', 'menu', 'contact'];
 
   const header = document.createElement('h1');
-  header.id = 'bannerHeader'
+  header.id = 'banner-header'
   header.innerHTML = 'COALS & SLABS';
 
   const bImg = document.createElement('img');
@@ -17,16 +17,16 @@ const home = () => {
 
   // tabs for pages
   const tabsContainer = document.createElement('div');
-  tabsContainer.id = 'tabsContainer';
+  tabsContainer.id = 'tabs-container';
 
   const tabsTitleContainer = document.createElement('div');
-  tabsTitleContainer.id = 'titleContainer';
+  tabsTitleContainer.id = 'title-container';
 
 
   pages.forEach((page, index) => {
     const title = document.createElement('div');
     title.innerHTML = page;
-    title.classList.add('tabTitle', 'tab');
+    title.classList.add('tab-title', 'tab');
     title.id = `title${index}`;
     tabsTitleContainer.appendChild(title);
 
