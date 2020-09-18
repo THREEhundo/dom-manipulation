@@ -47,9 +47,6 @@ function contact() {
       span.innerHTML = '...........................................';
       label.appendChild(span);
     }
-    console.log(hours);
-    hoursContainer.appendChild(label);
-    hoursContainer.appendChild(num);
   };
 
   const mapContainer = document.createElement('div');
