@@ -29,9 +29,25 @@ function contact() {
 
   for (let hours in hoursArr) {
     const label = document.createElement('h2');
-    const num = document.createElement('h2');
+    label.classList.add('days');
     label.innerHTML = hours;
+
+    const num = document.createElement('h2');
+    num.classList.add('hours');
     num.innerHTML = hoursArr[hours];
+
+    const span = document.createElement('span');
+    if (hours == 'MON - FRI') {
+      span.innerHTML = '...........................';
+      label.appendChild(span);
+    } else if (hours == 'SAT') {
+      span.innerHTML = '.............................';
+      label.appendChild(span);
+    } else if (hours == 'SUN') {
+      span.innerHTML = '...........................................';
+      label.appendChild(span);
+    }
+    console.log(hours);
     hoursContainer.appendChild(label);
     hoursContainer.appendChild(num);
   };
