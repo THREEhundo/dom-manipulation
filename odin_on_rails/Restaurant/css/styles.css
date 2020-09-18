@@ -20,6 +20,10 @@ iframe {
   z-index: 9;
 }
 
+span {
+  color: #f59b42;
+}
+
 #content {
   text-align: center;
   height: 100vh;
@@ -212,6 +216,7 @@ iframe {
   background-color: gray;
   width: 70%;
   margin-top: 25px;
+  border: 4px #f54b42 solid;
 }
 
 #apps-container {
