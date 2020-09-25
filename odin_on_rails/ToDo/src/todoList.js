@@ -1,47 +1,9 @@
-const ToDoItem = (data) => {
-  let title = data.title;
-  let description = data.description;
-  let dueDate = data.dueDate;
-  let priority = data.priority;
-  let note = data.note;
-  let finished = false;
+const Lists = () => {
+  // Create Lists Object
+  // Add List
+  // Edit List Name
+  // Delete List
+  // Repopulate Lists
 
-  const getTitle = () => title;
-  const getDescription = () => description;
-  const getDueDate = () => dueDate;
-  const getPriority = () => priority;
-  const getNote = () => note;
-
-  const editTitle = (newTitle) => title = newTitle;
-  const editDescription = (newDescription) => description = newDescription;
-  const editDueDate = (newDueDate) => dueDate = newDueDate;
-  const editPriority = (newPriority) => priority = newPriority;
-  const editNote = (newNote) => note = newNote;
-  const toggleFinished = () => finished = !finished;
-  const isFinished = () => finished;
-
-  return {
-    getTitle,
-    getDescription,
-    getDueDate,
-    getPriority,
-    getNote,
-    editTitle,
-    editDescription,
-    editDueDate,
-    editPriority,
-    editNote,
-    toggleFinished,
-    isFinished,
-    title,
-    description,
-    dueDate,
-    priority,
-    note,
-    finished
-  }
-}
-
-export {
-  ToDoItem
+  // Add To Do Item to List
 }
