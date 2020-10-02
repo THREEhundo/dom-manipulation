@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  margin: 0;
 }
 
 /* SIDEBAR */
@@ -7,6 +8,8 @@
   height: 100vh;
   width: 20vw;
   background-color: orange;
+  top: 0;
+  left: 0;
 }
 
 .sidebar-item {
