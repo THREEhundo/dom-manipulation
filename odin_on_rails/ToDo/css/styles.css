@@ -4,6 +4,10 @@
   font-family: 'Noto Sans JP', sans-serif;
 }
 
+button:focus {
+  outline: none;
+}
+
 /* SIDEBAR */
 .sidebar {
   height: 100vh;
@@ -11,11 +15,21 @@
   background-color: orange;
   top: 0;
   left: 0;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
 }
 
 .sidebar-item {
   display: grid;
   flex-flow: column;
+  padding: 15px;
+}
+
+.create-task-btn {
+  border-radius: 15px;
+  background-image: linear-gradient(to top, #ebf111, #b2f766, #88f59e, #7beec6, #91e3db);
+  border: none;
 }
 
 .sidebar-item-heading-title {
@@ -24,6 +38,11 @@
 
 .sidebar-item-heading-title-after {
   display: inline-flex;
+}
+
+.sidebar-collapse-button {
+  border-radius: 15px;
+  border: none;
 }
 
 .caret {
