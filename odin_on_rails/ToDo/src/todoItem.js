@@ -19,9 +19,9 @@ const ToDoItem = (data) => {
   const editDueDate = (newDueDate) => dueDate = newDueDate;
   const editPriority = (newPriority) => priority = newPriority;
   const editNote = (newNote) => note = newNote;
-  const addChecklistItem => (newChecklistItem) => checklist.push(newChecklistItem);
-  const deleteChecklistItem => (checklistItemIndex) => checklist.splice(checklistItemIndex, 1);
-  const editChecklistItem => (checklistItemIndex, text) => checklist.splice(checklistItemIndex, 1 text);
+  // const addChecklistItem => (newChecklistItem) => checklist.push(newChecklistItem);
+  // const deleteChecklistItem => (checklistItemIndex) => checklist.splice(checklistItemIndex, 1);
+  // const editChecklistItem => (checklistItemIndex, text) => checklist.splice(checklistItemIndex, 1 text);
   const toggleFinished = () => finished = !finished;
   const isFinished = () => finished;
 
@@ -37,6 +37,9 @@ const ToDoItem = (data) => {
     editDueDate,
     editPriority,
     editNote,
+    // addChecklistItem,
+    // deleteChecklistItem,
+    // editChecklistItem,
     toggleFinished,
     isFinished,
     title,
@@ -48,6 +51,4 @@ const ToDoItem = (data) => {
   }
 }
 
-export {
-  ToDoItem
-}
+export default ToDoItem

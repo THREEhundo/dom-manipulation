@@ -7,7 +7,7 @@ const Lists = (list) => {
   // Edit List Name
   const editTitle = (newTitle) => title = newTitle;
   // Delete List
-  const deleteList = (list) => delete list;
+  const deleteList = (list) => list = null;
   // Repopulate Lists
   // Add To Do Item to List
 
@@ -18,6 +18,4 @@ const Lists = (list) => {
   }
 }
 
-export {
-  Lists
-}
+export default Lists

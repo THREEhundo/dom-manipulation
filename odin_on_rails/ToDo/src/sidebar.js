@@ -10,13 +10,11 @@ const Sidebar = () => {
     popUp.id = 'task-modal';
   }
 
-  createTask.addEventListener('click', )
+  const createTaskEventListener = createTask.addEventListener('click', taskModal)
 
   return {
-
+    createTaskEventListener
   }
 }
 
-export {
-  Sidebar
-}
+export default Sidebar
