@@ -4,4 +4,4 @@ import Sidebar from './sidebar';
 
 // ToDoItem();
 // Lists();
-// Sidebar();
+Sidebar();
