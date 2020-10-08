@@ -39,7 +39,10 @@ const Sidebar = () => {
       type: 'date',
       id: 'start',
       name: 'start-date',
-      // value: minDate
+      value: minMax(min),
+      min: minMax(min),
+      max: minMax(max),
+      required: true,
     },
     "item-container-4": {
       type: 'submit',
@@ -53,6 +56,7 @@ function modalBuild(obj, form) {
     let popupInput;
     let popupInputLabel;
     let popupNotepad;
+
     mod.shift();
 
     const itemContainer = document.createElement('div');
@@ -65,6 +69,17 @@ function modalBuild(obj, form) {
         popupInputLabel.classList.add('label');
         popupInputLabel.innerHTML = item.innerHTML;
         popupInputLabel.setAttribute("for", item.for);
+      }
+      if (item.type == 'date') {
+        popupInput = document.createElement('input');
+        popupInput.setAttribute('type', item.type);
+        popupInput.classList.add('input');
+        popupInput.id = item.id;
+        popupInput.name = item.name;
+        popupInput.value = item.value;
+        popupInput.min = item.min;
+        popupInput.max = item.max;
+        popupInput.setAttribute('required', true);
       }
       if (item.type == 'input') {
         popupInput = document.createElement('input');
@@ -85,9 +100,6 @@ function modalBuild(obj, form) {
         popupInput = document.createElement('input');
         popupInput.value = item.value;
         popupInput.setAttribute('type', item.type)
-      }
-      if (item.type == 'date') {
-
       }
     }
 
