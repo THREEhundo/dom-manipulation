@@ -1,3 +1,5 @@
+import { compareAsc, format, formatDistance, formatRelative, subDays, set, max, min } from 'date-fns'
+
 const Sidebar = () => {
   const todoContainer = document.querySelector('#todo-container');
   const createTask = document.querySelector('#create-task');
@@ -5,7 +7,14 @@ const Sidebar = () => {
   const lists = document.querySelector('#lists');
   const calendar = document.querySelector('#calendar');
   const taskModal = document.querySelector('#task-modal');
-  // const createTaskNotes = document.querySelector('#create-task-notes');
+
+  // Calendar date minMax
+  function minMax(el) {
+    return format(el([
+      new Date(),
+      new Date(2030, 1, 11)
+    ]), "MM-dd-yyyy")
+  }
 
   const modalFeatures = {
     "item-container-0" :{
@@ -27,6 +36,12 @@ const Sidebar = () => {
       cols: 30
     },
     "item-container-3": {
+      type: 'date',
+      id: 'start',
+      name: 'start-date',
+      // value: minDate
+    },
+    "item-container-4": {
       type: 'submit',
       value: 'Submit'
     }
@@ -71,6 +86,9 @@ function modalBuild(obj, form) {
         popupInput.value = item.value;
         popupInput.setAttribute('type', item.type)
       }
+      if (item.type == 'date') {
+
+      }
     }
 
     form.appendChild(itemContainer);
@@ -83,7 +101,6 @@ function modalBuild(obj, form) {
       itemContainer.appendChild(popupNotepad);
     }
   }
-
 }
 
   // Create Task Modal
@@ -97,7 +114,6 @@ function modalBuild(obj, form) {
     // popupTitle.appendChild(popupInputLabel);
     // popupTitle.appendChild(popupInput);
   }
-  // console.log(popupInputLabel.for);
 
   const createTaskEventListener = createTask.addEventListener('click', createTaskModal);
 
