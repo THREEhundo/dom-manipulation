@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-plugin-dynamic-import-webpack": "^1.1.0",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   },

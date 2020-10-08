@@ -14,7 +14,7 @@ const Sidebar = () => {
       innerHTML: 'Task: ',
       required: true,
     },
-    "item-container-1": {
+    "item-container-1":{
       type: 'input',
       for: 'description',
       innerHTML: 'Description: ',
@@ -25,41 +25,65 @@ const Sidebar = () => {
       innerHTML: 'Notes: ',
       rows: 5,
       cols: 30
+    },
+    "item-container-3": {
+      type: 'submit',
+      value: 'Submit'
     }
-
   }
 
 function modalBuild(obj, form) {
-  let popupTitleInput;
-  let notes;
-  for (let item in obj) {
+  const mods = Object.entries(obj);
+  for (let mod of mods) {
+    let popupInput;
+    let popupInputLabel;
+    let popupNotepad;
+    mod.shift();
+
     const itemContainer = document.createElement('div');
     itemContainer.classList.add('popup-item-container');
+    itemContainer.id = `popup-item-container${mods.indexOf(mod)}`;
 
-    const popupTitleLabel = document.createElement('label');
-
-    for (let [key, value] of Object.entries(obj[item])) {
-      if (value == 'input') {
-        popupTitleInput = document.createElement('input');
-      } else if (key == 'for') {
-        popupTitleLabel.setAttribute("for", value);
-        popupTitleInput.id = value;
-      } else if (key == 'innerHTML') {
-        popupTitleLabel.innerHTML = value;
-      } else if (key == 'required') {
-        popupTitleInput.required = value;
-      } else if (key == 'rows') {
-        notes = document.createElement('textarea');
-        notes.id = 'create-task-notes';
-        notes.setAttribute('rows', value);
-        notes.setAttribute('cols', value);
+    for (let item of mod) {
+      if (item.innerHTML) {
+        popupInputLabel = document.createElement('label');
+        popupInputLabel.classList.add('label');
+        popupInputLabel.innerHTML = item.innerHTML;
+        popupInputLabel.setAttribute("for", item.for);
+      }
+      if (item.type == 'input') {
+        popupInput = document.createElement('input');
+        popupInput.classList.add('input');
+        popupInput.id = item.for;
+        popupInput.setAttribute('name', item.for);
+        // Adding required to Task Name
+        if (item.required) {
+          popupInput.setAttribute('required', true);
+        }
+      } else if (item.type == 'textarea') {
+        popupNotepad = document.createElement('textarea');
+        popupNotepad.id = item.for;
+        popupNotepad.setAttribute('name', item.for);
+        popupNotepad.setAttribute('rows', item.rows);
+        popupNotepad.setAttribute('cols', item.cols);
+      } else if (item.type == 'submit') {
+        popupInput = document.createElement('input');
+        popupInput.value = item.value;
+        popupInput.setAttribute('type', item.type)
       }
     }
+
     form.appendChild(itemContainer);
-    itemContainer.appendChild(popupTitleLabel);
-    itemContainer.appendChild(popupTitleInput);
-    // itemContainer.appendChild(notes);
+    if (popupInputLabel) {
+      itemContainer.appendChild(popupInputLabel);
+    }
+    if (popupInput) {
+      itemContainer.appendChild(popupInput);
+    } else if (popupNotepad) {
+      itemContainer.appendChild(popupNotepad);
+    }
   }
+
 }
 
   // Create Task Modal
@@ -70,16 +94,15 @@ function modalBuild(obj, form) {
     todoContainer.appendChild(popup);
     modalBuild(modalFeatures, popup);
     // popup.appendChild(popupTitle);
-    // popupTitle.appendChild(popupTitleLabel);
-    // popupTitle.appendChild(popupTitleInput);
+    // popupTitle.appendChild(popupInputLabel);
+    // popupTitle.appendChild(popupInput);
   }
-  // console.log(popupTitleLabel.for);
+  // console.log(popupInputLabel.for);
 
-  const createTaskEventListener = createTask.addEventListener('click', createTaskModal)
+  const createTaskEventListener = createTask.addEventListener('click', createTaskModal);
 
   return {
     createTaskEventListener
   }
 }
-
 export default Sidebar
