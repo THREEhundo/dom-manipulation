@@ -51,18 +51,6 @@ button:focus {
 }
 
 /* Create Task Form */
-#task-modal {
-  display: flex;
-  position: absolute;
-  width: 255px;
-  flex-flow: column wrap;
-  justify-content: center;
-  top: 36%;
-  left: 46%;
-  border: 1px solid black;
-  background-color:
-}
-
 #task-modal-container {
   width: 100vw;
   height: 100vh;
@@ -70,4 +58,29 @@ button:focus {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+#task-modal {
+  display: flex;
+  position: absolute;
+  width: 320px;
+  flex-flow: column wrap;
+  top: 36%;
+  left: 40%;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.popup-item-container {
+  display: flex;
+  padding: 5px;
+  justify-content: space-between;
+}
+
+.input {
+  align-self: flex-end;
+}
+
+#popup-item-container3, #popup-item-container4 {
+  justify-content: flex-end;
 }
