@@ -7,14 +7,7 @@ const Sidebar = () => {
   const lists = document.querySelector('#lists');
   const calendar = document.querySelector('#calendar');
   const taskModal = document.querySelector('#task-modal');
-
-  // Calendar date minMax
-  function minMax(el) {
-    return format(el([
-      new Date(),
-      new Date(2030, 1, 11)
-    ]), "MM-dd-yyyy")
-  }
+  const taskContainer = document.querySelector('#task-modal-container');
 
   const modalFeatures = {
     "item-container-0" :{
@@ -50,84 +43,115 @@ const Sidebar = () => {
     }
   }
 
-function modalBuild(obj, form) {
-  const mods = Object.entries(obj);
-  for (let mod of mods) {
-    let popupInput;
-    let popupInputLabel;
-    let popupNotepad;
+  // Calendar date minMax
+  function minMax(el) {
+    return format(el([
+      new Date(),
+      new Date(2030, 1, 11)
+    ]), "MM-dd-yyyy")
+  }
 
-    mod.shift();
+  function modalBuild(obj, form) {
+    const mods = Object.entries(obj);
+    for (let mod of mods) {
+      let popupInput;
+      let popupInputLabel;
+      let popupNotepad;
 
-    const itemContainer = document.createElement('div');
-    itemContainer.classList.add('popup-item-container');
-    itemContainer.id = `popup-item-container${mods.indexOf(mod)}`;
+      mod.shift();
 
-    for (let item of mod) {
-      if (item.innerHTML) {
-        popupInputLabel = document.createElement('label');
-        popupInputLabel.classList.add('label');
-        popupInputLabel.innerHTML = item.innerHTML;
-        popupInputLabel.setAttribute("for", item.for);
-      }
-      if (item.type == 'date') {
-        popupInput = document.createElement('input');
-        popupInput.setAttribute('type', item.type);
-        popupInput.classList.add('input');
-        popupInput.id = item.id;
-        popupInput.name = item.name;
-        popupInput.value = item.value;
-        popupInput.min = item.min;
-        popupInput.max = item.max;
-        popupInput.setAttribute('required', true);
-      }
-      if (item.type == 'input') {
-        popupInput = document.createElement('input');
-        popupInput.classList.add('input');
-        popupInput.id = item.for;
-        popupInput.setAttribute('name', item.for);
-        // Adding required to Task Name
-        if (item.required) {
+      const itemContainer = document.createElement('div');
+      itemContainer.classList.add('popup-item-container');
+      itemContainer.id = `popup-item-container${mods.indexOf(mod)}`;
+
+      for (let item of mod) {
+        if (item.innerHTML) {
+          popupInputLabel = document.createElement('label');
+          popupInputLabel.classList.add('label');
+          popupInputLabel.innerHTML = item.innerHTML;
+          popupInputLabel.setAttribute("for", item.for);
+        }
+        if (item.type == 'date') {
+          popupInput = document.createElement('input');
+          popupInput.setAttribute('type', item.type);
+          popupInput.classList.add('input');
+          popupInput.id = item.id;
+          popupInput.name = item.name;
+          popupInput.value = item.value;
+          popupInput.min = item.min;
+          popupInput.max = item.max;
           popupInput.setAttribute('required', true);
         }
-      } else if (item.type == 'textarea') {
-        popupNotepad = document.createElement('textarea');
-        popupNotepad.id = item.for;
-        popupNotepad.setAttribute('name', item.for);
-        popupNotepad.setAttribute('rows', item.rows);
-        popupNotepad.setAttribute('cols', item.cols);
-      } else if (item.type == 'submit') {
-        popupInput = document.createElement('input');
-        popupInput.value = item.value;
-        popupInput.setAttribute('type', item.type)
+        if (item.type == 'input') {
+          popupInput = document.createElement('input');
+          popupInput.classList.add('input');
+          popupInput.id = item.for;
+          popupInput.setAttribute('name', item.for);
+
+          // Adding required to Task Name
+          if (item.required) {
+            popupInput.setAttribute('required', true);
+          }
+
+        } else if (item.type == 'textarea') {
+          popupNotepad = document.createElement('textarea');
+          popupNotepad.id = item.for;
+          popupNotepad.setAttribute('name', item.for);
+          popupNotepad.setAttribute('rows', item.rows);
+          popupNotepad.setAttribute('cols', item.cols);
+        } else if (item.type == 'submit') {
+          popupInput = document.createElement('input');
+          popupInput.value = item.value;
+          popupInput.setAttribute('type', item.type)
+        }
+      }
+
+      form.appendChild(itemContainer);
+      if (popupInputLabel) {
+        itemContainer.appendChild(popupInputLabel);
+      }
+      if (popupInput) {
+        itemContainer.appendChild(popupInput);
+      } else if (popupNotepad) {
+        itemContainer.appendChild(popupNotepad);
       }
     }
+  }
 
-    form.appendChild(itemContainer);
-    if (popupInputLabel) {
-      itemContainer.appendChild(popupInputLabel);
-    }
-    if (popupInput) {
-      itemContainer.appendChild(popupInput);
-    } else if (popupNotepad) {
-      itemContainer.appendChild(popupNotepad);
+  function escape(e) {
+    if(e.key === "Escape") {
+      const taskContainer = document.querySelector('#task-modal-container');
+      taskContainer.style.display = 'none';
     }
   }
-}
-
   // Create Task Modal
   const createTaskModal = () => {
+    const formContainer = document.createElement('div');
+    formContainer.id = 'task-modal-container';
     const popup = document.createElement('form');
     popup.id = 'task-modal';
 
-    todoContainer.appendChild(popup);
+    todoContainer.appendChild(formContainer);
+    formContainer.appendChild(popup);
     modalBuild(modalFeatures, popup);
-    // popup.appendChild(popupTitle);
-    // popupTitle.appendChild(popupInputLabel);
-    // popupTitle.appendChild(popupInput);
+    formContainer.addEventListener('keydown', escape);
   }
 
-  const createTaskEventListener = createTask.addEventListener('click', createTaskModal);
+  const showTaskModal = () => {
+    taskContainer.style.display = 'block';
+  }
+
+  const createTaskEventListener = createTask.addEventListener('click', (taskContainer) => {
+    let ticker = 0;
+    if (ticker > 0) {
+      console.log(`click`);
+      taskContainer.style.display = 'block';
+    } else {
+      createTaskModal();
+      ticker++;
+      console.log(ticker);
+    }
+  });
 
   return {
     createTaskEventListener
