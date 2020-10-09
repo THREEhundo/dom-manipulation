@@ -7,8 +7,7 @@ const Sidebar = () => {
   const lists = document.querySelector('#lists');
   const calendar = document.querySelector('#calendar');
   const taskModal = document.querySelector('#task-modal');
-  const taskContainer = document.querySelector('#task-modal-container');
-
+  var ticker = 0;
   const modalFeatures = {
     "item-container-0" :{
       type: 'input',
@@ -137,19 +136,13 @@ const Sidebar = () => {
     formContainer.addEventListener('keydown', escape);
   }
 
-  const showTaskModal = () => {
-    taskContainer.style.display = 'block';
-  }
-
-  const createTaskEventListener = createTask.addEventListener('click', (taskContainer) => {
-    let ticker = 0;
+  const createTaskEventListener = createTask.addEventListener('click', () => {
     if (ticker > 0) {
-      console.log(`click`);
+      const taskContainer = document.querySelector('#task-modal-container');
       taskContainer.style.display = 'block';
     } else {
       createTaskModal();
       ticker++;
-      console.log(ticker);
     }
   });
 
