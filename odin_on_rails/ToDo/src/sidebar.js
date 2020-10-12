@@ -1,7 +1,8 @@
 import { compareAsc, format, formatDistance, formatRelative, subDays, set, max, min } from 'date-fns'
 import ToDoItem from './todoItem';
 
-const Sidebar = () => {
+const Sidebar = (todoArray) => {
+  console.log(todoArray);
   const todoContainer = document.querySelector('#todo-container');
   const createTask = document.querySelector('#create-task');
   const allTasks = document.querySelector('#all-tasks');
@@ -18,8 +19,8 @@ const Sidebar = () => {
     },
     "item-container-1":{
       type: 'input',
-      for: 'description',
-      innerHTML: 'Description: ',
+      for: 'project',
+      innerHTML: 'Project: ',
     },
     "item-container-2": {
       type: 'textarea',
@@ -32,6 +33,7 @@ const Sidebar = () => {
       type: 'date',
       id: 'start',
       name: 'start-date',
+      innerHTML: 'Due Date: ',
       value: minMax(min),
       min: minMax(min),
       max: minMax(max),
@@ -51,6 +53,8 @@ const Sidebar = () => {
     ]), "MM-dd-yyyy")
   }
 
+  const calendarFormat = format(new Date(), 'yyyy-MM-dd');
+
   // Create form
   function modalBuild(obj, form) {
     const mods = Object.entries(obj);
@@ -66,7 +70,7 @@ const Sidebar = () => {
       itemContainer.id = `popup-item-container${mods.indexOf(mod)}`;
 
       for (let item of mod) {
-        if (item.innerHTML) {
+        if (item.innerHTML || item.type == 'date') {
           popupInputLabel = document.createElement('label');
           popupInputLabel.classList.add('label');
           popupInputLabel.innerHTML = item.innerHTML;
@@ -78,7 +82,7 @@ const Sidebar = () => {
           popupInput.classList.add('input');
           popupInput.id = item.id;
           popupInput.name = item.name;
-          popupInput.value = item.value;
+          popupInput.setAttribute('value', calendarFormat);
           popupInput.min = item.min;
           popupInput.max = item.max;
           popupInput.setAttribute('required', true);
