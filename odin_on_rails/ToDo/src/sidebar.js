@@ -1,4 +1,5 @@
 import { compareAsc, format, formatDistance, formatRelative, subDays, set, max, min } from 'date-fns'
+import ToDoItem from './todoItem';
 
 const Sidebar = () => {
   const todoContainer = document.querySelector('#todo-container');
@@ -7,7 +8,7 @@ const Sidebar = () => {
   const lists = document.querySelector('#lists');
   const calendar = document.querySelector('#calendar');
   const taskModal = document.querySelector('#task-modal');
-  var ticker = 0;
+  let ticker = 0;
   const modalFeatures = {
     "item-container-0" :{
       type: 'input',
@@ -50,6 +51,7 @@ const Sidebar = () => {
     ]), "MM-dd-yyyy")
   }
 
+  // Create form
   function modalBuild(obj, form) {
     const mods = Object.entries(obj);
     for (let mod of mods) {
@@ -117,13 +119,16 @@ const Sidebar = () => {
     }
   }
 
+  // Exiting out of the form
   function escape(e) {
     if(e.key === "Escape") {
       const taskContainer = document.querySelector('#task-modal-container');
       taskContainer.style.display = 'none';
     }
   }
-  // Create Task Modal
+
+
+  // Create Form Container
   const createTaskModal = () => {
     const formContainer = document.createElement('div');
     formContainer.id = 'task-modal-container';

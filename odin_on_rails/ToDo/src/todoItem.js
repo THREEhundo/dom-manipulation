@@ -4,8 +4,8 @@ const ToDoItem = (data) => {
   let dueDate = data.dueDate;
   let priority = data.priority;
   let note = data.note;
-  let checklist = data.checklist;
   let finished = false;
+  let project = data.project;
 
   const getTitle = () => title;
   const getDescription = () => description;
@@ -19,9 +19,6 @@ const ToDoItem = (data) => {
   const editDueDate = (newDueDate) => dueDate = newDueDate;
   const editPriority = (newPriority) => priority = newPriority;
   const editNote = (newNote) => note = newNote;
-  // const addChecklistItem => (newChecklistItem) => checklist.push(newChecklistItem);
-  // const deleteChecklistItem => (checklistItemIndex) => checklist.splice(checklistItemIndex, 1);
-  // const editChecklistItem => (checklistItemIndex, text) => checklist.splice(checklistItemIndex, 1 text);
   const toggleFinished = () => finished = !finished;
   const isFinished = () => finished;
 
@@ -37,9 +34,6 @@ const ToDoItem = (data) => {
     editDueDate,
     editPriority,
     editNote,
-    // addChecklistItem,
-    // deleteChecklistItem,
-    // editChecklistItem,
     toggleFinished,
     isFinished,
     title,
