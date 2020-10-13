@@ -8,7 +8,6 @@ const Sidebar = (todoArray) => {
   const allTasks = document.querySelector('#all-tasks');
   const lists = document.querySelector('#lists');
   const calendar = document.querySelector('#calendar');
-  const taskModal = document.querySelector('#task-modal');
   let ticker = 0;
   const modalFeatures = {
     "item-container-0" :{
@@ -131,6 +130,20 @@ const Sidebar = (todoArray) => {
     }
   }
 
+  // Add Task to todoArray
+  const addToDo = (e) => {
+    e.preventDefault();
+    const title = document.querySelector('#list-name').value;
+    const dueDate = document.querySelector('#start').value;
+    const priority = 'low';
+    const note = document.querySelector('#notes').value;
+    const project = document.querySelector('#project').value;
+    let task = ToDoItem(title, dueDate, priority, note, project);
+    todoArray.push(task);
+    console.log(todoArray[3].getNote());
+    document.querySelector('#task-modal').reset();
+    document.querySelector('#task-modal-container').style.display = 'none';
+  }
 
   // Create Form Container
   const createTaskModal = () => {
@@ -153,6 +166,8 @@ const Sidebar = (todoArray) => {
       createTaskModal();
       ticker++;
     }
+    const taskModal = document.querySelector('#task-modal input[type="submit"]');
+    const submitForm = taskModal.addEventListener('click', addToDo);
   });
 
   return {

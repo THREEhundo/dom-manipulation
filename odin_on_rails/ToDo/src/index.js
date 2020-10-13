@@ -2,7 +2,7 @@ import ToDoItem from './todoItem';
 import Sidebar from './sidebar';
 
 const startUp = () => {
-  const todoArray = [1,2,3];
+  const todoArray = [];
   Sidebar(todoArray);
 }
 startUp();

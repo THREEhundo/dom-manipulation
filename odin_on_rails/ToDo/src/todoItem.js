@@ -1,10 +1,10 @@
-const ToDoItem = (data) => {
-  let title = data.title;
-  let dueDate = data.dueDate;
-  let priority = data.priority;
-  let note = data.note;
+const ToDoItem = (title, dueDate, priority, note, project) => {
+  title;
+  dueDate;
+  priority;
+  note;
   let finished = false;
-  let project = data.project;
+  project;
 
   const getTitle = () => title;
   const getDueDate = () => dueDate;
@@ -33,12 +33,6 @@ const ToDoItem = (data) => {
     editNote,
     toggleFinished,
     isFinished,
-    title,
-    description,
-    dueDate,
-    priority,
-    note,
-    finished
   }
 }
 
