@@ -33,6 +33,12 @@ const ToDoItem = (title, dueDate, priority, note, project) => {
     editNote,
     toggleFinished,
     isFinished,
+    title,
+    dueDate,
+    priority,
+    note,
+    finished,
+    project,
   }
 }
 

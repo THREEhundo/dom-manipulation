@@ -1,5 +1,6 @@
 import { compareAsc, format, formatDistance, formatRelative, subDays, set, max, min } from 'date-fns'
 import ToDoItem from './todoItem';
+import Projects from './projects'
 
 const Sidebar = (todoArray) => {
   console.log(todoArray);
@@ -130,21 +131,6 @@ const Sidebar = (todoArray) => {
     }
   }
 
-  // Add Task to todoArray
-  const addToDo = (e) => {
-    e.preventDefault();
-    const title = document.querySelector('#list-name').value;
-    const dueDate = document.querySelector('#start').value;
-    const priority = 'low';
-    const note = document.querySelector('#notes').value;
-    const project = document.querySelector('#project').value;
-    let task = ToDoItem(title, dueDate, priority, note, project);
-    todoArray.push(task);
-    console.log(todoArray[3].getNote());
-    document.querySelector('#task-modal').reset();
-    document.querySelector('#task-modal-container').style.display = 'none';
-  }
-
   // Create Form Container
   const createTaskModal = () => {
     const formContainer = document.createElement('div');
@@ -158,7 +144,7 @@ const Sidebar = (todoArray) => {
     formContainer.addEventListener('keydown', escape);
   }
 
-  const createTaskEventListener = createTask.addEventListener('click', () => {
+  createTask.addEventListener('click', () => {
     if (ticker > 0) {
       const taskContainer = document.querySelector('#task-modal-container');
       taskContainer.style.display = 'block';
@@ -166,12 +152,15 @@ const Sidebar = (todoArray) => {
       createTaskModal();
       ticker++;
     }
-    const taskModal = document.querySelector('#task-modal input[type="submit"]');
-    const submitForm = taskModal.addEventListener('click', addToDo);
+    document.querySelector('#task-modal input[type="submit"]').addEventListener('click', (e) => {
+      e.preventDefault();
+      const project = Projects(todoArray)
+      console.log(project.addToDo(todoArray));
+    });
   });
 
   return {
-    createTaskEventListener
+    // createTaskEventListener
   }
 }
 export default Sidebar
