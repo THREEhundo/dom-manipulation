@@ -6,11 +6,15 @@
 
 body {
   height: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 button:focus {
   outline: none;
+}
+
+li {
+  list-style: none;
 }
 
 /* SIDEBAR */

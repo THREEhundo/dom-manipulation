@@ -1,12 +1,13 @@
 import { compareAsc, format, formatDistance, formatRelative, subDays, set, max, min } from 'date-fns'
 import ToDoItem from './todoItem';
 import Projects from './projects'
+import ShowAllTasks from './showAllTasks';
+
 
 const Sidebar = (todoArray) => {
-  console.log(todoArray);
   const todoContainer = document.querySelector('#todo-container');
   const createTask = document.querySelector('#create-task');
-  const allTasks = document.querySelector('#all-tasks');
+  const allTasks = document.querySelector('#all-tasks-sidebar');
   const lists = document.querySelector('#lists');
   const calendar = document.querySelector('#calendar');
   let ticker = 0;
@@ -152,15 +153,22 @@ const Sidebar = (todoArray) => {
       createTaskModal();
       ticker++;
     }
+    // Listener for submitting tasks
     document.querySelector('#task-modal input[type="submit"]').addEventListener('click', (e) => {
       e.preventDefault();
-      const project = Projects(todoArray)
-      console.log(project.addToDo(todoArray));
+      const project = Projects();
+      project.addToDo(todoArray);
     });
   });
 
+  // Listener for all tasks tab
+  document.querySelector('.sidebar-item-heading-title > a').addEventListener('click', () => {
+    const taskMaster = ShowAllTasks();
+    taskMaster.allTaskContainer();
+  });
+
   return {
-    // createTaskEventListener
+
   }
 }
 export default Sidebar
