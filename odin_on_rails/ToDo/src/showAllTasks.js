@@ -1,3 +1,5 @@
+import TaskWindow from './taskWindow';
+
 const ShowAllTasks = () => {
   const allTaskContainer = () => {
     // Get array of tasks & loop to create divs
@@ -7,9 +9,15 @@ const ShowAllTasks = () => {
     allTaskItemContainer.classList.add('task-container-display');
 
     // Heading
+    const headingContainer = document.createElement('div');
+    headingContainer.id = 'task-heading-container';
+
     const allTaskHeader = document.createElement('div');
     allTaskHeader.innerHTML = 'All Tasks';
     allTaskHeader.classList.add('task-header-title');
+
+    const dateArrowContainer = document.createElement('div');
+    dateArrowContainer.id = 'date-arrow-container';
 
     const allTaskDueDate = document.createElement('div');
     allTaskDueDate.innerHTML = 'Due Date';
@@ -23,9 +31,11 @@ const ShowAllTasks = () => {
     taskContainer.classList.add('task-container');
 
     document.querySelector('#todo-container').appendChild(allTaskItemContainer);
-    allTaskItemContainer.appendChild(allTaskHeader);
-    allTaskItemContainer.appendChild(allTaskDueDate);
-    allTaskItemContainer.appendChild(sortingArrow);
+    allTaskItemContainer.appendChild(headingContainer);
+    headingContainer.appendChild(allTaskHeader);
+    headingContainer.appendChild(dateArrowContainer)
+    dateArrowContainer.appendChild(allTaskDueDate);
+    dateArrowContainer.appendChild(sortingArrow);
     allTaskItemContainer.appendChild(taskContainer);
 
     if (oldTasks.length > 0) {
@@ -35,7 +45,10 @@ const ShowAllTasks = () => {
         // isFinished first
         const taskItem = document.createElement('li');
         taskItem.classList.add('user-task');
-        taskItem.id = oldTasks[i];
+        taskItem.id = i;
+
+        const checkboxTitleContainer = document.createElement('div');
+        checkboxTitleContainer.classList.add('checkbox-title-container');
 
         const taskIsFinished = document.createElement('input');
         taskIsFinished.type = 'checkbox';
@@ -45,13 +58,16 @@ const ShowAllTasks = () => {
         taskTitle.classList.add('task-title');
         taskTitle.innerHTML = oldTasks[i].title;
 
+        // taskTitle.addEventListener('click', )
+
         const taskDueDate = document.createElement('div');
         taskDueDate.classList.add('task-due-date');
         taskDueDate.innerHTML = oldTasks[i].dueDate;
 
         taskContainer.appendChild(taskItem);
-        taskItem.appendChild(taskIsFinished);
-        taskItem.appendChild(taskTitle);
+        taskItem.appendChild(checkboxTitleContainer);
+        checkboxTitleContainer.appendChild(taskIsFinished);
+        checkboxTitleContainer.appendChild(taskTitle);
         taskItem.appendChild(taskDueDate);
       }
     }

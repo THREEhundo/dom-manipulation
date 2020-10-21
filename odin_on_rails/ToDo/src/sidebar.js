@@ -22,6 +22,7 @@ const Sidebar = (todoArray) => {
       type: 'input',
       for: 'project',
       innerHTML: 'Project: ',
+      required: true,
     },
     "item-container-2": {
       type: 'textarea',
@@ -86,17 +87,18 @@ const Sidebar = (todoArray) => {
           popupInput.setAttribute('value', calendarFormat);
           popupInput.min = item.min;
           popupInput.max = item.max;
-          popupInput.setAttribute('required', true);
+          popupInput.setAttribute("required", "");
         }
         if (item.type == 'input') {
           popupInput = document.createElement('input');
           popupInput.classList.add('input');
           popupInput.id = item.for;
+          popupInput.setAttribute('type', "text");
           popupInput.setAttribute('name', item.for);
 
           // Adding required to Task Name
           if (item.required) {
-            popupInput.setAttribute('required', true);
+            popupInput.setAttribute("required", "");
           }
 
         } else if (item.type == 'textarea') {
@@ -127,8 +129,8 @@ const Sidebar = (todoArray) => {
   // Exiting out of the form
   function escape(e) {
     if(e.key === "Escape") {
-      const taskContainer = document.querySelector('#task-modal-container');
-      taskContainer.style.display = 'none';
+      const taskModalContainer = document.querySelector('#task-modal-container');
+      taskModalContainer.style.display = 'none';
     }
   }
 
@@ -147,22 +149,25 @@ const Sidebar = (todoArray) => {
 
   createTask.addEventListener('click', () => {
     if (ticker > 0) {
-      const taskContainer = document.querySelector('#task-modal-container');
-      taskContainer.style.display = 'block';
+      const taskModalContainer = document.querySelector('#task-modal-container');
+      taskModalContainer.style.display = 'block';
     } else {
       createTaskModal();
       ticker++;
     }
     // Listener for submitting tasks
-    document.querySelector('#task-modal input[type="submit"]').addEventListener('click', (e) => {
-      e.preventDefault();
-      const project = Projects();
-      project.addToDo(todoArray);
-    });
+    // document.querySelector('#task-modal input[type="button"]').addEventListener('click', () => {
+    //   e.preventDefault();
+    //   const project = Projects();
+    //   project.addToDo(todoArray);
+    // });
   });
 
   // Listener for all tasks tab
   document.querySelector('.sidebar-item-heading-title > a').addEventListener('click', () => {
+    if (document.querySelector('.task-container-display')) {
+      return;
+    }
     const taskMaster = ShowAllTasks();
     taskMaster.allTaskContainer();
   });

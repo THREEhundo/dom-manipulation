@@ -2,6 +2,7 @@ import ToDoItem from './todoItem';
 import Sidebar from './sidebar';
 import Projects from './projects';
 import ShowAllTasks from './showAllTasks';
+import TaskWindow from './taskWindow';
 
 const startUp = () => {
   var todoArray = [];
@@ -12,6 +13,7 @@ const startUp = () => {
   //   const taskMaster = ShowAllTasks();
   //   taskMaster.allTaskContainer();
   // });
+  //
 
 }
 startUp();
