@@ -156,11 +156,10 @@ const Sidebar = (todoArray) => {
       ticker++;
     }
     // Listener for submitting tasks
-    // document.querySelector('#task-modal input[type="button"]').addEventListener('click', () => {
-    //   e.preventDefault();
-    //   const project = Projects();
+    document.querySelector('#task-modal input[type="submit"]').addEventListener('click', () => {
+      const project = Projects(todoArray);
     //   project.addToDo(todoArray);
-    // });
+    });
   });
 
   // Listener for all tasks tab
