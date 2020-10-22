@@ -33,7 +33,7 @@ const Sidebar = (todoArray) => {
     },
     "item-container-3": {
       type: 'date',
-      id: 'start',
+      for: 'cal',
       name: 'start-date',
       innerHTML: 'Due Date: ',
       value: minMax(min),
@@ -77,16 +77,19 @@ const Sidebar = (todoArray) => {
           popupInputLabel.classList.add('label');
           popupInputLabel.innerHTML = item.innerHTML;
           popupInputLabel.setAttribute("for", item.for);
+          if (item.type == 'date') {
+            popupInputLabel.removeAttribute("for", item.for);
+          }
         }
         if (item.type == 'date') {
           popupInput = document.createElement('input');
           popupInput.setAttribute('type', item.type);
           popupInput.classList.add('input');
-          popupInput.id = item.id;
-          popupInput.name = item.name;
-          popupInput.setAttribute('value', calendarFormat);
+          // popupInput.setAttribute('value', calendarFormat);
           popupInput.min = item.min;
           popupInput.max = item.max;
+          popupInput.id = item.for;
+          popupInput.name = item.name;
           popupInput.setAttribute("required", "");
         }
         if (item.type == 'input') {
@@ -156,9 +159,10 @@ const Sidebar = (todoArray) => {
       ticker++;
     }
     // Listener for submitting tasks
-    document.querySelector('#task-modal input[type="submit"]').addEventListener('click', () => {
+    document.querySelector('#task-modal input[type="submit"]').addEventListener('click', (e) => {
+      e.preventDefault();
       const project = Projects(todoArray);
-    //   project.addToDo(todoArray);
+      // project.addToDo(todoArray);
     });
   });
 
