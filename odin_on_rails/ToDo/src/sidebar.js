@@ -1,6 +1,6 @@
 import { compareAsc, format, formatDistance, formatRelative, subDays, set, max, min } from 'date-fns'
 import ToDoItem from './todoItem';
-import Projects from './projects'
+import Projects from './projects';
 import ShowAllTasks from './showAllTasks';
 
 
@@ -87,7 +87,7 @@ const Sidebar = (todoArray) => {
           popupInput.classList.add('input');
           popupInput.setAttribute('value', calendarFormat);
           popupInput.min = item.min;
-          // popupInput.max = item.max;
+          popupInput.max = item.max;
           popupInput.id = item.for;
           popupInput.name = item.name;
           popupInput.setAttribute("required", "");
