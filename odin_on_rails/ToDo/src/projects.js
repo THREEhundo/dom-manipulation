@@ -8,9 +8,9 @@ const Projects = (arr) => {
     const note = document.querySelector('#notes').value;
     const project = document.querySelector('#project').value;
     let dueDate = document.querySelector('input[type="date"]').value;
-    if (dueDate == "") {
-      dueDate = "N/A";
-    }
+    // if (dueDate == "") {
+    //   dueDate = "N/A";
+    // }
     let newTask = ToDoItem(title, dueDate, priority, note, project);
     arr.push(newTask);
 

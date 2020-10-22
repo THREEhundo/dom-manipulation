@@ -85,9 +85,9 @@ const Sidebar = (todoArray) => {
           popupInput = document.createElement('input');
           popupInput.setAttribute('type', item.type);
           popupInput.classList.add('input');
-          // popupInput.setAttribute('value', calendarFormat);
+          popupInput.setAttribute('value', calendarFormat);
           popupInput.min = item.min;
-          popupInput.max = item.max;
+          // popupInput.max = item.max;
           popupInput.id = item.for;
           popupInput.name = item.name;
           popupInput.setAttribute("required", "");
@@ -159,17 +159,16 @@ const Sidebar = (todoArray) => {
       ticker++;
     }
     // Listener for submitting tasks
-    document.querySelector('#task-modal input[type="submit"]').addEventListener('click', (e) => {
-      e.preventDefault();
+    document.querySelector('#task-modal input[type="submit"]').addEventListener('click', () => {
       const project = Projects(todoArray);
-      // project.addToDo(todoArray);
     });
   });
 
   // Listener for all tasks tab
   document.querySelector('.sidebar-item-heading-title > a').addEventListener('click', () => {
-    if (document.querySelector('.task-container-display')) {
-      return;
+    const allTasksWindow = document.querySelector('.task-container-display');
+    if (allTasksWindow) {
+      allTasksWindow.remove();
     }
     const taskMaster = ShowAllTasks();
     taskMaster.allTaskContainer();
