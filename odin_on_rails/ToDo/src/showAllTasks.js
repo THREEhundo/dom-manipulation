@@ -6,6 +6,7 @@ const ShowAllTasks = () => {
   const allTaskContainer = () => {
     // Get array of tasks & loop to create divs
     const oldTasks = JSON.parse(localStorage.getItem('TaskList'));
+    console.log(oldTasks);
 
     const allTaskItemContainer = document.createElement('div');
     allTaskItemContainer.classList.add('task-container-display');
@@ -65,9 +66,9 @@ const ShowAllTasks = () => {
         const formatDate = date.match(/\d+/g);
         const taskDueDate = document.createElement('div');
         taskDueDate.classList.add('task-due-date');
-        console.log(oldTasks)
+
         // CHANGE FORMAT OF DATE WITH DATEFNS
-        const time = format(new Date(parseInt(formatDate[0]), parseInt(formatDate[1]) - 1, parseInt(formatDate[2])), 'MMM dd')
+        const time = format(new Date(parseInt(formatDate[0]), parseInt(formatDate[1]) - 1, parseInt(formatDate[2])), 'MMM dd');
         taskDueDate.innerHTML = time;
 
         taskContainer.appendChild(taskItem);
@@ -88,28 +89,49 @@ const ShowAllTasks = () => {
 
           // Notes
           const eNotes = document.createElement('textarea');
-          eNotes.value = oldTasks[i].note;
+          if (oldTasks[i].note == "") {
+            eNotes.placeholder = 'Ex. Notes for Task';
+            eNotes.classList.add('placeholder-txt');
+          } else {
+            eNotes.value = oldTasks[i].note;
+          }
           eNotes.id = 'edit-notes';
 
           // Due Date
           const eDueDate = document.createElement('input');
           eDueDate.type = 'text';
-          ////////////
-          eDueDate.value = format(new Date())
-          /////////////
+          eDueDate.value = format(new Date(parseInt(formatDate[0]), parseInt(formatDate[1]) - 1, parseInt(formatDate[2])), 'MM/dd/yyyy');
           oldTasks[i].dueDate;
           eDueDate.id = 'edit-date';
-          // const picker = datepicker('#edit-date', { startDate: new Date()})
 
           // Priority
+          const priorityContainer = document.createElement('div');
+          const priorityLabel = document.createElement('div');
+          const low = document.createElement('div');
+          const high = document.createElement('div');
+          priorityLabel.innerHTML = 'Priority';
+          low.innerHTML = 'Low';
+          high.innerHTML = 'High';
 
           // Project Name
-
+          const projectName = document.createElement('input');
+          projectName.type = 'text';
+          if (oldTasks[i].project == "") {
+            projectName.placeholder = 'Add to a Project';
+            projectName.addClass('placeholder-txt');
+          } else {
+            projectName.value = oldTasks[i].project;
+          }
 
           document.querySelector('#todo-container').appendChild(mainContainer);
           mainContainer.appendChild(eHeader);
           mainContainer.appendChild(eNotes);
           mainContainer.appendChild(eDueDate);
+          mainContainer.appendChild(priorityContainer);
+          priorityContainer.appendChild(priorityLabel);
+          priorityContainer.appendChild(low);
+          priorityContainer.appendChild(high);
+          mainContainer.appendChild(projectName);
         }
 
         taskTitle.addEventListener('click', allTaskDetails);
