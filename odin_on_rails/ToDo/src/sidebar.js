@@ -55,7 +55,7 @@ const Sidebar = (todoArray) => {
     ]), "MM-dd-yyyy")
   }
 
-  const calendarFormat = format(new Date(), 'yyyy-MM-dd');
+  const calendarFormat = format(new Date(), 'MM-dd-yyyy');
 
   // Create form
   function modalBuild(obj, form) {
@@ -174,8 +174,6 @@ const Sidebar = (todoArray) => {
     taskMaster.allTaskContainer();
   });
 
-  return {
-
-  }
+  return {  }
 }
 export default Sidebar

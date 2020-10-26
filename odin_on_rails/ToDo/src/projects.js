@@ -9,9 +9,10 @@ const Projects = (arr) => {
     const project = document.querySelector('#project').value;
     let dueDate = document.querySelector('input[type="date"]').value;
 
-    let reformatDueDate = format(new Date(dueDate), 'LLL do');
+    // Change date format ex. Oct 22nd
+    // let reformatDueDate = format(new Date(dueDate), 'LLL do');
 
-    let newTask = ToDoItem(title, reformatDueDate, priority, note, project);
+    let newTask = ToDoItem(title, dueDate, priority, note, project);
     arr.push(newTask);
 
     // If nothing is stored create new array

@@ -1,4 +1,6 @@
 import TaskWindow from './taskWindow';
+import datepicker from 'js-datepicker';
+import { compareAsc, format, formatDistance, formatRelative, subDays, set, max, min } from 'date-fns';
 
 const ShowAllTasks = () => {
   const allTaskContainer = () => {
@@ -58,17 +60,59 @@ const ShowAllTasks = () => {
         taskTitle.classList.add('task-title');
         taskTitle.innerHTML = oldTasks[i].title;
 
-        // taskTitle.addEventListener('click', )
-
+        // Change date format ex. Oct 22nd
+        const date = oldTasks[i].dueDate;
+        const formatDate = date.match(/\d+/g);
         const taskDueDate = document.createElement('div');
         taskDueDate.classList.add('task-due-date');
-        taskDueDate.innerHTML = oldTasks[i].dueDate;
+        console.log(oldTasks)
+        // CHANGE FORMAT OF DATE WITH DATEFNS
+        const time = format(new Date(parseInt(formatDate[0]), parseInt(formatDate[1]) - 1, parseInt(formatDate[2])), 'MMM dd')
+        taskDueDate.innerHTML = time;
 
         taskContainer.appendChild(taskItem);
         taskItem.appendChild(checkboxTitleContainer);
         checkboxTitleContainer.appendChild(taskIsFinished);
         checkboxTitleContainer.appendChild(taskTitle);
         taskItem.appendChild(taskDueDate);
+
+        // Create Task Details Div
+        const allTaskDetails = () => {
+          const mainContainer = document.createElement('div');
+          mainContainer.id = 'task-detail-window';
+
+          // Header
+          const eHeader = document.createElement('textarea');
+          eHeader.value = oldTasks[i].title;
+          eHeader.id = 'edit-title';
+
+          // Notes
+          const eNotes = document.createElement('textarea');
+          eNotes.value = oldTasks[i].note;
+          eNotes.id = 'edit-notes';
+
+          // Due Date
+          const eDueDate = document.createElement('input');
+          eDueDate.type = 'text';
+          ////////////
+          eDueDate.value = format(new Date())
+          /////////////
+          oldTasks[i].dueDate;
+          eDueDate.id = 'edit-date';
+          // const picker = datepicker('#edit-date', { startDate: new Date()})
+
+          // Priority
+
+          // Project Name
+
+
+          document.querySelector('#todo-container').appendChild(mainContainer);
+          mainContainer.appendChild(eHeader);
+          mainContainer.appendChild(eNotes);
+          mainContainer.appendChild(eDueDate);
+        }
+
+        taskTitle.addEventListener('click', allTaskDetails);
       }
     }
   }
