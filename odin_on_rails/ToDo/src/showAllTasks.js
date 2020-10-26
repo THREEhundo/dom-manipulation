@@ -134,7 +134,13 @@ const ShowAllTasks = () => {
           mainContainer.appendChild(projectName);
         }
 
-        taskTitle.addEventListener('click', allTaskDetails);
+        taskTitle.addEventListener('click', () => {
+          const mainContainer = document.querySelector('#task-detail-window');
+          if (mainContainer) {
+            mainContainer.remove();
+          }
+          allTaskDetails();
+        });
       }
     }
   }
