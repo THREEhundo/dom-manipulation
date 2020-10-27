@@ -128,6 +128,18 @@ const ShowAllTasks = () => {
           priorityLabel.id = 'priority-label';
           low.id = 'low-pr';
           high.id = 'high-pr';
+          low.addEventListener('click', (e) => {
+            e.stopPropagation();
+            oldTasks[i].priority = 'low';
+            localStorage.setItem('TaskList', JSON.stringify(oldTasks));
+            console.log(JSON.parse(localStorage.getItem('TaskList')));
+          });
+          high.addEventListener('click', (e) => {
+            e.stopPropagation();
+            oldTasks[i].priority = 'high';
+            localStorage.setItem('TaskList', JSON.stringify(oldTasks));
+            console.log(JSON.parse(localStorage.getItem('TaskList')));
+          });
 
           // Project Name
           const eProject = document.createElement('input');
@@ -145,13 +157,6 @@ const ShowAllTasks = () => {
             localStorage.setItem('TaskList', JSON.stringify(oldTasks));
             console.log(JSON.parse(localStorage.getItem('TaskList')));
           });
-          // Edit localStorage on exit focus
-          // eHeader
-          // eNotes
-          // eDueDate
-          // low
-          // high
-          // eProject
 
           document.querySelector('#todo-container').appendChild(mainContainer);
           mainContainer.appendChild(eHeader);
