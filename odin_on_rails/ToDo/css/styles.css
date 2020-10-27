@@ -25,10 +25,10 @@ title {
 
 #todo-container {
   display: grid;
-  grid-template-columns: 15% 25% 60%;
+  grid-template-columns: 15% 25% 58%;
   grid-template-rows: auto;
   background-color: tan;
-  column-gap: 5px;
+  column-gap: 1%;
 }
 
 /* Task Container Display */
@@ -148,5 +148,44 @@ title {
 }
 
 /* ALL TASKS CONTAINER */
+#task-detail-window {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 10px;
+  margin: 30px;
+}
+
+#task-detail-window textarea {
+  color: blue;
+  resize: none;
+  border-style: none;
+}
+
+#edit-date, #edit-project {
+  border-style: none;
+}
+
+#priority-container {
+  display: flex;
+}
+
+#priority-label {
+  margin-right: 30px;
+}
+
+#low-pr, #high-pr {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  color: white;
+}
+
+#low-pr {
+  background-color: green;
+}
+
+#high-pr {
+  background-color: red;
+}
 
 /* SINGLE TASK CONTAINER */

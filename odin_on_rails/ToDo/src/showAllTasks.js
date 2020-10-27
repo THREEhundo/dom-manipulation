@@ -86,6 +86,12 @@ const ShowAllTasks = () => {
           const eHeader = document.createElement('textarea');
           eHeader.value = oldTasks[i].title;
           eHeader.id = 'edit-title';
+          eHeader.addEventListener('focusout', (e) => {
+            e.stopPropagation();
+            oldTasks[i].title = eHeader.value;
+            localStorage.setItem('TaskList', JSON.stringify(oldTasks));
+            console.log(JSON.parse(localStorage.getItem('TaskList')));
+          })
 
           // Notes
           const eNotes = document.createElement('textarea');
@@ -112,16 +118,29 @@ const ShowAllTasks = () => {
           priorityLabel.innerHTML = 'Priority';
           low.innerHTML = 'Low';
           high.innerHTML = 'High';
+          priorityContainer.id = 'priority-container';
+          priorityLabel.id = 'priority-label';
+          low.id = 'low-pr';
+          high.id = 'high-pr';
 
           // Project Name
-          const projectName = document.createElement('input');
-          projectName.type = 'text';
+          const eProject = document.createElement('input');
+          eProject.type = 'text';
+          eProject.id = 'edit-project'
           if (oldTasks[i].project == "") {
-            projectName.placeholder = 'Add to a Project';
-            projectName.addClass('placeholder-txt');
+            eProject.placeholder = 'Add to a Project';
+            eProject.addClass('placeholder-txt');
           } else {
-            projectName.value = oldTasks[i].project;
+            eProject.value = oldTasks[i].project;
           }
+
+          // Edit localStorage on exit focus
+          // eHeader
+          // eNotes
+          // eDueDate
+          // low
+          // high
+          // eProject
 
           document.querySelector('#todo-container').appendChild(mainContainer);
           mainContainer.appendChild(eHeader);
@@ -131,7 +150,7 @@ const ShowAllTasks = () => {
           priorityContainer.appendChild(priorityLabel);
           priorityContainer.appendChild(low);
           priorityContainer.appendChild(high);
-          mainContainer.appendChild(projectName);
+          mainContainer.appendChild(eProject);
         }
 
         taskTitle.addEventListener('click', () => {
@@ -143,6 +162,10 @@ const ShowAllTasks = () => {
         });
       }
     }
+  }
+
+  const focusOut = () => {
+
   }
 
   return {
