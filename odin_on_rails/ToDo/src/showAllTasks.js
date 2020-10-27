@@ -90,8 +90,8 @@ const ShowAllTasks = () => {
             e.stopPropagation();
             oldTasks[i].title = eHeader.value;
             localStorage.setItem('TaskList', JSON.stringify(oldTasks));
-            console.log(JSON.parse(localStorage.getItem('TaskList')));
-          })
+            taskTitle.innerHTML = eHeader.value;
+          });
 
           // Notes
           const eNotes = document.createElement('textarea');
@@ -102,6 +102,12 @@ const ShowAllTasks = () => {
             eNotes.value = oldTasks[i].note;
           }
           eNotes.id = 'edit-notes';
+          eNotes.addEventListener('focusout', (e) => {
+            e.stopPropagation();
+            oldTasks[i].note = eNotes.value;
+            localStorage.setItem('TaskList', JSON.stringify(oldTasks));
+            // console.log(JSON.parse(localStorage.getItem('TaskList')));
+          });
 
           // Due Date
           const eDueDate = document.createElement('input');
@@ -133,7 +139,12 @@ const ShowAllTasks = () => {
           } else {
             eProject.value = oldTasks[i].project;
           }
-
+          eProject.addEventListener('focusout', (e) => {
+            e.stopPropagation();
+            oldTasks[i].project = eProject.value;
+            localStorage.setItem('TaskList', JSON.stringify(oldTasks));
+            console.log(JSON.parse(localStorage.getItem('TaskList')));
+          });
           // Edit localStorage on exit focus
           // eHeader
           // eNotes
