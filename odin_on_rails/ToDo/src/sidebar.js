@@ -167,8 +167,12 @@ const Sidebar = (todoArray) => {
   // Listener for all tasks tab
   document.querySelector('.sidebar-item-heading-title > a').addEventListener('click', () => {
     const allTasksWindow = document.querySelector('.task-container-display');
+    const detailContainer = document.querySelector('#task-detail-window');
     if (allTasksWindow) {
       allTasksWindow.remove();
+    }
+    if (detailContainer) {
+      detailContainer.remove();
     }
     const taskMaster = ShowAllTasks();
     taskMaster.allTaskContainer();

@@ -1,6 +1,7 @@
 import TaskWindow from './taskWindow';
 import datepicker from 'js-datepicker';
 import { compareAsc, format, formatDistance, formatRelative, subDays, set, max, min } from 'date-fns';
+import { Datepicker } from 'vanillajs-datepicker';
 
 const ShowAllTasks = () => {
   const allTaskContainer = () => {
@@ -115,6 +116,21 @@ const ShowAllTasks = () => {
           eDueDate.value = format(new Date(parseInt(formatDate[0]), parseInt(formatDate[1]) - 1, parseInt(formatDate[2])), 'MM/dd/yyyy');
           oldTasks[i].dueDate;
           eDueDate.id = 'edit-date';
+          const datepicker = new Datepicker(eDueDate, {
+            minDate: 10/28/2020,
+            format: 'mm-dd-yyyy'
+          });
+          eDueDate.addEventListener('focusout', (e) => {
+            e.stopPropagation();
+            const regex = '////gi'
+            const reDueDate = eDueDate.value.replace(regex, '-');
+            console.log(reDueDate);
+            oldTasks[i].dueDate = reDueDate;
+            localStorage.setItem('TaskList', JSON.stringify(oldTasks));
+            console.log(localStorage.getItem('TaskList'));
+            const reformatNewDate = format(new Date(reDueDate), 'MMM dd');
+            taskDueDate.innerHTML = reformatNewDate;
+          });
 
           // Priority
           const priorityContainer = document.createElement('div');
@@ -132,13 +148,11 @@ const ShowAllTasks = () => {
             e.stopPropagation();
             oldTasks[i].priority = 'low';
             localStorage.setItem('TaskList', JSON.stringify(oldTasks));
-            console.log(JSON.parse(localStorage.getItem('TaskList')));
           });
           high.addEventListener('click', (e) => {
             e.stopPropagation();
             oldTasks[i].priority = 'high';
             localStorage.setItem('TaskList', JSON.stringify(oldTasks));
-            console.log(JSON.parse(localStorage.getItem('TaskList')));
           });
 
           // Project Name
