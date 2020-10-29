@@ -57,6 +57,9 @@ const ShowAllTasks = () => {
         const taskIsFinished = document.createElement('input');
         taskIsFinished.type = 'checkbox';
         taskIsFinished.id = 'is-finished';
+        // taskIsFinished.addEventListener('click', () => {
+        //   console.log('click');
+        // })
 
         const taskTitle = document.createElement('div');
         taskTitle.classList.add('task-title');
@@ -69,8 +72,12 @@ const ShowAllTasks = () => {
         taskDueDate.classList.add('task-due-date');
 
         // CHANGE FORMAT OF DATE WITH DATEFNS
-        const time = format(new Date(parseInt(formatDate[0]), parseInt(formatDate[1]) - 1, parseInt(formatDate[2])), 'MMM dd');
-        taskDueDate.innerHTML = time;
+        if (date == '') {
+          taskDueDate.innerHTML = '';
+        } else {
+          const time = format(new Date(parseInt(formatDate[0]), parseInt(formatDate[1]) - 1, parseInt(formatDate[2])), 'MMM dd');
+          taskDueDate.innerHTML = time;
+        }
 
         taskContainer.appendChild(taskItem);
         taskItem.appendChild(checkboxTitleContainer);
@@ -107,28 +114,26 @@ const ShowAllTasks = () => {
             e.stopPropagation();
             oldTasks[i].note = eNotes.value;
             localStorage.setItem('TaskList', JSON.stringify(oldTasks));
-            // console.log(JSON.parse(localStorage.getItem('TaskList')));
           });
 
           // Due Date
           const eDueDate = document.createElement('input');
           eDueDate.type = 'text';
-          eDueDate.value = format(new Date(parseInt(formatDate[0]), parseInt(formatDate[1]) - 1, parseInt(formatDate[2])), 'MM/dd/yyyy');
-          oldTasks[i].dueDate;
+          eDueDate.value = oldTasks[i].dueDate;
+          console.log();
+          console.log(eDueDate.value);
           eDueDate.id = 'edit-date';
           const datepicker = new Datepicker(eDueDate, {
-            minDate: 10/28/2020,
-            format: 'mm-dd-yyyy'
+            minDate: 'today',
+            format: 'mm-dd-yyyy',
+            todayHighlight: true,
           });
           eDueDate.addEventListener('focusout', (e) => {
             e.stopPropagation();
-            const regex = '////gi'
-            const reDueDate = eDueDate.value.replace(regex, '-');
-            console.log(reDueDate);
-            oldTasks[i].dueDate = reDueDate;
+            oldTasks[i].dueDate = eDueDate.value;
             localStorage.setItem('TaskList', JSON.stringify(oldTasks));
             console.log(localStorage.getItem('TaskList'));
-            const reformatNewDate = format(new Date(reDueDate), 'MMM dd');
+            const reformatNewDate = format(new Date(eDueDate.value), 'MMM dd');
             taskDueDate.innerHTML = reformatNewDate;
           });
 

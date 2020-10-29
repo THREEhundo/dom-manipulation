@@ -161,6 +161,7 @@ const Sidebar = (todoArray) => {
     // Listener for submitting tasks
     document.querySelector('#task-modal input[type="submit"]').addEventListener('click', () => {
       const project = Projects(todoArray);
+
     });
   });
 
