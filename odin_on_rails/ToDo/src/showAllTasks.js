@@ -49,7 +49,7 @@ const ShowAllTasks = () => {
         // isFinished first
         const taskItem = document.createElement('li');
         taskItem.classList.add('user-task');
-        taskItem.id = i;
+        taskItem.id = `user-task-${i}`;
 
         const checkboxTitleContainer = document.createElement('div');
         checkboxTitleContainer.classList.add('checkbox-title-container');
@@ -57,12 +57,26 @@ const ShowAllTasks = () => {
         const taskIsFinished = document.createElement('input');
         taskIsFinished.type = 'checkbox';
         taskIsFinished.id = 'is-finished';
-        // taskIsFinished.addEventListener('click', () => {
-        //   console.log('click');
-        // })
+        taskIsFinished.addEventListener('change', () => {
+          if (taskIsFinished.checked) {
+            taskTitle.classList.add('strikethrough');
+            taskDueDate.classList.add('strikethrough');
+            setTimeout(() => {
+              console.log(document.querySelector(`#user-task-${i}`));
+              document.querySelector(`#user-task-${i}`).classList.add('fade-out');
+            }, 2000);
+            oldTasks.splice(i, 1);
+            localStorage.setItem('TaskList', JSON.stringify(oldTasks));
+            taskDueDate.remove();
+          } else {
+            taskTitle.classList.remove('strikethrough');
+            taskDueDate.classList.remove('strikethrough');
+          }
+        })
 
         const taskTitle = document.createElement('div');
         taskTitle.classList.add('task-title');
+        taskTitle.id = `task-title-${i}`;
         taskTitle.innerHTML = oldTasks[i].title;
 
         // Change date format ex. Oct 22nd

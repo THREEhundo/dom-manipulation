@@ -188,4 +188,21 @@ title {
   background-color: red;
 }
 
+.strikethrough {
+  text-decoration: line-through;
+}
+
+.fade-out {
+	-webkit-animation: fade-out 1s ease-out both;
+	        animation: fade-out 1s ease-out both;
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 /* SINGLE TASK CONTAINER */
