@@ -3,6 +3,7 @@ import Sidebar from './sidebar';
 import Projects from './projects';
 import ShowAllTasks from './showAllTasks';
 import TaskWindow from './taskWindow';
+import ListLink from './listLink';
 import { Datepicker } from 'vanillajs-datepicker';
 
 const startUp = () => {

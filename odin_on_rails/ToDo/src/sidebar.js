@@ -2,7 +2,7 @@ import { compareAsc, format, formatDistance, formatRelative, subDays, set, max, 
 import ToDoItem from './todoItem';
 import Projects from './projects';
 import ShowAllTasks from './showAllTasks';
-
+import ListLink from './listLink';
 
 const Sidebar = (todoArray) => {
   const todoContainer = document.querySelector('#todo-container');
@@ -11,6 +11,12 @@ const Sidebar = (todoArray) => {
   const lists = document.querySelector('#lists');
   const calendar = document.querySelector('#calendar');
   let ticker = 0;
+
+  // Return Unique Values
+  function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+  }
+
   const modalFeatures = {
     "item-container-0" :{
       type: 'input',
@@ -166,7 +172,7 @@ const Sidebar = (todoArray) => {
   });
 
   // Listener for all tasks tab
-  document.querySelector('.sidebar-item-heading-title > a').addEventListener('click', () => {
+  document.querySelector('#all-tasks-link').addEventListener('click', () => {
     const allTasksWindow = document.querySelector('.task-container-display');
     const detailContainer = document.querySelector('#task-detail-window');
     if (allTasksWindow) {
@@ -179,6 +185,14 @@ const Sidebar = (todoArray) => {
     taskMaster.allTaskContainer();
   });
 
+  lists.addEventListener('click', (e) => {
+    if (document.querySelector('#projects')) {
+      e.preventDefault();
+    } else {
+      const dropDown = ListLink(lists);
+      dropDown.showProjectsSidebar();
+    }
+  });
   return {  }
 }
 export default Sidebar
