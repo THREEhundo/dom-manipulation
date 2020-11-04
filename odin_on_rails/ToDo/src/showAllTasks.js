@@ -6,6 +6,7 @@ import { Datepicker } from 'vanillajs-datepicker';
 const ShowAllTasks = (self) => {
   const oldTasks = JSON.parse(localStorage.getItem('TaskList'));
 
+  // Heading for List of Tasks
   const createHeading = () => {
     const allTaskItemContainer = document.createElement('div');
     allTaskItemContainer.classList.add('task-container-display');
@@ -212,6 +213,7 @@ const ShowAllTasks = (self) => {
     });
   }
 
+  // Show All Tasks From a Particular Project
   const sortByList = (self) => {
     let projectArr = [];
     for (let task in oldTasks) {
@@ -226,6 +228,7 @@ const ShowAllTasks = (self) => {
     });
   }
 
+  // Show All Tasks
   const allTaskContainer = () => {
     createHeading();
 
