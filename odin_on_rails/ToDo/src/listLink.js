@@ -1,3 +1,5 @@
+import ShowAllTasks from './showAllTasks';
+
 const ListLink = (lists) => {
   // Create links sorted by list name in A-Z order
   const oldTasks = JSON.parse(localStorage.getItem('TaskList'));
@@ -37,7 +39,8 @@ const ListLink = (lists) => {
       link.id = `project-link-${i}`;
       link.innerHTML = item;
       link.addEventListener('click', () => {
-
+        const showList = ShowAllTasks();
+        showList.sortByList(link);
       });
 
       lists.appendChild(dropdownContainer);
