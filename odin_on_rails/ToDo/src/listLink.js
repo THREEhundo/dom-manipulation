@@ -39,6 +39,14 @@ const ListLink = (lists) => {
       link.id = `project-link-${i}`;
       link.innerHTML = item;
       link.addEventListener('click', () => {
+        const allTasksWindow = document.querySelector('.task-container-display');
+        const detailContainer = document.querySelector('#task-detail-window');
+        if (allTasksWindow) {
+          allTasksWindow.remove();
+        }
+        if (detailContainer) {
+          detailContainer.remove();
+        }
         const showList = ShowAllTasks();
         showList.sortByList(link);
       });
