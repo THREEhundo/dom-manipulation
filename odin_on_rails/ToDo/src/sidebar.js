@@ -187,6 +187,7 @@ const Sidebar = (todoArray) => {
 
   lists.addEventListener('click', (e) => {
     if (document.querySelector('#projects')) {
+      e.preventDefault();
       document.querySelector('#projects').remove();
     } else {
       const dropDown = ListLink(lists);

@@ -38,7 +38,7 @@ const ListLink = (lists) => {
       const link = document.createElement('a');
       link.id = `project-link-${i}`;
       link.innerHTML = item;
-      link.addEventListener('click', () => {
+      link.addEventListener('click', (e) => {
         const allTasksWindow = document.querySelector('.task-container-display');
         const detailContainer = document.querySelector('#task-detail-window');
         if (allTasksWindow) {
@@ -47,6 +47,7 @@ const ListLink = (lists) => {
         if (detailContainer) {
           detailContainer.remove();
         }
+        e.stopPropagation();
         const showList = ShowAllTasks();
         showList.sortByList(link);
       });
