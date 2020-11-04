@@ -4,18 +4,18 @@ const ListLink = (lists) => {
   // Create links sorted by list name in A-Z order
   const oldTasks = JSON.parse(localStorage.getItem('TaskList'));
 
-  const sortByProject = oldTasks.sort(function(a, b) {
-    const projectA = a.project.toUpperCase(); // Ignore upper & lower case
-    const projectB = b.project.toUpperCase();
-    if (projectA < projectB) {
-      return -1;
-    }
-    if (projectA > projectB) {
-      return 1;
-    }
-    // Name must be equal
-    return 0;
-  });
+  // const sortByProject = oldTasks.sort(function(a, b) {
+  //   const projectA = a.project.toUpperCase(); // Ignore upper & lower case
+  //   const projectB = b.project.toUpperCase();
+  //   if (projectA < projectB) {
+  //     return -1;
+  //   }
+  //   if (projectA > projectB) {
+  //     return 1;
+  //   }
+  //   // Name must be equal
+  //   return 0;
+  // });
 
   const showProjectsSidebar = () => {
     const dropdownContainer = document.createElement('div');

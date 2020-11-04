@@ -3,6 +3,7 @@ import ToDoItem from './todoItem';
 import Projects from './projects';
 import ShowAllTasks from './showAllTasks';
 import ListLink from './listLink';
+import PriorityLevel from './priorityLevel'
 
 const Sidebar = (todoArray) => {
   const todoContainer = document.querySelector('#todo-container');
@@ -10,6 +11,7 @@ const Sidebar = (todoArray) => {
   const allTasks = document.querySelector('#all-tasks-sidebar');
   const lists = document.querySelector('#lists');
   const calendar = document.querySelector('#calendar');
+  const prioritySidebar = document.querySelector('#priority');
   let ticker = 0;
 
   // Return Unique Values
@@ -185,6 +187,7 @@ const Sidebar = (todoArray) => {
     taskMaster.allTaskContainer();
   });
 
+  // Listener for List Dropdown Menu
   lists.addEventListener('click', (e) => {
     if (document.querySelector('#projects')) {
       e.preventDefault();
@@ -194,6 +197,13 @@ const Sidebar = (todoArray) => {
       dropDown.showProjectsSidebar();
     }
   });
+
+  prioritySidebar.addEventListener('click', (e) => {
+    const pLevel = PriorityLevel();
+    pLevel.showPrioritySidebar();
+  });
+
+
   return {  }
 }
 export default Sidebar
