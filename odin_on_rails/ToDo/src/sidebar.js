@@ -178,11 +178,20 @@ const Sidebar = (todoArray) => {
   document.querySelector('#all-tasks-link').addEventListener('click', () => {
     const allTasksWindow = document.querySelector('.task-container-display');
     const detailContainer = document.querySelector('#task-detail-window');
+    const prioritySubmenuContainer = document.querySelector('#priority-submenu-container');
+    const listSubmenuContainer = document.querySelector('#link-submenu-container');
+
     if (allTasksWindow) {
       allTasksWindow.remove();
     }
     if (detailContainer) {
       detailContainer.remove();
+    }
+    if (prioritySubmenuContainer) {
+      prioritySubmenuContainer.remove();
+    }
+    if (listSubmenuContainer) {
+      listSubmenuContainer.remove();
     }
     const taskMaster = ShowAllTasks();
     taskMaster.allTaskContainer();
@@ -190,14 +199,19 @@ const Sidebar = (todoArray) => {
 
   // Listener for List Dropdown Menu
   lists.addEventListener('click', (e) => {
+    const prioritySubmenuContainer = document.querySelector('#priority-submenu-container');
     if (document.querySelector('#projects')) {
       document.querySelector('#projects').remove();
     } else {
+      if (prioritySubmenuContainer) {
+        prioritySubmenuContainer.remove();
+      }
       const dropDown = ListLink(lists);
       dropDown.showProjectsSidebar();
     }
   });
 
+  // Listener for Priority Dropdown Menu
   prioritySidebar.addEventListener('click', (e) => {
     const prioritySubmenuContainer = document.querySelector('#priority-submenu-container');
     const listSubmenuContainer = document.querySelector('#link-submenu-container');
