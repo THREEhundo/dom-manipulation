@@ -230,47 +230,33 @@ const ShowAllTasks = (self) => {
 
   // Show All Tasks from a Particular Priority Level
   const sortByPriority = (level) => {
-    // const prioritySort = oldTasks.sort(function(a, b) {
-    //   const projectA = a.priority.toUpperCase(); // Ignore upper & lower case
-    //   const projectB = b.priority.toUpperCase();
-    //   if (projectA < projectB) {
-    //     return -1;
-    //   }
-    //   if (projectA > projectB) {
-    //     return 1;
-    //   }
-    //   // Name must be equal
-    //   return 0;
-    // }
-    // console.log(level);
-    // const lowOrHigh = oldTasks.map((item, level) => {
-    //   if (item.priority == level) {
-    //     console.log(item);
-    //   }
-    // });
     function highLow(level) {
       let priorityArr = [];
       if (level == 'low') {
         const sortedLow = oldTasks.forEach((item) => {
           if (item.priority == 'low') {
             priorityArr.push(item);
-            console.log(priorityArr);
+            // console.log(priorityArr);
           }
         });
       } else {
         const sortedHigh = oldTasks.forEach((item) => {
           if (item.priority == 'high') {
             priorityArr.push(item);
-            console.log(priorityArr);
+            // console.log(priorityArr);
           }
         });
       }
       return priorityArr;
     }
-    highLow(level);
-    createHeading();
 
-    // return prioritySort;
+    createHeading();
+    const output = highLow(level);
+    console.log(output);
+    output.forEach((item, i) => {
+      console.log(item);
+      tC(i, output);
+    })
   }
 
   // Show All Tasks
@@ -283,6 +269,26 @@ const ShowAllTasks = (self) => {
       }
     }
   }
+
+
+  // const prioritySort = oldTasks.sort(function(a, b) {
+  //   const projectA = a.priority.toUpperCase(); // Ignore upper & lower case
+  //   const projectB = b.priority.toUpperCase();
+  //   if (projectA < projectB) {
+  //     return -1;
+  //   }
+  //   if (projectA > projectB) {
+  //     return 1;
+  //   }
+  //   // Name must be equal
+  //   return 0;
+  // }
+  // console.log(level);
+  // const lowOrHigh = oldTasks.map((item, level) => {
+  //   if (item.priority == level) {
+  //     console.log(item);
+  //   }
+  // });
 
   return {
     allTaskContainer,
