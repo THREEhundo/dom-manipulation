@@ -200,9 +200,14 @@ const Sidebar = (todoArray) => {
 
   prioritySidebar.addEventListener('click', (e) => {
     const prioritySubmenuContainer = document.querySelector('#priority-submenu-container');
+    const listSubmenuContainer = document.querySelector('#link-submenu-container');
+
     if (prioritySubmenuContainer) {
       prioritySubmenuContainer.remove();
     } else {
+      if (listSubmenuContainer) {
+        listSubmenuContainer.remove();
+      }
       const pLevel = PriorityLink();
       pLevel.showPrioritySidebar();
     }

@@ -85,6 +85,7 @@ title {
   display: flex;
   flex-flow: column;
   justify-content: center;
+  min-width: 120px;
 }
 
 .sidebar-item {

@@ -20,6 +20,7 @@ const ListLink = (lists) => {
   const showProjectsSidebar = () => {
     let projectArr = [];
     const dropdownContainer = document.createElement('div');
+    dropdownContainer.id = 'link-submenu-container';
 
     for (let task in oldTasks) {
       projectArr.push(oldTasks[task].project);

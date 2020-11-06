@@ -236,14 +236,12 @@ const ShowAllTasks = (self) => {
         const sortedLow = oldTasks.forEach((item) => {
           if (item.priority == 'low') {
             priorityArr.push(item);
-            // console.log(priorityArr);
           }
         });
       } else {
         const sortedHigh = oldTasks.forEach((item) => {
           if (item.priority == 'high') {
             priorityArr.push(item);
-            // console.log(priorityArr);
           }
         });
       }

@@ -29,11 +29,15 @@ const PriorityLink = () => {
       link.addEventListener('click', (e) => {
         const allTasksWindow = document.querySelector('.task-container-display');
         const detailContainer = document.querySelector('#task-detail-window');
+        
         if (allTasksWindow) {
           allTasksWindow.remove();
         }
         if (detailContainer) {
           detailContainer.remove();
+        }
+        if (listSubmenuContainer) {
+          listSubmenuContainer.remove();
         }
         e.stopPropagation();
         const showList = ShowAllTasks();
