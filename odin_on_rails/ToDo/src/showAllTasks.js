@@ -25,6 +25,7 @@ const ShowAllTasks = (self) => {
     const allTaskDueDate = document.createElement('div');
     allTaskDueDate.innerHTML = 'Due Date';
     allTaskDueDate.classList.add('task-header-date');
+    allTaskDueDate.id = 'sort-heading';
 
     const sortingArrow = document.createElement('img');
     sortingArrow.src = '../css/images/caret-down.svg';
@@ -222,10 +223,54 @@ const ShowAllTasks = (self) => {
       }
     }
     createHeading();
-
     projectArr.forEach((item, i) => {
       tC(i, projectArr);
     });
+  }
+
+  // Show All Tasks from a Particular Priority Level
+  const sortByPriority = (level) => {
+    // const prioritySort = oldTasks.sort(function(a, b) {
+    //   const projectA = a.priority.toUpperCase(); // Ignore upper & lower case
+    //   const projectB = b.priority.toUpperCase();
+    //   if (projectA < projectB) {
+    //     return -1;
+    //   }
+    //   if (projectA > projectB) {
+    //     return 1;
+    //   }
+    //   // Name must be equal
+    //   return 0;
+    // }
+    // console.log(level);
+    // const lowOrHigh = oldTasks.map((item, level) => {
+    //   if (item.priority == level) {
+    //     console.log(item);
+    //   }
+    // });
+    function highLow(level) {
+      let priorityArr = [];
+      if (level == 'low') {
+        const sortedLow = oldTasks.forEach((item) => {
+          if (item.priority == 'low') {
+            priorityArr.push(item);
+            console.log(priorityArr);
+          }
+        });
+      } else {
+        const sortedHigh = oldTasks.forEach((item) => {
+          if (item.priority == 'high') {
+            priorityArr.push(item);
+            console.log(priorityArr);
+          }
+        });
+      }
+      return priorityArr;
+    }
+    highLow(level);
+    createHeading();
+
+    // return prioritySort;
   }
 
   // Show All Tasks
@@ -242,7 +287,8 @@ const ShowAllTasks = (self) => {
   return {
     allTaskContainer,
     tC,
-    sortByList
+    sortByList,
+    sortByPriority
   }
 }
 

@@ -3,7 +3,7 @@ import ToDoItem from './todoItem';
 import Projects from './projects';
 import ShowAllTasks from './showAllTasks';
 import ListLink from './listLink';
-import PriorityLevel from './priorityLevel'
+import PriorityLink from './priorityLink'
 
 const Sidebar = (todoArray) => {
   const todoContainer = document.querySelector('#todo-container');
@@ -12,6 +12,7 @@ const Sidebar = (todoArray) => {
   const lists = document.querySelector('#lists');
   const calendar = document.querySelector('#calendar');
   const prioritySidebar = document.querySelector('#priority');
+  const prioritySubmenu = document.querySelector('#priority-submenu');
   let ticker = 0;
 
   // Return Unique Values
@@ -190,7 +191,6 @@ const Sidebar = (todoArray) => {
   // Listener for List Dropdown Menu
   lists.addEventListener('click', (e) => {
     if (document.querySelector('#projects')) {
-      e.preventDefault();
       document.querySelector('#projects').remove();
     } else {
       const dropDown = ListLink(lists);
@@ -199,8 +199,13 @@ const Sidebar = (todoArray) => {
   });
 
   prioritySidebar.addEventListener('click', (e) => {
-    const pLevel = PriorityLevel();
-    pLevel.showPrioritySidebar();
+    const prioritySubmenuContainer = document.querySelector('#priority-submenu-container');
+    if (prioritySubmenuContainer) {
+      prioritySubmenuContainer.remove();
+    } else {
+      const pLevel = PriorityLink();
+      pLevel.showPrioritySidebar();
+    }
   });
 
 

@@ -1,41 +1,30 @@
 import ShowAllTasks from './showAllTasks';
 
-const ListLink = (lists) => {
-  // Create links sorted by list name in A-Z order
-  const oldTasks = JSON.parse(localStorage.getItem('TaskList'));
-
-  // const sortByProject = oldTasks.sort(function(a, b) {
-  //   const projectA = a.project.toUpperCase(); // Ignore upper & lower case
-  //   const projectB = b.project.toUpperCase();
-  //   if (projectA < projectB) {
-  //     return -1;
-  //   }
-  //   if (projectA > projectB) {
-  //     return 1;
-  //   }
-  //   // Name must be equal
-  //   return 0;
-  // });
-
-  const showProjectsSidebar = () => {
+const PriorityLink = () => {
+  const showPrioritySidebar = () => {
     let projectArr = [];
+    const prioritySidebar = document.querySelector('#priority');
+    // const sort = ShowAllTasks();
+    // const sorted = sort.sortByPriority();
+    const oldTasks = JSON.parse(localStorage.getItem('TaskList'));
     const dropdownContainer = document.createElement('div');
+    dropdownContainer.id = 'priority-submenu-container';
 
     for (let task in oldTasks) {
-      projectArr.push(oldTasks[task].project);
+      projectArr.push(oldTasks[task].priority);
     }
 
     let uniqueProjects = [...new Set(projectArr)];
 
     const ul = document.createElement('ul');
-    ul.id = 'projects';
+    ul.id = 'priority-submenu';
 
     uniqueProjects.forEach((item, i) => {
       const li = document.createElement('li');
-      li.id = `project-${i}`;
+      li.id = `priority-${i}`;
 
       const link = document.createElement('a');
-      link.id = `project-link-${i}`;
+      link.id = `priority-link-${i}`;
       link.innerHTML = item;
       link.addEventListener('click', (e) => {
         const allTasksWindow = document.querySelector('.task-container-display');
@@ -48,19 +37,22 @@ const ListLink = (lists) => {
         }
         e.stopPropagation();
         const showList = ShowAllTasks();
-        showList.sortByList(link);
+        showList.sortByPriority(item);
       });
 
-      lists.appendChild(dropdownContainer);
+      prioritySidebar.appendChild(dropdownContainer);
       dropdownContainer.appendChild(ul);
       ul.appendChild(li);
       li.appendChild(link);
     });
+
   }
 
+
+
   return {
-    showProjectsSidebar,
+    showPrioritySidebar
   }
 }
 
-export default ListLink
+export default PriorityLink
