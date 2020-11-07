@@ -205,10 +205,9 @@ const Sidebar = (todoArray) => {
     } else {
       if (prioritySubmenuContainer) {
         prioritySubmenuContainer.remove();
-      } else {
-        const dropDown = ListLink(lists);
-        dropDown.showProjectsSidebar();
       }
+      const dropDown = ListLink(lists);
+      dropDown.showProjectsSidebar();
     }
   });
 
@@ -222,10 +221,9 @@ const Sidebar = (todoArray) => {
     } else {
       if (listSubmenuContainer) {
         listSubmenuContainer.remove();
-      } else {
-        const pLevel = PriorityLink();
-        pLevel.showPrioritySidebar();
       }
+      const pLevel = PriorityLink();
+      pLevel.showPrioritySidebar();
     }
   });
 
