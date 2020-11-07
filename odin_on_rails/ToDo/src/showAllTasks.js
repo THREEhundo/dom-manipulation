@@ -26,6 +26,11 @@ const ShowAllTasks = (self) => {
     allTaskDueDate.innerHTML = 'Due Date';
     allTaskDueDate.classList.add('task-header-date');
     allTaskDueDate.id = 'sort-heading';
+    allTaskDueDate.addEventListener('click', () => {
+      for (let i = 0; i < sortByDate.length; i++) {
+        tC(i, sortByDate);
+      }
+    });
 
     const sortingArrow = document.createElement('img');
     sortingArrow.src = '../css/images/caret-down.svg';
@@ -94,9 +99,14 @@ const ShowAllTasks = (self) => {
     if (date == '') {
       taskDueDate.innerHTML = '';
     } else {
-      const time = format(new Date(parseInt(formatDate[0]), parseInt(formatDate[1]) - 1, parseInt(formatDate[2])), 'MMM dd');
+      const time = format(new Date(parseInt(formatDate[2]), parseInt(formatDate[0]) - 1, parseInt(formatDate[1])), 'MMM dd');
       taskDueDate.innerHTML = time;
+      console.log(`Formatted Date: ${time}
+        1st int: ${parseInt(formatDate[0])}
+        2nd int: ${parseInt(formatDate[1]) - 1}
+        3rd int: ${parseInt(formatDate[2])}`);
     }
+    console.log(taskDueDate);
 
     document.querySelector('.task-container').appendChild(taskItem);
     taskItem.appendChild(checkboxTitleContainer);
@@ -148,10 +158,12 @@ const ShowAllTasks = (self) => {
       eDueDate.addEventListener('focusout', (e) => {
         e.stopPropagation();
         oldTasks[i].dueDate = eDueDate.value;
+        console.log(oldTasks[i].dueDate);
         localStorage.setItem('TaskList', JSON.stringify(oldTasks));
-        console.log(localStorage.getItem('TaskList'));
+        // console.log(localStorage.getItem('TaskList'));
         const reformatNewDate = format(new Date(eDueDate.value), 'MMM dd');
         taskDueDate.innerHTML = reformatNewDate;
+        console.log(taskDueDate, reformatNewDate);
       });
 
       // Priority
@@ -230,6 +242,7 @@ const ShowAllTasks = (self) => {
 
   // Show All Tasks from a Particular Priority Level
   const sortByPriority = (level) => {
+
     function highLow(level) {
       let priorityArr = [];
       if (level == 'low') {
@@ -254,7 +267,7 @@ const ShowAllTasks = (self) => {
     output.forEach((item, i) => {
       console.log(item);
       tC(i, output);
-    })
+    });
   }
 
   // Show All Tasks
@@ -268,31 +281,28 @@ const ShowAllTasks = (self) => {
     }
   }
 
-
-  // const prioritySort = oldTasks.sort(function(a, b) {
-  //   const projectA = a.priority.toUpperCase(); // Ignore upper & lower case
-  //   const projectB = b.priority.toUpperCase();
-  //   if (projectA < projectB) {
-  //     return -1;
-  //   }
-  //   if (projectA > projectB) {
-  //     return 1;
-  //   }
-  //   // Name must be equal
-  //   return 0;
-  // }
-  // console.log(level);
-  // const lowOrHigh = oldTasks.map((item, level) => {
-  //   if (item.priority == level) {
-  //     console.log(item);
-  //   }
-  // });
+  // Sort By Date
+  const sortByDate = oldTasks.sort((a, b) => {
+    const aDate = a.dueDate;
+    const bDate = b.dueDate;
+    // Sort
+    if (aDate < bDate) {
+      return -1;
+    }
+    if (aDate > bDate) {
+      return 1;
+    }
+    // Equal Date
+    return 0;
+    // Create divs
+  });
 
   return {
     allTaskContainer,
     tC,
     sortByList,
-    sortByPriority
+    sortByPriority,
+    sortByDate
   }
 }
 
