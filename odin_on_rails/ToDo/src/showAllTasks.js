@@ -58,7 +58,7 @@ const ShowAllTasks = (self) => {
   }
 
   // Create Content List
-  const tC = (i, oldTasks) => {
+  const tC = (i, arr) => {
     // duedate, finished, notes, priority, project, title
     const taskItem = document.createElement('li');
     taskItem.classList.add('user-task');
@@ -82,9 +82,20 @@ const ShowAllTasks = (self) => {
         setTimeout(() => {
           document.querySelector(`#user-task-${i}`).remove();
         }, 3000);
+        if (arr == oldTasks) {
+          arr.splice(i, 1);
+        } else {
+          const arrItem = arr[i];
+          for (let i = 0; i < oldTasks.length; i++) {
+            if (arrItem.title == oldTasks[i].title && arrItem.dueDate == oldTasks[i].dueDate) {
+              oldTasks.splice(i, 1);
+              console.log(oldTasks);
+              localStorage.setItem('TaskList', JSON.stringify(oldTasks));
 
-        oldTasks.splice(i, 1);
-        localStorage.setItem('TaskList', JSON.stringify(oldTasks));
+            }
+          }
+        }
+        localStorage.setItem('TaskList', JSON.stringify(arr));
       } else {
         taskTitle.classList.remove('strikethrough');
         taskDueDate.classList.remove('strikethrough');
@@ -94,10 +105,10 @@ const ShowAllTasks = (self) => {
     const taskTitle = document.createElement('div');
     taskTitle.classList.add('task-title');
     taskTitle.id = `task-title-${i}`;
-    taskTitle.innerHTML = oldTasks[i].title;
+    taskTitle.innerHTML = arr[i].title;
 
     // Change date format ex. Oct 22nd
-    const date = oldTasks[i].dueDate;
+    const date = arr[i].dueDate;
     const formatDate = date.match(/\d+/g);
     const taskDueDate = document.createElement('div');
     taskDueDate.classList.add('task-due-date');
@@ -123,28 +134,28 @@ const ShowAllTasks = (self) => {
 
       // Header
       const eHeader = document.createElement('textarea');
-      eHeader.value = oldTasks[i].title;
+      eHeader.value = arr[i].title;
       eHeader.id = 'edit-title';
       eHeader.addEventListener('focusout', (e) => {
         e.stopPropagation();
-        oldTasks[i].title = eHeader.value;
-        localStorage.setItem('TaskList', JSON.stringify(oldTasks));
+        arr[i].title = eHeader.value;
+        localStorage.setItem('TaskList', JSON.stringify(arr));
         taskTitle.innerHTML = eHeader.value;
       });
 
       // Notes
       const eNotes = document.createElement('textarea');
-      if (oldTasks[i].note == "") {
+      if (arr[i].note == "") {
         eNotes.placeholder = 'Ex. Notes for Task';
         eNotes.classList.add('placeholder-txt');
       } else {
-        eNotes.value = oldTasks[i].note;
+        eNotes.value = arr[i].note;
       }
       eNotes.id = 'edit-notes';
       eNotes.addEventListener('focusout', (e) => {
         e.stopPropagation();
-        oldTasks[i].note = eNotes.value;
-        localStorage.setItem('TaskList', JSON.stringify(oldTasks));
+        arr[i].note = eNotes.value;
+        localStorage.setItem('TaskList', JSON.stringify(arr));
       });
 
       // Due Date
@@ -159,9 +170,9 @@ const ShowAllTasks = (self) => {
       });
       eDueDate.addEventListener('focusout', (e) => {
         e.stopPropagation();
-        oldTasks[i].dueDate = eDueDate.value;
-        console.log(oldTasks[i].dueDate);
-        localStorage.setItem('TaskList', JSON.stringify(oldTasks));
+        arr[i].dueDate = eDueDate.value;
+        console.log(arr[i].dueDate);
+        localStorage.setItem('TaskList', JSON.stringify(arr));
         // console.log(localStorage.getItem('TaskList'));
         const reformatNewDate = format(new Date(eDueDate.value), 'MMM dd');
         taskDueDate.innerHTML = reformatNewDate;
@@ -182,29 +193,29 @@ const ShowAllTasks = (self) => {
       high.id = 'high-pr';
       low.addEventListener('click', (e) => {
         e.stopPropagation();
-        oldTasks[i].priority = 'low';
-        localStorage.setItem('TaskList', JSON.stringify(oldTasks));
+        arr[i].priority = 'low';
+        localStorage.setItem('TaskList', JSON.stringify(arr));
       });
       high.addEventListener('click', (e) => {
         e.stopPropagation();
-        oldTasks[i].priority = 'high';
-        localStorage.setItem('TaskList', JSON.stringify(oldTasks));
+        arr[i].priority = 'high';
+        localStorage.setItem('TaskList', JSON.stringify(arr));
       });
 
       // Project Name
       const eProject = document.createElement('input');
       eProject.type = 'text';
       eProject.id = 'edit-project'
-      if (oldTasks[i].project == "") {
+      if (arr[i].project == "") {
         eProject.placeholder = 'Add to a Project';
         eProject.addClass('placeholder-txt');
       } else {
-        eProject.value = oldTasks[i].project;
+        eProject.value = arr[i].project;
       }
       eProject.addEventListener('focusout', (e) => {
         e.stopPropagation();
-        oldTasks[i].project = eProject.value;
-        localStorage.setItem('TaskList', JSON.stringify(oldTasks));
+        arr[i].project = eProject.value;
+        localStorage.setItem('TaskList', JSON.stringify(arr));
         console.log(JSON.parse(localStorage.getItem('TaskList')));
       });
 
