@@ -95,7 +95,6 @@ const ShowAllTasks = (self) => {
             }
           }
         }
-        localStorage.setItem('TaskList', JSON.stringify(arr));
       } else {
         taskTitle.classList.remove('strikethrough');
         taskDueDate.classList.remove('strikethrough');
