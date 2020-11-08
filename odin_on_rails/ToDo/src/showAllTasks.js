@@ -27,8 +27,16 @@ const ShowAllTasks = (self) => {
     allTaskDueDate.classList.add('task-header-date');
     allTaskDueDate.id = 'sort-heading';
     allTaskDueDate.addEventListener('click', () => {
-      for (let i = 0; i < sortByDate.length; i++) {
-        tC(i, sortByDate);
+      const allTContainer = document.querySelector('#task-container');
+      if (allTContainer) {
+        // Remove All Nodes from Container
+        allTContainer.querySelectorAll('*').forEach(n => n.remove());
+      }
+      // Sort by Date
+      const immediateSorting = oldTasks.sort(sortByDate);
+      console.log(immediateSorting);
+      for (let i = 0; i < immediateSorting.length; i++) {
+        const dateInOrder = tC(i, immediateSorting);
       }
     });
 
@@ -68,7 +76,6 @@ const ShowAllTasks = (self) => {
         taskDueDate.classList.add('strikethrough');
 
         setTimeout(() => {
-          console.log(document.querySelector(`#user-task-${i}`));
           document.querySelector(`#user-task-${i}`).classList.add('fade-out');
         }, 2000);
 
@@ -101,14 +108,9 @@ const ShowAllTasks = (self) => {
     } else {
       const time = format(new Date(parseInt(formatDate[2]), parseInt(formatDate[0]) - 1, parseInt(formatDate[1])), 'MMM dd');
       taskDueDate.innerHTML = time;
-      console.log(`Formatted Date: ${time}
-        1st int: ${parseInt(formatDate[0])}
-        2nd int: ${parseInt(formatDate[1]) - 1}
-        3rd int: ${parseInt(formatDate[2])}`);
     }
-    console.log(taskDueDate);
 
-    document.querySelector('.task-container').appendChild(taskItem);
+    document.querySelector('#task-container').appendChild(taskItem);
     taskItem.appendChild(checkboxTitleContainer);
     checkboxTitleContainer.appendChild(taskIsFinished);
     checkboxTitleContainer.appendChild(taskTitle);
@@ -282,20 +284,11 @@ const ShowAllTasks = (self) => {
   }
 
   // Sort By Date
-  const sortByDate = oldTasks.sort((a, b) => {
+  function sortByDate(a, b) {
     const aDate = a.dueDate;
     const bDate = b.dueDate;
-    // Sort
-    if (aDate < bDate) {
-      return -1;
-    }
-    if (aDate > bDate) {
-      return 1;
-    }
-    // Equal Date
-    return 0;
-    // Create divs
-  });
+    return bDate ? -1 : aDate ? 1 : 0;
+  }
 
   return {
     allTaskContainer,
