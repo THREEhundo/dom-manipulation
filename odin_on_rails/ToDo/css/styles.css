@@ -43,6 +43,7 @@ title {
 .task-container-display {
   flex-flow: column wrap;
   font-weight: lighter;
+  min-width: 220px;
 }
 
 .task-header-title {
@@ -158,6 +159,7 @@ title {
   flex-flow: column nowrap;
   padding: 10px;
   margin: 30px;
+  min-width: 420px;
 }
 
 #task-detail-window textarea {
@@ -210,4 +212,26 @@ title {
     opacity: 0;
   }
 }
+
 /* SINGLE TASK CONTAINER */
+
+.text-glow {
+  text-shadow:
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 20px #fff;
+}
+
+.box-glow-green {
+  box-shadow:
+    0 0 5px #66944a,
+    0 0 10px #66944a,
+    0 0 20px #66944a;
+}
+
+.box-glow-red {
+  box-shadow:
+    0 0 5px #a63628,
+    0 0 10px #a63628,
+    0 0 20px #a63628;
+}

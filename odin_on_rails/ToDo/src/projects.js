@@ -10,8 +10,6 @@ const Projects = (arr) => {
     let dueDate = document.querySelector('input[type="date"]').value;
 
     // Change date format ex. Oct 22nd
-    // let reformatDueDate = format(new Date(dueDate), 'LLL do');
-
     let newTask = ToDoItem(title, dueDate, priority, note, project);
     arr.push(newTask);
 

@@ -89,9 +89,7 @@ const ShowAllTasks = (self) => {
           for (let i = 0; i < oldTasks.length; i++) {
             if (arrItem.title == oldTasks[i].title && arrItem.dueDate == oldTasks[i].dueDate) {
               oldTasks.splice(i, 1);
-              console.log(oldTasks);
               localStorage.setItem('TaskList', JSON.stringify(oldTasks));
-
             }
           }
         }
@@ -145,7 +143,7 @@ const ShowAllTasks = (self) => {
       // Notes
       const eNotes = document.createElement('textarea');
       if (arr[i].note == "") {
-        eNotes.placeholder = 'Ex. Notes for Task';
+        eNotes.placeholder = 'Notes for Task';
         eNotes.classList.add('placeholder-txt');
       } else {
         eNotes.value = arr[i].note;
@@ -170,12 +168,9 @@ const ShowAllTasks = (self) => {
       eDueDate.addEventListener('focusout', (e) => {
         e.stopPropagation();
         arr[i].dueDate = eDueDate.value;
-        console.log(arr[i].dueDate);
         localStorage.setItem('TaskList', JSON.stringify(arr));
-        // console.log(localStorage.getItem('TaskList'));
         const reformatNewDate = format(new Date(eDueDate.value), 'MMM dd');
         taskDueDate.innerHTML = reformatNewDate;
-        console.log(taskDueDate, reformatNewDate);
       });
 
       // Priority
@@ -190,15 +185,32 @@ const ShowAllTasks = (self) => {
       priorityLabel.id = 'priority-label';
       low.id = 'low-pr';
       high.id = 'high-pr';
+      if (arr[i].priority == 'low') {
+        low.classList.add('text-glow', 'box-glow-green');
+      } else {
+        high.classList.add('text-glow', 'box-glow-red');
+      }
       low.addEventListener('click', (e) => {
         e.stopPropagation();
         arr[i].priority = 'low';
         localStorage.setItem('TaskList', JSON.stringify(arr));
+        low.classList.toggle('text-glow');
+        low.classList.toggle('box-glow-green');
+        if (high.classList.contains('text-glow')) {
+          high.classList.remove('text-glow');
+          high.classList.remove('box-glow-red');
+        }
       });
       high.addEventListener('click', (e) => {
         e.stopPropagation();
         arr[i].priority = 'high';
         localStorage.setItem('TaskList', JSON.stringify(arr));
+        high.classList.toggle('text-glow');
+        high.classList.toggle('box-glow-red');
+        if (low.classList.contains('box-glow-green')) {
+          low.classList.remove('text-glow');
+          low.classList.remove('box-glow-green');
+        }
       });
 
       // Project Name
@@ -215,7 +227,6 @@ const ShowAllTasks = (self) => {
         e.stopPropagation();
         arr[i].project = eProject.value;
         localStorage.setItem('TaskList', JSON.stringify(arr));
-        console.log(JSON.parse(localStorage.getItem('TaskList')));
       });
 
       document.querySelector('#todo-container').appendChild(mainContainer);
@@ -275,9 +286,7 @@ const ShowAllTasks = (self) => {
 
     createHeading();
     const output = highLow(level);
-    console.log(output);
     output.forEach((item, i) => {
-      console.log(item);
       tC(i, output);
     });
   }

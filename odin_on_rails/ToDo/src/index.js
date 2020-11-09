@@ -9,15 +9,7 @@ import { Datepicker } from 'vanillajs-datepicker';
 
 const startUp = () => {
   var todoArray = [];
-
   Sidebar(todoArray);
-  // allTasks.addEventListener('click', (e) => {
-  //   console.log(todoArray);
-  //   const taskMaster = ShowAllTasks();
-  //   taskMaster.allTaskContainer();
-  // });
-  //
-
 }
 startUp();
 

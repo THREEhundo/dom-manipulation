@@ -4,8 +4,6 @@ const PriorityLink = () => {
   const showPrioritySidebar = () => {
     let projectArr = [];
     const prioritySidebar = document.querySelector('#priority');
-    // const sort = ShowAllTasks();
-    // const sorted = sort.sortByPriority();
     const oldTasks = JSON.parse(localStorage.getItem('TaskList'));
     const dropdownContainer = document.createElement('div');
     dropdownContainer.id = 'priority-submenu-container';
@@ -48,8 +46,6 @@ const PriorityLink = () => {
     });
 
   }
-
-
 
   return {
     showPrioritySidebar
