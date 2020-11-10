@@ -27,6 +27,7 @@ title {
 
 h1 {
   grid-area: header;
+  text-align: center;
 }
 
 /* TODO CONTAINER */
@@ -34,7 +35,7 @@ h1 {
 #todo-container {
   display: grid;
   grid-template-columns: 15% 25% 58%;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 0.15fr 1fr 1fr 1fr;
   grid-template-areas:
     'sidebar header header'
     'sidebar task-container-display task-detail-window'
@@ -54,6 +55,7 @@ h1 {
   font-weight: lighter;
   min-width: 220px;
   grid-area: task-container-display;
+  margin: 30px;
 }
 
 .task-header-title {
@@ -85,6 +87,10 @@ h1 {
 #is-finished {
   align-self: center;
   margin: 5px;
+}
+
+#sort-heading {
+  margin-right: 7px;
 }
 
 /* SIDEBAR */
@@ -129,6 +135,19 @@ h1 {
   width: 8px;
 }
 
+.slide-bottom {
+  animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@@keyframes slide-bottom {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100px);
+  }
+}
+
 /* Create Task Form */
 #task-modal-container {
   width: 100vw;
@@ -168,7 +187,6 @@ h1 {
 #task-detail-window {
   display: flex;
   flex-flow: column nowrap;
-  padding: 10px;
   margin: 30px;
   min-width: 420px;
   grid-area: task-detail-window;
@@ -257,5 +275,9 @@ h1 {
       'sidebar header'
       'sidebar task-container-display'
       'sidebar task-detail-window';
+  }
+
+  .task-container-display {
+    margin: 0 30px;
   }
 }

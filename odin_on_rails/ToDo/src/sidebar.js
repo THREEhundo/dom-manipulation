@@ -200,8 +200,8 @@ const Sidebar = (todoArray) => {
   // Listener for List Dropdown Menu
   lists.addEventListener('click', (e) => {
     const prioritySubmenuContainer = document.querySelector('#priority-submenu-container');
-    if (document.querySelector('#projects')) {
-      document.querySelector('#projects').remove();
+    if (document.querySelector('#link-submenu-container')) {
+      document.querySelector('#link-submenu-container').remove();
     } else {
       if (prioritySubmenuContainer) {
         prioritySubmenuContainer.remove();
@@ -209,6 +209,7 @@ const Sidebar = (todoArray) => {
       const dropDown = ListLink(lists);
       dropDown.showProjectsSidebar();
     }
+    // lists.classList.add('slide-bottom');
   });
 
   // Listener for Priority Dropdown Menu
