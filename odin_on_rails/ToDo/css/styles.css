@@ -25,12 +25,21 @@ title {
   display: none;
 }
 
+h1 {
+  grid-area: header;
+}
+
 /* TODO CONTAINER */
 
 #todo-container {
   display: grid;
   grid-template-columns: 15% 25% 58%;
-  grid-template-rows: auto;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-areas:
+    'sidebar header header'
+    'sidebar task-container-display task-detail-window'
+    'sidebar task-container-display task-detail-window'
+    'sidebar task-container-display task-detail-window';
   background-color: tan;
   column-gap: 1%;
 }
@@ -44,6 +53,7 @@ title {
   flex-flow: column wrap;
   font-weight: lighter;
   min-width: 220px;
+  grid-area: task-container-display;
 }
 
 .task-header-title {
@@ -87,6 +97,7 @@ title {
   flex-flow: column;
   justify-content: center;
   min-width: 120px;
+  grid-area: sidebar;
 }
 
 .sidebar-item {
@@ -160,6 +171,7 @@ title {
   padding: 10px;
   margin: 30px;
   min-width: 420px;
+  grid-area: task-detail-window;
 }
 
 #task-detail-window textarea {
@@ -234,4 +246,16 @@ title {
     0 0 5px #a63628,
     0 0 10px #a63628,
     0 0 20px #a63628;
+}
+
+/* Small Layout */
+@media (max-width: 900px) {
+  #todo-container {
+    grid-template-columns: 22% 75%;
+    grid-template-rows: 0.15fr 0.25fr 1fr ;
+    grid-template-areas:
+      'sidebar header'
+      'sidebar task-container-display'
+      'sidebar task-detail-window';
+  }
 }
