@@ -135,16 +135,33 @@ h1 {
   width: 8px;
 }
 
-.slide-bottom {
-  animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+.slide-in-top {
+  animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
-@@keyframes slide-bottom {
+@keyframes slide-in-top {
   0% {
-    transform: translateY(0);
+    transform: translateY(-20px);
+    opacity: 0;
   }
   100% {
-    transform: translateY(100px);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-bottom {
+  animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) reverse both;
+}
+
+@keyframes slide-in-bottom {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
@@ -188,7 +205,7 @@ h1 {
   display: flex;
   flex-flow: column nowrap;
   margin: 30px;
-  min-width: 420px;
+  min-width: 300px;
   grid-area: task-detail-window;
 }
 

@@ -198,10 +198,23 @@ const Sidebar = (todoArray) => {
   });
 
   // Listener for List Dropdown Menu
-  lists.addEventListener('click', (e) => {
+  lists.addEventListener('click', () => {
     const prioritySubmenuContainer = document.querySelector('#priority-submenu-container');
     if (document.querySelector('#link-submenu-container')) {
-      document.querySelector('#link-submenu-container').remove();
+      if (document.querySelector('#link-submenu-container').classList.contains('slide-in-top')) {
+        document.querySelector('#link-submenu-container').classList.remove('slide-in-top');
+
+        // Triggers Reflow
+        void document.querySelector('#link-submenu-container').offsetWidth;
+
+        document.querySelector('#link-submenu-container').classList.add('slide-in-bottom');
+
+        lists.addEventListener('animationend', () => {
+          if (document.querySelector('#link-submenu-container').classList.contains('slide-in-bottom')) {
+            document.querySelector('#link-submenu-container').remove();
+          }
+        });
+      }
     } else {
       if (prioritySubmenuContainer) {
         prioritySubmenuContainer.remove();
@@ -209,7 +222,7 @@ const Sidebar = (todoArray) => {
       const dropDown = ListLink(lists);
       dropDown.showProjectsSidebar();
     }
-    // lists.classList.add('slide-bottom');
+    document.querySelector('#link-submenu-container').classList.add('slide-in-top');
   });
 
   // Listener for Priority Dropdown Menu
@@ -218,7 +231,20 @@ const Sidebar = (todoArray) => {
     const listSubmenuContainer = document.querySelector('#link-submenu-container');
 
     if (prioritySubmenuContainer) {
-      prioritySubmenuContainer.remove();
+      if (document.querySelector('#priority-submenu-container').classList.contains('slide-in-top')) {
+        document.querySelector('#priority-submenu-container').classList.remove('slide-in-top');
+
+        // Triggers Reflow
+        void document.querySelector('#priority-submenu-container').offsetWidth;
+
+        document.querySelector('#priority-submenu-container').classList.add('slide-in-bottom');
+
+        prioritySidebar.addEventListener('animationend', () => {
+          if (document.querySelector('#priority-submenu-container').classList.contains('slide-in-bottom')) {
+            document.querySelector('#priority-submenu-container').remove();
+          }
+        });
+      }
     } else {
       if (listSubmenuContainer) {
         listSubmenuContainer.remove();
@@ -226,6 +252,7 @@ const Sidebar = (todoArray) => {
       const pLevel = PriorityLink();
       pLevel.showPrioritySidebar();
     }
+    document.querySelector('#priority-submenu-container').classList.add('slide-in-top');
   });
 
 
