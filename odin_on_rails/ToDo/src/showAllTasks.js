@@ -6,9 +6,11 @@ import { Datepicker } from 'vanillajs-datepicker';
 const ShowAllTasks = (self) => {
   const oldTasks = JSON.parse(localStorage.getItem('TaskList'));
   let sorted = false;
+  let projectArr = [];
+  let priorityArr = [];
 
   // Heading for List of Tasks
-  const createHeading = () => {
+  const createHeading = (arr) => {
     const allTaskItemContainer = document.createElement('div');
     allTaskItemContainer.classList.add('task-container-display');
 
@@ -34,7 +36,8 @@ const ShowAllTasks = (self) => {
         allTContainer.querySelectorAll('*').forEach(n => n.remove());
       }
 
-      const immediateSorting = oldTasks.sort(sortByDate);
+      const immediateSorting = chooseArr(arr);
+      console.log(immediateSorting);
       // Sort
       if (sorted === true) {
         for (let i = 0; i < immediateSorting.length; i++) {
@@ -265,13 +268,12 @@ const ShowAllTasks = (self) => {
 
   // Show All Tasks From a Particular Project
   const sortByList = (self) => {
-    let projectArr = [];
     for (let task in oldTasks) {
       if (oldTasks[task].project == self.innerHTML) {
         projectArr.push(oldTasks[task]);
       }
     }
-    createHeading();
+    createHeading(projectArr);
     projectArr.forEach((item, i) => {
       tC(i, projectArr);
     });
@@ -281,7 +283,6 @@ const ShowAllTasks = (self) => {
   const sortByPriority = (level) => {
 
     function highLow(level) {
-      let priorityArr = [];
       if (level == 'low') {
         const sortedLow = oldTasks.forEach((item) => {
           if (item.priority == 'low') {
@@ -298,7 +299,7 @@ const ShowAllTasks = (self) => {
       return priorityArr;
     }
 
-    createHeading();
+    createHeading(priorityArr);
     const output = highLow(level);
     output.forEach((item, i) => {
       tC(i, output);
@@ -307,7 +308,7 @@ const ShowAllTasks = (self) => {
 
   // Show All Tasks
   const allTaskContainer = () => {
-    createHeading();
+    createHeading(oldTasks);
 
     if (oldTasks.length > 0) {
       for (let i = 0; i < oldTasks.length; i++) {
@@ -319,6 +320,10 @@ const ShowAllTasks = (self) => {
   // Sort By Date
   function sortByDate(a, b) {
     return new Date(b.dueDate) - new Date(a.dueDate);
+  }
+
+  function chooseArr(arr) {
+    return arr.sort(sortByDate);
   }
 
   return {
