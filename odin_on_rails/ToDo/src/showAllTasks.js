@@ -5,6 +5,7 @@ import { Datepicker } from 'vanillajs-datepicker';
 
 const ShowAllTasks = (self) => {
   const oldTasks = JSON.parse(localStorage.getItem('TaskList'));
+  let sorted = false;
 
   // Heading for List of Tasks
   const createHeading = () => {
@@ -32,11 +33,22 @@ const ShowAllTasks = (self) => {
         // Remove All Nodes from Container
         allTContainer.querySelectorAll('*').forEach(n => n.remove());
       }
-      // Sort by Date
+
       const immediateSorting = oldTasks.sort(sortByDate);
-      console.log(immediateSorting);
-      for (let i = 0; i < immediateSorting.length; i++) {
-        const dateInOrder = tC(i, immediateSorting);
+      // Sort
+      if (sorted === true) {
+        for (let i = 0; i < immediateSorting.length; i++) {
+          const dateInOrder = tC(i, immediateSorting);
+        }
+        sorted = false;
+      }
+      // Reverse Sort
+      else if (!sorted) {
+        const reversed = immediateSorting.reverse();
+        for (let i = 0; i < reversed.length; i++) {
+          const reversedInOrder = tC(i, reversed);
+        }
+        sorted = true;
       }
     });
 
@@ -84,6 +96,8 @@ const ShowAllTasks = (self) => {
         }, 3000);
         if (arr == oldTasks) {
           arr.splice(i, 1);
+          localStorage.setItem('TaskList', JSON.stringify(oldTasks));
+          console.log(JSON.parse(localStorage.getItem('TaskList')));
         } else {
           const arrItem = arr[i];
           for (let i = 0; i < oldTasks.length; i++) {
@@ -304,9 +318,7 @@ const ShowAllTasks = (self) => {
 
   // Sort By Date
   function sortByDate(a, b) {
-    const aDate = a.dueDate;
-    const bDate = b.dueDate;
-    return bDate ? -1 : aDate ? 1 : 0;
+    return new Date(b.dueDate) - new Date(a.dueDate);
   }
 
   return {
