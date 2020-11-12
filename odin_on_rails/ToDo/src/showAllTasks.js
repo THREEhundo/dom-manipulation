@@ -322,6 +322,7 @@ const ShowAllTasks = (self) => {
     return new Date(b.dueDate) - new Date(a.dueDate);
   }
 
+  // Choose Array for sorting
   function chooseArr(arr) {
     return arr.sort(sortByDate);
   }

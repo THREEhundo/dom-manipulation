@@ -96,7 +96,8 @@ h1 {
 /* SIDEBAR */
 .sidebar {
   height: 100vh;
-  background-color: orange;
+  background-color: #30302d;
+  color: white;
   top: 0;
   left: 0;
   display: flex;
@@ -112,7 +113,7 @@ h1 {
   padding: 15px;
 }
 
-.create-task-btn {
+.create-task-btn, .sidebar-collapse-button {
   border-radius: 15px;
   background-image: linear-gradient(to top, #ebf111, #b2f766, #88f59e, #7beec6, #91e3db);
   border: none;
@@ -124,11 +125,6 @@ h1 {
 
 .sidebar-item-heading-title-after {
   display: inline-flex;
-}
-
-.sidebar-collapse-button {
-  border-radius: 15px;
-  border: none;
 }
 
 .caret {
@@ -164,6 +160,19 @@ h1 {
     opacity: 1;
   }
 }
+
+h1, .sidebar-item-heading-title, .sidebar-item-heading-title, .sidebar-item-heading-title {
+background-image: linear-gradient(to bottom, #ebf111, #b2f766, #88f59e, #7beec6, #91e3db);
+background-clip: text;
+background-size: 100%;
+background-repeat: repeat;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+-moz-background-clip: text;
+-moz-text-fill-color: transparent;
+}
+
+
 
 /* Create Task Form */
 #task-modal-container {
