@@ -146,6 +146,14 @@ const Sidebar = (todoArray) => {
     }
   }
 
+  // Changing class
+  function changeClass(a) {
+    const caret = document.querySelector(a);
+    const regEx = new RegExp('(\\s|^)rotate(\\s|$)');
+    caret.className = caret.className.replace(regEx, ' ');
+    caret.className += "rotate";
+  }
+
   // Create Form Container
   const createTaskModal = () => {
     const formContainer = document.createElement('div');
@@ -200,14 +208,17 @@ const Sidebar = (todoArray) => {
   // Listener for List Dropdown Menu
   lists.addEventListener('click', () => {
     const prioritySubmenuContainer = document.querySelector('#priority-submenu-container');
+    const caret = document.querySelector('#caret-1');
     if (document.querySelector('#link-submenu-container')) {
       if (document.querySelector('#link-submenu-container').classList.contains('slide-in-top')) {
         document.querySelector('#link-submenu-container').classList.remove('slide-in-top');
+        caret.style.transform = 'none';
 
         // Triggers Reflow
         void document.querySelector('#link-submenu-container').offsetWidth;
 
         document.querySelector('#link-submenu-container').classList.add('slide-in-bottom');
+        caret.classList.toggle('rotate');
 
         lists.addEventListener('animationend', () => {
           if (document.querySelector('#link-submenu-container').classList.contains('slide-in-bottom')) {
@@ -223,21 +234,28 @@ const Sidebar = (todoArray) => {
       dropDown.showProjectsSidebar();
     }
     document.querySelector('#link-submenu-container').classList.add('slide-in-top');
+    if (caret.classList.contains('rotate')) {
+      caret.style.transform = 'rotate(180deg)';
+    }
+    caret.classList.add('rotate');
   });
 
   // Listener for Priority Dropdown Menu
   prioritySidebar.addEventListener('click', (e) => {
     const prioritySubmenuContainer = document.querySelector('#priority-submenu-container');
     const listSubmenuContainer = document.querySelector('#link-submenu-container');
+    const caret = document.querySelector('#caret-2');
 
     if (prioritySubmenuContainer) {
       if (document.querySelector('#priority-submenu-container').classList.contains('slide-in-top')) {
         document.querySelector('#priority-submenu-container').classList.remove('slide-in-top');
+        caret.style.transform = 'none';
 
         // Triggers Reflow
         void document.querySelector('#priority-submenu-container').offsetWidth;
 
         document.querySelector('#priority-submenu-container').classList.add('slide-in-bottom');
+        caret.classList.toggle('rotate');
 
         prioritySidebar.addEventListener('animationend', () => {
           if (document.querySelector('#priority-submenu-container').classList.contains('slide-in-bottom')) {
@@ -253,6 +271,10 @@ const Sidebar = (todoArray) => {
       pLevel.showPrioritySidebar();
     }
     document.querySelector('#priority-submenu-container').classList.add('slide-in-top');
+    if (caret.classList.contains('rotate')) {
+      caret.style.transform = 'rotate(180deg)';
+    }
+    caret.classList.add('rotate');
   });
 
 
