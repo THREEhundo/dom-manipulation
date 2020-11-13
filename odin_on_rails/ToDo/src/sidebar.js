@@ -146,14 +146,6 @@ const Sidebar = (todoArray) => {
     }
   }
 
-  // Changing class
-  function changeClass(a) {
-    const caret = document.querySelector(a);
-    const regEx = new RegExp('(\\s|^)rotate(\\s|$)');
-    caret.className = caret.className.replace(regEx, ' ');
-    caret.className += "rotate";
-  }
-
   // Create Form Container
   const createTaskModal = () => {
     const formContainer = document.createElement('div');
@@ -182,12 +174,35 @@ const Sidebar = (todoArray) => {
     });
   });
 
+  // Retraction Animation
+  function retractSubmenu(menu, caret, v) {
+    menu.classList.remove('slide-in-top');
+    caret.style.transform = 'none';
+
+    // Trigger Reflow
+    void menu.offsetWidth;
+
+    menu.classList.add('slide-in-bottom');
+
+    if (v == 1) {
+      caret.classList.toggle('rotate');
+    }
+    
+    menu.addEventListener('animationend', () => {
+      if (menu.classList.contains('slide-in-bottom')) {
+        menu.remove();
+      }
+    });
+  }
+
   // Listener for all tasks tab
   document.querySelector('#all-tasks-link').addEventListener('click', () => {
     const allTasksWindow = document.querySelector('.task-container-display');
     const detailContainer = document.querySelector('#task-detail-window');
     const prioritySubmenuContainer = document.querySelector('#priority-submenu-container');
     const listSubmenuContainer = document.querySelector('#link-submenu-container');
+    const listCaret = document.querySelector('#caret-1');
+    const priorityCaret = document.querySelector('#caret-2');
 
     if (allTasksWindow) {
       allTasksWindow.remove();
@@ -196,10 +211,9 @@ const Sidebar = (todoArray) => {
       detailContainer.remove();
     }
     if (prioritySubmenuContainer) {
-      prioritySubmenuContainer.remove();
-    }
-    if (listSubmenuContainer) {
-      listSubmenuContainer.remove();
+      retractSubmenu(prioritySubmenuContainer, priorityCaret, 0);
+    } else if (listSubmenuContainer) {
+      retractSubmenu(listSubmenuContainer, listCaret, 0);
     }
     const taskMaster = ShowAllTasks();
     taskMaster.allTaskContainer();
@@ -211,20 +225,7 @@ const Sidebar = (todoArray) => {
     const caret = document.querySelector('#caret-1');
     if (document.querySelector('#link-submenu-container')) {
       if (document.querySelector('#link-submenu-container').classList.contains('slide-in-top')) {
-        document.querySelector('#link-submenu-container').classList.remove('slide-in-top');
-        caret.style.transform = 'none';
-
-        // Triggers Reflow
-        void document.querySelector('#link-submenu-container').offsetWidth;
-
-        document.querySelector('#link-submenu-container').classList.add('slide-in-bottom');
-        caret.classList.toggle('rotate');
-
-        lists.addEventListener('animationend', () => {
-          if (document.querySelector('#link-submenu-container').classList.contains('slide-in-bottom')) {
-            document.querySelector('#link-submenu-container').remove();
-          }
-        });
+        retractSubmenu(document.querySelector('#link-submenu-container'), caret, 1);
       }
     } else {
       if (prioritySubmenuContainer) {
@@ -248,20 +249,7 @@ const Sidebar = (todoArray) => {
 
     if (prioritySubmenuContainer) {
       if (document.querySelector('#priority-submenu-container').classList.contains('slide-in-top')) {
-        document.querySelector('#priority-submenu-container').classList.remove('slide-in-top');
-        caret.style.transform = 'none';
-
-        // Triggers Reflow
-        void document.querySelector('#priority-submenu-container').offsetWidth;
-
-        document.querySelector('#priority-submenu-container').classList.add('slide-in-bottom');
-        caret.classList.toggle('rotate');
-
-        prioritySidebar.addEventListener('animationend', () => {
-          if (document.querySelector('#priority-submenu-container').classList.contains('slide-in-bottom')) {
-            document.querySelector('#priority-submenu-container').remove();
-          }
-        });
+        retractSubmenu(document.querySelector('#priority-submenu-container'), caret, 1);
       }
     } else {
       if (listSubmenuContainer) {
