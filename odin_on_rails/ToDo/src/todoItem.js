@@ -10,7 +10,6 @@ const ToDoItem = (title, dueDate, priority, note, project) => {
   const getDueDate = () => dueDate;
   const getPriority = () => priority;
   const getNote = () => note;
-  const getChecklist = () => checklist;
   const getProject = () => project;
 
   const editTitle = (newTitle) => title = newTitle;
@@ -25,7 +24,6 @@ const ToDoItem = (title, dueDate, priority, note, project) => {
     getDueDate,
     getPriority,
     getNote,
-    getChecklist,
     getProject,
     editTitle,
     editDueDate,

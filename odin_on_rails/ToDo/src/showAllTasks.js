@@ -1,9 +1,6 @@
-import TaskWindow from './taskWindow';
-import datepicker from 'js-datepicker';
-import { compareAsc, format, formatDistance, formatRelative, subDays, set, max, min } from 'date-fns';
-import { Datepicker } from 'vanillajs-datepicker';
+import { format } from 'date-fns';
 
-const ShowAllTasks = (self) => {
+const ShowAllTasks = () => {
   const oldTasks = JSON.parse(localStorage.getItem('TaskList'));
   let sorted = false;
   let projectArr = [];
@@ -41,7 +38,7 @@ const ShowAllTasks = (self) => {
       // Sort
       if (sorted === true) {
         for (let i = 0; i < immediateSorting.length; i++) {
-          const dateInOrder = tC(i, immediateSorting);
+          tC(i, immediateSorting);
         }
         sorted = false;
       }
@@ -49,7 +46,7 @@ const ShowAllTasks = (self) => {
       else if (!sorted) {
         const reversed = immediateSorting.reverse();
         for (let i = 0; i < reversed.length; i++) {
-          const reversedInOrder = tC(i, reversed);
+          tC(i, reversed);
         }
         sorted = true;
       }
@@ -177,11 +174,6 @@ const ShowAllTasks = (self) => {
       eDueDate.type = 'text';
       eDueDate.value = oldTasks[i].dueDate;
       eDueDate.id = 'edit-date';
-      const datepicker = new Datepicker(eDueDate, {
-        minDate: 'today',
-        format: 'mm-dd-yyyy',
-        todayHighlight: true,
-      });
       eDueDate.addEventListener('focusout', (e) => {
         e.stopPropagation();
         arr[i].dueDate = eDueDate.value;
@@ -284,13 +276,13 @@ const ShowAllTasks = (self) => {
 
     function highLow(level) {
       if (level == 'low') {
-        const sortedLow = oldTasks.forEach((item) => {
+        oldTasks.forEach((item) => {
           if (item.priority == 'low') {
             priorityArr.push(item);
           }
         });
       } else {
-        const sortedHigh = oldTasks.forEach((item) => {
+        oldTasks.forEach((item) => {
           if (item.priority == 'high') {
             priorityArr.push(item);
           }
@@ -312,7 +304,7 @@ const ShowAllTasks = (self) => {
 
     if (oldTasks.length > 0) {
       for (let i = 0; i < oldTasks.length; i++) {
-        const allTaskList = tC(i, oldTasks);
+        tC(i, oldTasks);
       }
     }
   }

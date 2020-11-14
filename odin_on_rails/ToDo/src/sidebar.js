@@ -1,24 +1,14 @@
-import { compareAsc, format, formatDistance, formatRelative, subDays, set, max, min } from 'date-fns'
-import ToDoItem from './todoItem';
-import Projects from './projects';
+import { format, max, min } from 'date-fns'
 import ShowAllTasks from './showAllTasks';
 import ListLink from './listLink';
 import PriorityLink from './priorityLink'
 
-const Sidebar = (todoArray) => {
+const Sidebar = () => {
   const todoContainer = document.querySelector('#todo-container');
   const createTask = document.querySelector('#create-task');
-  const allTasks = document.querySelector('#all-tasks-sidebar');
   const lists = document.querySelector('#lists');
-  const calendar = document.querySelector('#calendar');
   const prioritySidebar = document.querySelector('#priority');
-  const prioritySubmenu = document.querySelector('#priority-submenu');
   let ticker = 0;
-
-  // Return Unique Values
-  function onlyUnique(value, index, self) {
-    return self.indexOf(value) === index;
-  }
 
   const modalFeatures = {
     "item-container-0" :{
@@ -167,11 +157,6 @@ const Sidebar = (todoArray) => {
       createTaskModal();
       ticker++;
     }
-    // Listener for submitting tasks
-    document.querySelector('#task-modal input[type="submit"]').addEventListener('click', () => {
-      const project = Projects(todoArray);
-
-    });
   });
 
   // Retraction Animation
@@ -187,7 +172,7 @@ const Sidebar = (todoArray) => {
     if (v == 1) {
       caret.classList.toggle('rotate');
     }
-    
+
     menu.addEventListener('animationend', () => {
       if (menu.classList.contains('slide-in-bottom')) {
         menu.remove();
@@ -242,7 +227,7 @@ const Sidebar = (todoArray) => {
   });
 
   // Listener for Priority Dropdown Menu
-  prioritySidebar.addEventListener('click', (e) => {
+  prioritySidebar.addEventListener('click', () => {
     const prioritySubmenuContainer = document.querySelector('#priority-submenu-container');
     const listSubmenuContainer = document.querySelector('#link-submenu-container');
     const caret = document.querySelector('#caret-2');

@@ -8,7 +8,6 @@ const TaskWindow = () => {
 const mainContainer = document.querySelector('#todo-container');
 
 const iTaskContainer = document.createElement('div');
-const projectContainer = document.createElement('div');
 const projectHeader = document.createElement('div');
 const projectBody = document.createElement('div');
 

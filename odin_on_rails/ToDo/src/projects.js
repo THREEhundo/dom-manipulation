@@ -10,7 +10,6 @@ const Projects = (arr) => {
     let dueDate = document.querySelector('input[type="date"]').value;
     const dateArr = dueDate.match(/\d+/g);
     const formatedDate = format(new Date(dateArr[0], dateArr[1] - 1, dateArr[2]), 'MM-dd-yyyy');
-    console.log(formatedDate);
 
     // Change date format ex. Oct 22nd
     let newTask = ToDoItem(title, formatedDate, priority, note, project);
