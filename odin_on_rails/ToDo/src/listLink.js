@@ -1,13 +1,13 @@
-import ShowAllTasks from './showAllTasks';
+import ShowAllTasks from "./showAllTasks";
 
 const ListLink = (lists) => {
   // Create links sorted by list name in A-Z order
-  const oldTasks = JSON.parse(localStorage.getItem('TaskList'));
+  const oldTasks = JSON.parse(localStorage.getItem("TaskList"));
 
   const showProjectsSidebar = () => {
     let projectArr = [];
-    const dropdownContainer = document.createElement('div');
-    dropdownContainer.id = 'link-submenu-container';
+    const dropdownContainer = document.createElement("div");
+    dropdownContainer.id = "link-submenu-container";
 
     for (let task in oldTasks) {
       projectArr.push(oldTasks[task].project);
@@ -15,19 +15,21 @@ const ListLink = (lists) => {
 
     let uniqueProjects = [...new Set(projectArr)];
 
-    const ul = document.createElement('ul');
-    ul.id = 'projects';
+    const ul = document.createElement("ul");
+    ul.id = "projects";
 
     uniqueProjects.forEach((item, i) => {
-      const li = document.createElement('li');
+      const li = document.createElement("li");
       li.id = `project-${i}`;
 
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.id = `project-link-${i}`;
       link.innerHTML = item;
-      link.addEventListener('click', (e) => {
-        const allTasksWindow = document.querySelector('.task-container-display');
-        const detailContainer = document.querySelector('#task-detail-window');
+      link.addEventListener("click", (e) => {
+        const allTasksWindow = document.querySelector(
+          ".task-container-display"
+        );
+        const detailContainer = document.querySelector("#task-detail-window");
         if (allTasksWindow) {
           allTasksWindow.remove();
         }
@@ -44,11 +46,11 @@ const ListLink = (lists) => {
       ul.appendChild(li);
       li.appendChild(link);
     });
-  }
+  };
 
   return {
     showProjectsSidebar,
-  }
-}
+  };
+};
 
-export default ListLink
+export default ListLink;
