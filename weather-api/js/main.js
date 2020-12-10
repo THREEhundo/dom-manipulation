@@ -211,8 +211,4 @@ form.addEventListener("submit", function (e) {
   e.preventDefault();
 
   const newCity = city(searchbox.value, "imperial");
-  console.log(city(searchbox.value, "imperial"));
-  // removeAllChildNodes(weatherContainer);
-
-  // }
 });
