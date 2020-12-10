@@ -1,5 +1,3 @@
-const img = document.querySelector("img");
-
 async function cityWeather(city, f) {
   try {
     let weather;
@@ -25,7 +23,24 @@ async function cityWeather(city, f) {
       sunset: data.sys.sunset,
     });
   } catch (err) {
+    removeError();
+    createError();
     throw new Error(err);
+  }
+}
+
+function createError() {
+  const formContainer = document.querySelector("#form-container");
+  const showError = document.createElement("span");
+  showError.id = "error-msg";
+  showError.innerHTML = "Location Not Found";
+  formContainer.appendChild(showError);
+}
+
+function removeError() {
+  const box = document.querySelector("#error-msg");
+  if (box) {
+    box.remove();
   }
 }
 
@@ -121,27 +136,83 @@ function createApp() {
   const searchContainer = document.createElement("div");
   searchContainer.id = "search-container";
 
+  const form = document.createElement("form");
+
+  const formDiv = document.createElement("div");
+  formDiv.id = "form-container";
+
+  const button = document.createElement("button");
+
+  const img = document.createElement("img");
+  img.src = "./css/imgs/search.png";
+
+  const search = document.createElement("input");
+  search.id = "city-search";
+  search.type = "text";
+  search.name = "city-search";
+  search.value = "Enter location";
+
   document.body.appendChild(mainContainer);
-  mainContainer.appendChild(weatherContainer);
   mainContainer.appendChild(searchContainer);
+  searchContainer.appendChild(form);
+  form.appendChild(formDiv);
+  formDiv.appendChild(button);
+  formDiv.appendChild(search);
+  button.appendChild(img);
+  mainContainer.appendChild(weatherContainer);
 }
 
 function city(city, measurement) {
-  Promise.resolve(cityWeather(city, measurement)).then((weather) => {
-    const weatherContainer = document.querySelector("#weather-container");
+  Promise.resolve(cityWeather(city, measurement))
+    .then((weather) => {
+      const weatherContainer = document.querySelector("#weather-container");
 
-    cityName(weather);
+      removeError();
 
-    const name = document.querySelector("#city");
-  });
+      removeAllChildNodes(weatherContainer);
+
+      cityName(weather);
+
+      const name = document.querySelector("#city");
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
 }
 
 createApp();
 city("los angeles", "imperial");
-// const cityObj = Promise.resolve(denver).then(weatherContent);
-// Promise.all([
-//   cityWeather("los angeles", "imperial"),
-//   cityWeather("los angeles", "metric"),
-// ]);
-// cityWeather("los angeles", "imperial");
-// const denver = cityWeather("denver", "imperial");
+
+const searchbox = document.querySelector("#city-search");
+const button = document.querySelector("button");
+const form = document.querySelector("form");
+
+searchbox.addEventListener("click", function (e) {
+  searchbox.value = "";
+});
+
+searchbox.addEventListener("focusout", function (e) {
+  if (searchbox.value === "") {
+    searchbox.value = "Enter location";
+    searchbox.placeholder = "Enter location";
+  }
+});
+
+form.addEventListener("submit", function (e) {
+  const weatherContainer = document.querySelector("#weather-container");
+  const box = document.querySelector("#error-msg");
+
+  e.preventDefault();
+
+  const newCity = city(searchbox.value, "imperial");
+  console.log(city(searchbox.value, "imperial"));
+  // removeAllChildNodes(weatherContainer);
+
+  // }
+});
