@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Clock from "./components/Clock";
+import DemoComponent from "./components/DemoComponent";
 // import Home from "./components/Home";
 // import Header from "./components/Header";
 
@@ -11,8 +12,7 @@ ReactDOM.render(
   <React.StrictMode>
     <App />
     <Clock />
-    <Clock />
-    <Clock />
+    <DemoComponent user="Sam Baik" />
   </React.StrictMode>,
   document.getElementById("root")
 );
